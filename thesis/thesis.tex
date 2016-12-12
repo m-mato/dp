@@ -79,6 +79,8 @@
 \usepackage{amsfonts}
 \usepackage{url}
 \usepackage{menukeys}
+\usepackage{float}
+\usepackage[plainpages=false, pdfpagelabels]{hyperref}
 
 \begin{document}
 
@@ -90,73 +92,106 @@ nejakým spôsobom zapojená do Internetu. Zároveň zaznamenávame nárast
 aplikácií, ktoré poskytujú užívateľom webové rozhranie a ústup takzvaných
 desktopových aplikácií.
 
----------------------------------
-OBR. 1 - WEB apps vs DESKTOP apps
----------------------------------
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.80\textwidth]{images/web-vs-desktop.png}
+  \caption{Vizualizácia pomeru počtu užívateľov webových a desktopových
+  aplikácií v čase, zdroj: vlastné spracovanie}
+  \label{fig:web-vs-desktop}
+\end{figure}
 
-	Z tohto vyplýva potreba rozoznania a identifikácie "používateľov", ktorý s
+	Z tohto vyplýva potreba rozoznania a identifikácie používateľov, ktorý s
 danou aplikáciou interagujú. Existuje niekoľko rôznych prístupov k 
 identifikácií, od mapovania IP adries sieťovej vrstvy až po aplikačnú správu
-užívateľských účtov. Podrobne sa nimi zaoberá [kapitola ~Existujúce prístupy].
+užívateľských účtov. Podrobne sa nimi zaoberá kapitola \ref{ch:existing}.
 Cieľom tejto práce je vytvoriť unikátny identifikátor na základe informácií
-dostupných z HTTP protokolu. Pred zostavením samotného algoritmu je preto
-dôležité popísať niektoré kľúčové oblasti a postupy.
+dostupných z \textit{HTTP} protokolu. Pred zostavením samotného algoritmu je
+preto dôležité popísať niektoré kľúčové oblasti a postupy.
+
 Nasledujúce kapitoly sa preto budú stručne zaoberať fungovaním aplikácií typu
-klient-server, modelom sieťových vrstiev či útokmi typu Denial of Service.
-Ďalej v práci popíšem spomínané existujúce prístupy a vlastný návrh algoritmu 
-identifikácie užívateľa. 
+klient-server, modelom sieťových vrstiev či útokmi typu \textit{Denial of
+Service}. Ďalej v práci popíšem spomínané existujúce prístupy a vlastný návrh
+algoritmu identifikácie užívateľa. 
 
 \section{Aplikácie typu Klient-Server}
-	S pokračujúcim vývojom nových technológií sa Web stáva stále väčšou súčasťou
-našich životov. Web taktiež už nie je limitovaný prehliadaním na počítačoch.
-Musí sa prispôsobovať rôznym novým technológiám, ako sú napríklad mobilné, či
-iné zriadenia. Najčastejšie používaným modelom komunikácie pre architektúru
-webových aplikácií je tzv. Klient-Server model. Základnou myšlienkou tohto modelu
-je zaslanie požiadavku (requestu) klientom na server, ktorý vystupuje ako
-poskytovateľ služby.
+	S pokračujúcim vývojom nových technológií sa Web stáva stále väčšou
+súčasťou našich životov. Web taktiež už nie je limitovaný prehliadaním na
+počítačoch. Musí sa prispôsobovať rôznym novým technológiám, ako sú napríklad
+mobilné, či iné zriadenia. Najčastejšie používaným modelom komunikácie pre
+architektúru webových aplikácií je tzv. Klient-Server model. Základnou
+myšlienkou tohto modelu je zaslanie požiadavku (\textit{requestu}) klientom na
+server, ktorý vystupuje ako poskytovateľ služby.
 
------------------------------------
-OBR. 2 - Klient-Server basic schema
------------------------------------
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.99\textwidth]{images/C-S-basic.png}
+  \caption{Schéma znázorňuje základnú architektúru modelu Klient-Server, zdroj:
+  vlastné spracovanie}
+  \label{fig:cs-basic}
+\end{figure}
 
 \subsection{Klient-Server model}
-Pretože Klient-Server model je používaný rôznymi typmi aplikácií bolo nutné použiť
-štandardizované protokoly, na základe ktorý ch bude možné komunikovať. Základné
-používané protokoly sú: FTP (File Transfer Protocol), Simple Mail Transfer Protocol
-(SMTP) a Hypertext Transfer Protocol (HTTP). Bližšie sieťové vrstvy a jednotlivé
-protokoly popisuje [kapitola ~Sieťové vrstvy].
+Pretože Klient-Server model je používaný rôznymi typmi aplikácií bolo nutné
+použiť štandardizované protokoly, na základe ktorý ch bude možné komunikovať.
+Základné používané protokoly sú: \textit{FTP (File Transfer Protocol)},
+\textit{Simple Mail Transfer Protocol (SMTP)} a \textit{Hypertext Transfer
+Protocol (HTTP)}. Bližšie sieťové vrstvy a jednotlivé protokoly popisuje
+kapitola \ref{ch:net-layers}.
 
 \subsection{Architektúra}
 Architektúra modelu Klient-Server sa vo všeobecnosti typicky skladá z troch 
 častí:
-	• Aplikačný server
-	• Databázový server
-	• Zariadenie klienta
-Zároveň Existujú dva zakladné typy architekúr: 
-	• 2-stupňová (2-tier)
-	• 3-stupňová (3-tier)
+\begin{itemize}
+	\item Aplikačný server
+	\item Databázový server
+	\item Zariadenie klienta
+\end{itemize}
+Zároveň Existujú dva základné typy architektúr: 
+\begin{itemize}
+	\item 2-stupňová \textit{(2-tier)}
+	\item 3-stupňová \textit{(3-tier)}
+\end{itemize}
 
-2-tier architektúra zahrna len zariadenie klienta a databázový server. U tohoto
-typu architektúry je aplikácia spustená na zariadení klienta, ktoré sa následne
-pripája priamo na server. Zariadenie tak obsluhuje zároveň business logiku aj
-zobrazovanie aplikácie. Inak tento typ architektúry nazývame aj tučný klient
-(thick client).
+\textit{2-tier} architektúra zahrna len zariadenie klienta a databázový server.
+U tohoto typu architektúry je aplikácia spustená na zariadení klienta, ktoré sa
+následne pripája priamo na server. Zariadenie tak obsluhuje zároveň
+\textit{business} logiku aj zobrazovanie aplikácie. Inak tento typ architektúry
+nazývame aj tučný klient(\textit{thick client}).
 
----------------------------
-OBR. 3 - Thick Client image
----------------------------
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=\textwidth]{images/C-S-thick.png}
+  \caption{Grafické znázornenie a popis priebehu komunikácie 2-tier architektúry,
+  zdroj: vlastné spracovanie}
+  \label{fig:cs-thick}
+\end{figure}
 
-3-tier architektúra, ktorou sa budem zaoberať v tejto práci sa od 2-tier líši najmä
-tým, že okrem zariadenia klienta a databázového servera zahŕňa aj aplikačný server.
-Tento je následne používaný na obsluhu business logiky aplikácie a komunikáciu s
-databázou, pričom zariadenie klienta slúž len na zobrazovanie. Iný názov pre takýto
-typ architektúry je tenký klient (thin cient).
+\textit{3-tier} architektúra, ktorou sa budem zaoberať v tejto práci sa od
+\textit{2-tier} líši najmätým, že okrem zariadenia klienta a databázového servera
+zahŕňa aj aplikačný server. Tento je následne používaný na obsluhu
+\textit{business} logiky aplikácie a komunikáciu s databázou, pričom zariadenie
+klienta slúž len na zobrazovanie. Iný názov pre takýto typ architektúry je tenký
+klient (\textit{thincient}).
 
---------------------------
-OBR. 4 - Thin Client image
---------------------------
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=\textwidth]{images/C-S-thin.png}
+  \caption{Grafické znázornenie a popis priebehu komunikácie 3-tier architektúry,
+  zdroj: vlastné spracovanie}
+  \label{fig:cs-thin}
+\end{figure}
+
+Nasledujúce kapitoly tejto práce sa budú zaoberať jedným z najdôležitejších
+problémov Webových aplikácií, ktorým je identifikácia užívateľa. Najskôr v kapitole 
+\ref{ch:net-layers} popisujem jednotlivé sieťové vrstvy a protokoly, ktorých
+informácie je možné použiť ka následnej identifikácií. Ďalšou časťou je zhrnutie
+existujúcich prístupov k rozoznaniu užívateľov v kapitole \ref{ch:existing} a 
+popis útokov typu DOS v kapitole \ref{ch:dos}. Najdôležitejšou časťou je však
+samozrejme kapitola \ref{ch:footprint}, ktorá popisuje návrh samotného 
+algoritmu identifikátoru.
 
 \chapter{Sieťové vrstvy}
+\label{ch:net-layers}
 //TODO - Úvod
 \section{Aplikačná vrstva}
 \section{Transportná vrstva}
@@ -164,8 +199,10 @@ OBR. 4 - Thin Client image
 \section{Vrstva sieťového rozhrania}
 
 \chapter{Útoky typu Denial of Service}
+\label{ch:dos}
 
 \chapter{Existujúce prístupy k identifikácií}
+\label{ch:existing}
 //TODO - Úvod
 \section{Využitie sieťovej vrstvy}
 //TODO - Úvod
@@ -174,6 +211,7 @@ OBR. 4 - Thin Client image
 \section{Aplikačné identifikátory}
 
 \chapter{Tvorba unikátneho identifikátoru}
+\label{ch:footprint}
 //TODO - Úvod
 \section{Možnosti protokolu HTTP}
 \section{Možnosti TCP}
