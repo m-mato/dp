@@ -182,15 +182,15 @@ klient (\textit{thincient}).
 \end{figure}
 
 Nasledujúce kapitoly tejto práce sa budú zaoberať jedným z najdôležitejších
-problémov Webových aplikácií, ktorým je identifikácia užívateľa. Najskôr v kapitole 
-\ref{ch:net-layers} popisujem jednotlivé sieťové vrstvy a protokoly, ktorých
+problémov Webových aplikácií, ktorým je identifikácia užívateľa. Najskôr kapitola
+\ref{ch:net-layers} analyzuje jednotlivé sieťové vrstvy a protokoly, ktorých
 informácie je možné použiť ka následnej identifikácií. Ďalšou časťou je zhrnutie
 existujúcich prístupov k rozoznaniu užívateľov v kapitole \ref{ch:existing} a 
 popis útokov typu DOS v kapitole \ref{ch:dos}. Najdôležitejšou časťou je však
 samozrejme kapitola \ref{ch:footprint}, ktorá popisuje návrh samotného 
 algoritmu identifikátoru.
 
-\chapter{Sieťové vrstvy}
+\chapter{Analýza sieťových vrstiev a protokolov}
 \label{ch:net-layers}
 //TODO - Úvod
 \section{Aplikačná vrstva}
@@ -198,8 +198,53 @@ algoritmu identifikátoru.
 \section{Sieťová vrstva}
 \section{Vrstva sieťového rozhrania}
 
-\chapter{Útoky typu Denial of Service}
+\chapter{Útoky typu \textit{Denial of Service}}
 \label{ch:dos}
+Jedným z hlavných dôvodov identifikácie užívateľov je prevencia proti útokom. Medzi
+najznámejšie z útokov patrí tzv. Denial of Service, ďalej len DoS.
+
+Vo všeobecnosti je za DoS útok považovaná snaha utočníka zabrániť oprávneným
+užívateľom v prístupe k informáciám, prípadne službám poskytovateľa. Snahou útočníka
+je znefunkčnit pripojenie neustálym narušaním služby serveru, prípadne sieťovej
+infraštruktúry, v dôsledku čoho môze dôjsť k čiastočnej, či úplnej strate
+internetového pripojenia hostiteľa. 
+
+U distribuovaného DoS útoku (alej len DDoS) môže útočník použiť k útoku na server
+počítače klientov. Nad týmito zariadeniami je možné prevziať kontrolu využitím
+bezpečnostných chýb alebo nedostatkov. Takto je následne možné donútiť počítač
+posielať obrovské množstvo dát na webové servery, prípadne odosielanie nevyžiadanej
+pošty na konkrétne e-mailové adresy. Útok sa nazýva "distribuovaný", pretože útočník
+používa viac zariadení na začatie útoku denial-of-service.
+
+DoS útok je podobny veľkej skupine ľudí, ktorá sa zhromažďuje pri vstupe do obchodu a
+bráni vo vstupe skutočným zákazníkom, ktrých záujmom sú reálne služby.
+Utočníci vykonávajúci tieto útoky sa často zameriavajú na webové sluzby a servery,
+ktoré su poskytované vysoko profitujúcimi inštitúciami, ako sú napríklad banky,
+prípadne platobné brány.
+
+---
+
+DOS - diagram
+
+---
+
+\section{Základne typy a techniky}
+Nasledujúce odseky popisuju najpoužívanejšie typy a techniky vykonávania DoS útokov a
+identifikujú prostriedky, ktorými je im možné zabrániť.
+\subsection{Distribuované DoS útoky}
+
+---
+
+D-DOS - diagram
+
+---
+
+\subsection{Sémantické DoS útoky}
+\subsection{Útoky hrubou silou}
+\subsection{Nízkoúrovnové DoS utoky}
+\subsection{Pokročilé DoS - APDoS}
+\subsection{...}
+\subsection{Reflekcia}
 
 \chapter{Existujúce prístupy k identifikácií}
 \label{ch:existing}
