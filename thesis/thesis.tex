@@ -201,148 +201,151 @@ algoritmu identifikátoru.
 \chapter{Útoky typu \textit{Denial of Service}}
 \label{ch:dos}
 Jedným z hlavných dôvodov identifikácie užívateľov je prevencia proti útokom. Medzi
-najznámejšie z útokov patrí tzv. Denial of Service, ďalej len DoS.
+najznámejšie z útokov patrí tzv. \textit{Denial of Service}, ďalej len \textit{DoS}.
 
-Vo všeobecnosti je za DoS útok považovaná snaha utočníka zabrániť oprávneným
+Vo všeobecnosti je za \textit{DoS} útok považovaná snaha utočníka zabrániť oprávneným
 užívateľom v prístupe k informáciám, prípadne službám poskytovateľa. Snahou útočníka
-je znefunkčnit pripojenie neustálym narušaním služby serveru, prípadne sieťovej
-infraštruktúry, v dôsledku čoho môze dôjsť k čiastočnej, či úplnej strate
+je znefunkčniť pripojenie neustálym narúšaním služby serveru, prípadne sieťovej
+infraštruktúry, v dôsledku čoho môže dôjsť k čiastočnej, či úplnej strate
 internetového pripojenia hostiteľa. 
 
-U distribuovaného DoS útoku (alej len DDoS) môže útočník použiť k útoku na server
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=\textwidth]{images/dos.png}
+  \caption{Schéma DoS útoku, zdroj: vlastné spracovanie}
+  \label{fig:cs-basic}
+\end{figure}
+
+U distribuovaného \textit{DoS} útoku môže útočník použiť k útoku na server
 počítače klientov. Nad týmito zariadeniami je možné prevziať kontrolu využitím
 bezpečnostných chýb alebo nedostatkov. Takto je následne možné donútiť počítač
 posielať obrovské množstvo dát na webové servery, prípadne odosielanie nevyžiadanej
 pošty na konkrétne e-mailové adresy. Útok sa nazýva "distribuovaný", pretože útočník
-používa viac zariadení na začatie útoku denial-of-service.
+používa viac zariadení na začatie útoku \textit{denial-of-service}.
 
-DoS útok je podobny veľkej skupine ľudí, ktorá sa zhromažďuje pri vstupe do obchodu a
-bráni vo vstupe skutočným zákazníkom, ktrých záujmom sú reálne služby.
-Utočníci vykonávajúci tieto útoky sa často zameriavajú na webové sluzby a servery,
-ktoré su poskytované vysoko profitujúcimi inštitúciami, ako sú napríklad banky,
+\textit{DoS} útok je podobný veľkej skupine ľudí, ktorá sa zhromažďuje pri vstupe do
+obchodu a bráni vo vstupe skutočným zákazníkom, ktorých záujmom sú reálne služby.
+Útočníci vykonávajúci tieto útoky sa často zameriavajú na webové služby a servery,
+ktoré sú poskytované vysoko profitujúcimi inštitúciami, ako sú napríklad banky,
 prípadne platobné brány.
 
----
-
-DOS - diagram
-
----
-
 \section{Základne typy a techniky}
-Nasledujúce odseky popisuju najpoužívanejšie typy a techniky vykonávania DoS útokov a
-identifikujú prostriedky, ktorými je im možné zabrániť.
+Nasledujúce odseky popisujú najpoužívanejšie typy a techniky vykonávania \textit{DoS}
+útokov a identifikujú prostriedky, ktorými je im možné zabrániť.
 
 \subsection{Distribuované DoS útoky}
-O distribuovaných DoS útokoch hovoríme v prípade, že viaceré zariadenia zaplavia celú šírku pásma prípadne zdrojov cieľového systému, ktorým je zvyčajne jeden, alebo viacero serverov. Takýto útok je často dôsledkom použitia rôznych systémov a zariadení (napríkald botnetu), ktoré sa snažia vyťažiť cieľový systém. Botnet je rozsiahla virtuálna sieť umelých - zombie počítačov, ktorých cieľom je prijímať príkazy bez vedomia majiteľa. Keď cieľový systém spotrebuje všetky voľné spojenia, ďalšie (nové) už nie je možné nadviazať. Hlavné výhody útočníka pri využití Distribuovaného DoS útoku spočívajú v skutočnostiach, že viaceré zariadenia dokážu generovať väčšiu záťaž ako jedno, pričom použitie množstva systémov zabezpečuje omnoho ťažšiu detekciu útočníka a správanie sa každého z týchto zariadení je menej pozorovateľné čo sťažuje obranu voči útočníkovi. Tieto výhody taktiež spôsobujú vývoj obranných mechanizmov. Na strane cieľového serveru už nebude stačiť jednoduché zvýšenie šírky pásma nad hranicu momentálnej veľkosti útoku, pretože útočník môže napríklad zvýšit počet zapojených zariadení čím by taktiez spôsobil zaťaženie a výpadok systému.
+O distribuovaných \textit{DoS} útokoch hovoríme v prípade, že viaceré zariadenia zaplavia
+celú šírku pásma prípadne zdrojov cieľového systému, ktorým je zvyčajne jeden, alebo viacero
+serverov. Takýto útok je často dôsledkom použitia rôznych systémov a zariadení (napríklad
+\textit{botnetu}), ktoré sa snažia vyťažiť cieľový systém. \textit{Botnet} je rozsiahla
+virtuálna sieť umelých (\textit{zombie}) počítačov, ktorých cieľom je prijímať príkazy bez
+vedomia majiteľa. Keď cieľový systém spotrebuje všetky voľné spojenia, ďalšie (nové) už nie
+je možné nadviazať. Hlavné výhody útočníka pri využití Distribuovaného \textit{DoS} útoku
+spočívajú v skutočnostiach, že viaceré zariadenia dokážu generovať väčšiu záťaž ako jedno,
+pričom použitie množstva systémov zabezpečuje omnoho ťažšiu detekciu útočníka a správanie
+sa každého z týchto zariadení je menej pozorovateľné čo sťažuje obranu voči útočníkovi.
+Tieto výhody taktiež spôsobujú vývoj obranných mechanizmov. Na strane cieľového serveru už
+nebude stačiť jednoduché zvýšenie šírky pásma nad hranicu momentálnej veľkosti útoku, pretože
+útočník môže napríklad zvýšiť počet zapojených zariadení čím by taktiež spôsobil zaťaženie a
+výpadok systému.
 
----
-
-D-DOS - diagram
-
----
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=\textwidth]{images/ddos.png}
+  \caption{Schéma rozloženia DDoS útoku, zdroj: vlastné spracovanie}
+  \label{fig:cs-basic}
+\end{figure}
 
 \subsection{Sémantické DoS útoky}
-Sémantické útoky využívaju špecifickú funkcionalitu, alebo implementačnú chybu aplikácie, prípadne protokolu zariadenia obete na zneužitie určitého množstva jeho zdrojov. Narpíklad v prípade TCP SYN útoku je touto zneužitou funkcionalitou alokácia znacného množstva priestoru v zozname pripojení ihneď po potvrdení TCP SYN requestu.
-% Semantic attacks exploit a specific feature or implementation
-% bug of some protocol or application installed at the victim
-% in order to consume excess amounts of its resources. For
-% example, in the TCP SYN attack, the exploited feature is
-% the allocation of substantial space in a connection queue immediately
-% upon receipt of a TCP SYN request. The attacker
-% initiates multiple connections that are never completed, thus
-% filling up the connection queue. In the CGI request attack,
-% the attacker consumes the CPU time of the victim by issuing
-% multiple CGI requests. The NAPTHA [61] attack is an
-% especially powerful attack on the TCP protocol. It initiates
-% and establishes numerous TCP connections that consume
-% the connection queue at the victim. NAPTHA bypasses the
-% TCP protocol stack on the agent machine, not keeping the
-% state for connections it originates. Instead, it participates
-% in the connection, inferring reply attributes from received
-% packets. Thus even a poorly provisioned agent machine can
-% easily deplete the resources of better provisioned victim.
+Sémantické útoky využívajú špecifickú funkcionalitu, alebo implementačnú chybu aplikácie,
+prípadne protokolu zariadenia obete na zneužitie určitého množstva jeho zdrojov. Napríklad
+v prípade \textit{TCP SYN} útoku je touto zneužitou funkcionalitou alokácia značného množstva
+priestoru v zozname pripojení ihneď po potvrdení \textit{ TCP SYN requestu}. Útočník otvorí
+viaceré spojenia, ktoré nikdy neuzavrie, čím zahlcuje server. 
 
-\subsection{Útoky hrubou silou}
-% Brute-force attacks are performed by initiating a vast amount
-% of seemingly legitimate transactions. Since an intermediate
-% network can usually deliver higher traffic volume than the
-% victim network can handle, a high number of attack packets
-% exhausts the victim’s resources.
-% There is a thin line between semantic and brute-force attacks.
-% Semantic attacks also overwhelm a victim’s resources
-% with excess traffic, and badly designed protocol features at
-% remote hosts are frequently used to perform reflector bruteforce
-% attacks, such as the DNS request attack [15] or the
-% Smurf attack [19]. The difference is that the victim can usually
-% substantially mitigate the effect of semantic attacks by
-% modifying the misused protocols or deploying filters. However,
-% it is helpless against brute-force attacks due to their
-% misuse of legitimate services (filtering attempts also harm
-% legitimate traffic) or due to its own limited resources (a
-% victim cannot handle an attack that swamps its network
-% bandwidth). Countering semantic attacks by modifying the
-% deployed protocol or application pushes the corresponding
-% attack mechanism into the brute-force category. For example,
-% if the victim deploys TCP SYN cookies [20] to combat
-% TCP SYN attacks, it will still be vulnerable to TCP SYN
-% attacks that generate more requests than its network can
-% accommodate. Classification of the specific attack needs to
-% take into account both the attack mechanisms used, and the
-% victim’s configuration and deployed protocols.
-% It should be noted that brute-force attacks need to generate
-% a much higher volume of attack packets than semantic
-% attacks to inflict damage to the victim. So by modifying the
-% deployed protocols, the victim pushes its vulnerability limit
-% higher. It is also interesting to note that the variability of
-% attack packet features (header and payload) is determined
-% by the exploited weakness. Packets comprising semantic
-% and some brute-force attacks must specify some valid header
-% fields and possibly some valid contents. For example TCP
-% SYN attack packets cannot vary the protocol or flag field,
-% and HTTP flood packets must belong to an established TCP
-% connection and therefore cannot spoof source addresses. On
-% the other hand, attacks aiming simply to consume the victim’s
-% network resources could vary packet features at will,
-% which greatly hinders the defense.
+Pri \textit{CGI} útoku je cieľom útočníka takýmto spôsobom zahltiť procesor viacerými
+\textit{CGI requestami}.
+
+Jedným z obzvlášť nebezpečných útokov je \textit{NAPTHA} útok, ktorý sa zameriava na
+\textit{TCP} protokol. Inicializuje mnoho \textit{TCP} spojení, ktoré zaplnia zdroje serveru.
+
+\subsection{Brute-force útoky}
+TODO 
+
+Source ref: https://www.eecis.udel.edu/~sunshine/publications/ccr.pdf
 
 \subsection{Reflexia a zosilnenie}
+TODO
+
+Source ref (reflection): Vern Paxson. An Analysis of Using Reflectors for Distributed Denialof-service Attacks. SIGCOMM Comput. Commun. Rev., 31(3):38–47, July 2001.
+
+Source ref (amplification): http://crt.io/DNS-Amplification-Attacks.pdf
 % A reflector is any IP host that will return a packet if sent a packet. Attackers
 % orchestrate the hosts under their control to send the spoofed traffic purportedly
 % coming from the victim to reflectors. The result is that the flood at the
 % victim arrives from a significantly higher number of sources, an exceedingly diffuse
 % flood likely clogging every single path to the victim from the rest of the internet.
 
----
-
-DR-DOS - diagram
-
----
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=\textwidth]{images/drdos.png}
+  \caption{Schéma rozloženia DRDoS útoku, zdroj: vlastné spracovanie}
+  \label{fig:cs-basic}
+\end{figure}
 
 % Amplification: An amplification attack is a type of the reflection attack in which
 % reflectors’ responses are larger than queries. Therefore the volume of the attack
 % traffic from the source to the victim is multiplied .
 
-\subsection{HTTP POST DoS utoky}
+\subsection{HTTP POST DoS útoky}
+TODO
+
 % First discovered in 2009, the HTTP POST attack sends a complete, legitimate HTTP POST header, which includes a 'Content-Length' field to specify the size of the message body to follow. However, the attacker then proceeds to send the actual message body at an extremely slow rate (e.g. 1 byte/110 seconds). Due to the entire message being correct and complete, the target server will attempt to obey the 'Content-Length' field in the header, and wait for the entire body of the message to be transmitted, which can take a very long time. The attacker establishes hundreds or even thousands of such connections, until all resources for incoming connections on the server (the victim) are used up, hence making any further (including legitimate) connections impossible until all data has been sent. It is notable that unlike many other (D)DoS attacks, which try to subdue the server by overloading its network or CPU, a HTTP POST attack targets the logical resources of the victim, which means the victim would still have enough network bandwidth and processing power to operate. Further combined with the fact that Apache will, by default, accept requests up to 2GB in size, this attack can be particularly powerful. HTTP POST attacks are difficult to differentiate from legitimate connections, and are therefore able to bypass some protection systems. OWASP, an open source web application security project, has released a testing tool to test the security of servers against this type of attacks.
 
-\subsection{DoS nastroje a DoS as a Service}
-Typyckou metódou prensu mechanizmov DDoS útokov je malvér. Jedným z príkladov bol takzvaný MyDoom. Ide o DoS mechanizmus, ktorý sa spúštaľ vo predom naplánovanom čase. Tento útok zahŕňal nastavenie hodnoty IP adresy cielového systému pre nasadenie malvéru, pričom pre spustenie útoku nebola potrebná žiadna interakcia s používatelom.
+\section{DoS nástroje a DoS as a Service}
+Typickou metódou prenosu mechanizmov \textit{DDoS} útokov je malvér. Jedným z príkladov bol
+takzvaný \textit{MyDoom}. Ide o \textit{DoS} mechanizmus, ktorý sa spúšťal vo predom naplánovanom čase.
+Tento útok zahŕňal nastavenie hodnoty \textit{IP} adresy cieľového systému pre nasadenie malvéru,
+pričom pre spustenie útoku nebola potrebná žiadna interakcia s používateľom.
 
-Ďalším spôsobom zneužitia systému pre DDoS útok je použitie skrytej časti softvéru tretej strany, ktorý umožní útočníkovi stiahnutie zombie agenta, príapdne ho už softvér sám obsahuje. Útočník môže preniknúť do systému taktiež pomocou automatizovaných nástrojov, ktoré zneužívajú chyby v programoch počúvajúcich vzdialené priojenia. Tento scenár zasahuje primmárne systémy, ktoré sa správajú ako webové servery. Typyckým príkladom DDoS nástroja z tejto oblasti je takzvaný Stacheldraht. Stacheldraht využíva vrstevnatú štruktúru, v ktorej útočník používa program klienta na pripojenie sa k handlerom, ktoré sú zneužívané na prenos príkazov k zombie agentom. Agenti následne vykonávajú samotný DDoS útok.
-Agenti sú cez handleri zneužívané útočníkom za pomoci použitia automatizovaných algoritmov na vyhľadávanie zraniteľností v programoch, ktoré prijímajú vzdialené pripojenia. Každý handler je schopný kontrolovať až tisíc agentov. 
+Ďalším spôsobom zneužitia systému pre \textit{DDoS} útok je použitie skrytej časti softvéru tretej
+strany, ktorý umožní útočníkovi stiahnutie \textit{zombie} agenta, prípadne ho už softvér sám obsahuje.
+Útočník môže preniknúť do systému taktiež pomocou automatizovaných nástrojov, ktoré zneužívajú chyby v
+programoch počúvajúcich vzdialené pripojenia. Tento scenár zasahuje primárne systémy, ktoré sa správajú
+ako webové servery. Typickým príkladom \textit{DDoS} nástroja z tejto oblasti je takzvaný
+\textit{Stacheldraht}. \textit{Stacheldraht} využíva vrstevnatú štruktúru, v ktorej útočník používa
+program klienta na pripojenie sa k \textit{handlerom}, ktoré sú zneužívané na prenos príkazov
+k \textit{zombie} agentom. Agenti následne vykonávajú samotný \textit{DDoS} útok. Agenti sú cez handleri
+zneužívané útočníkom za pomoci použitia automatizovaných algoritmov na vyhľadávanie zraniteľností v
+programoch, ktoré prijímajú vzdialené pripojenia. Každý \textit{handler} je schopný kontrolovať až tisíc
+agentov. 
 
-DDoS nástroje ako Stacheldraht stále používajú klasické DoS metódy zamerané na zosilnenie a podvrhovanie IP adries ako napríkald útok vyťaženia šírky pásma. Ďalšou z možností je zahltenie zdrojov - SYN Flood útok. Novšie nástroje používajú na DoS útoky taktiež DNS servery.
+DDoS nástroje ako \textit{Stacheldraht} stále používajú klasické \textit{DoS} metódy zamerané na
+zosilnenie a podvrhovanie IP adries ako napríklad útok vyťaženia šírky pásma. Ďalšou z možností je
+zahltenie zdrojov - \textit{SYN Flood} útok. Novšie nástroje používajú na \textit{DoS} útoky taktiež
+\textit{DNS} servery.
 
-Nástroje ako MyDoom môžu byť použité voči ľubovoľnej IP adrese. Menej skúsení útočníci ich používajú k znemožneniu dostupnosti populárnych a známych webových serverov. Naopak sofistikovanejší útočníci používaju tieto nástorje na vydieranie, napríklad voči svojim obchodným protivníkom.
+Nástroje ako \textit{MyDoom} môžu byť použité voči ľubovoľnej IP adrese. Menej skúsení útočníci ich
+používajú k znemožneniu dostupnosti populárnych a známych webových serverov. Naopak sofistikovanejší
+útočníci používajú tieto nástroje na vydieranie, napríklad voči svojim obchodným protivníkom.
 
-V niektorých prípadoch sa však môze zariadenie stať časťou DDoS útoku zámerne - so súhlasom majiteľa. Príkladom je distribuovaný útok Operation Payback organizovaný skupinu Anonymous.
+V niektorých prípadoch sa však môže zariadenie stať časťou \textit{DDoS} útoku zámerne - so súhlasom
+majiteľa. Príkladom je distribuovaný útok \textit{Operation Payback} organizovaný skupinu
+\textit{Anonymous}.
+
+---
+
+TODO DoSaaS
+
+Source ref: http://krebsonsecurity.com/2015/08/stress-testing-the-booter-services-financially/ 
 % The LOIC has typically been used in this way. Along with HOIC a wide variety of DDoS tools are available today, including paid and free versions, with different features available. There is an underground market for these in hacker related forums and IRC channels.
 
 % UK's GCHQ has tools built for DDoS, named PREDATORS FACE and ROLLING THUNDER.
 
 % Some vendors provide so-called "booter" or "stresser" services, which have simple web-based front ends, and accept payment over the web. Marketed and promoted as stress-testing tools, they can be used to perform unauthorized denial-of-service attacks, and allow technically unsophisticated attackers access to sophisticated attack tools without the need for the attacker to understand their use.
 
-\subsection{DoS - Zhrnutie}
+\section{DoS - Zhrnutie}
+TODO
 % Simple attacks such as SYN floods may appear with a wide range of source IP addresses, giving the appearance of a well distributed DoS. These flood attacks do not require completion of the TCP three way handshake and attempt to exhaust the destination SYN queue or the server bandwidth. Because the source IP addresses can be trivially spoofed, an attack could come from a limited set of sources, or may even originate from a single host. Stack enhancements such as syn cookies may be effective mitigation against SYN queue flooding, however complete bandwidth exhaustion may require involvement.
 
 % If an attacker mounts an attack from a single host it would be classified as a DoS attack. In fact, any attack against availability would be classed as a denial-of-service attack. On the other hand, if an attacker uses many systems to simultaneously launch attacks against a remote host, this would be classified as a DDoS attack.
@@ -375,6 +378,6 @@ V niektorých prípadoch sa však môze zariadenie stať časťou DDoS útoku z�
 
 \appendix %% Start the appendices.
 \chapter{Príloha}
-Here you can insert the appendices of your thesis.
+Appendices of thesis.
 
 \end{document}
