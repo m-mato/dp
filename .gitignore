@@ -22,3 +22,6 @@ thesis-example/*.synctex.gz
 thesis-example/*.toc
 
 ufoo/*.td
+ufoo/java/.idea
+ufoo/java/*.iml
+ufoo/java/target/
