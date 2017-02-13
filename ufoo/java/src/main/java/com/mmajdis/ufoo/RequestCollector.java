@@ -25,6 +25,8 @@ public class RequestCollector {
     public void advice(JoinPoint thisJoinPoint) {
 
         System.out.println("--------" + thisJoinPoint);
+        PacketStream packetStream = new PacketStream();
+        packetStream.start();
         //TODO - do the magic
     }
 }
