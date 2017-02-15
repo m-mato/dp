@@ -37,13 +37,6 @@
             <version>1</version>
         </dependency>
 
-        <dependency>
-            <groupId>jnetpcap</groupId>
-            <artifactId>jnetpcap</artifactId>
-            <version>1.4.r1425-1d</version>
-        </dependency>
-
-
     </dependencies>
 
 </project>
