@@ -28,7 +28,7 @@ public class PacketStream implements Runnable {
         String[] cmdLinux = {"/bin/bash", "-c", "tcpdump -e -U -n -ieth0 \"tcp\" -P in -S -tt -v"};
         String cmdWindows = "cmd /c tcpdump -i \"\\Device\\NPF_{D705A902-0D2E-4121-A88B-E7A6C582EAE7}\" -U -n -S -tt -v tcp";
 
-        Process pb = null;
+        Process pb;
 
         try {
            if(SystemUtils.IS_OS_WINDOWS){
@@ -51,6 +51,7 @@ public class PacketStream implements Runnable {
 
     private TCPFootprint processPacket(String line) {
 
+        line = line + ", ";
         String[] parsed = line.split("\\(", 2);
         if(parsed.length != 2) {
             return null;
@@ -61,10 +62,10 @@ public class PacketStream implements Runnable {
             return null;
         }
 
-        final Long id = parse(parsed[1],"id ",",");
-        final Long ipLength = parse(parsed[1], "length ", ")");
-        final Long tcpLength = parse(parsed[1], "length ", true);
-        final Long tcpWindow = parse(parsed[1],"win ",",");
+        final Long id = parse(parsed[1],"id ",',');
+        final Long ipLength = parse(parsed[1], "length", ')');
+        final Long tcpLength = parse(parsed[1], "length ", true, ',');
+        final Long tcpWindow = parse(parsed[1],"win ",',');
 
 //        int idIndex = parsed[1].indexOf("id ");
 //        final long id = Long.valueOf(parsed[1].substring(idIndex, parsed[1].indexOf(',', idIndex)).split(" ", 2)[1]);
@@ -72,28 +73,34 @@ public class PacketStream implements Runnable {
         return new TCPFootprint(id, timestamp, ipLength, tcpLength, tcpWindow);
     }
 
-    private Long parse(String dataPart, String expression, boolean isLast) {
-        return parse(dataPart, expression, isLast, null);
-    }
-
-    private Long parse(String dataPart, String expression, String divider) {
+    private Long parse(String dataPart, String expression, char divider) {
         return parse(dataPart, expression, false, divider);
     }
 
-    private Long parse(String dataPart, String expression, boolean isLast, String divider) {
+    private Long parse(String dataPart, String expression, boolean useLast, char divider) {
 
         int idIndex = dataPart.indexOf(expression);
-        if(isLast) {
+        if(useLast) {
             idIndex = dataPart.lastIndexOf(expression);
         }
 
-        int endIndex = dataPart.indexOf(divider, idIndex);
-
-        if(divider == null) {
-            endIndex = dataPart.length()-1;
+        if(idIndex == -1) {
+            return null;
         }
 
-        return Long.valueOf(dataPart.substring(idIndex, endIndex).split(" ", 2)[1]);
+        int start = dataPart.indexOf(" ", idIndex) + 1;
+        int end = dataPart.indexOf(" ", start);
+        String substr = dataPart.substring(start, end);
+
+        if(substr.charAt(substr.length()-1) == divider) {
+            substr = substr.substring(0, substr.length()-1);
+        }
+
+        return Long.valueOf(substr);
+
+//        int endIndex = dataPart.indexOf(divider, idIndex);
+//
+//        return Long.valueOf(dataPart.substring(idIndex, endIndex).split(" ", 2)[1]);
     }
 
     private Long parseTimestamp(String infoPart) {
