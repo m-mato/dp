@@ -5,7 +5,7 @@ package com.mmajdis.ufoo;
  */
 public class TCPFootprint {
 
-    private Integer id;
+    private Long id;
 
     private Long timestamp;
 
@@ -18,7 +18,7 @@ public class TCPFootprint {
     public TCPFootprint() {
     }
 
-    public TCPFootprint(Integer id, Long timestamp, Long ipLength, Long tcpLength, Long tcpWindow) {
+    public TCPFootprint(Long id, Long timestamp, Long ipLength, Long tcpLength, Long tcpWindow) {
         this.id = id;
         this.timestamp = timestamp;
         this.ipLength = ipLength;
@@ -26,11 +26,11 @@ public class TCPFootprint {
         this.tcpWindow = tcpWindow;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

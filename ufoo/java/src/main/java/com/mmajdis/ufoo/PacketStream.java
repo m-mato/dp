@@ -1,7 +1,5 @@
 package com.mmajdis.ufoo;
 
-
-
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.apache.commons.lang3.SystemUtils;
 
@@ -27,7 +25,7 @@ public class PacketStream implements Runnable {
      * Main startup method
      */
     public void start() {
-        String[] cmdLinux = {"/bin/bash", "-c", "tcpdump -U -n -i eth0 \"tcp\" -P in -S -tt -v"};
+        String[] cmdLinux = {"/bin/bash", "-c", "tcpdump -e -U -n -ieth0 \"tcp\" -P in -S -tt -v"};
         String cmdWindows = "cmd /c tcpdump -i \"\\Device\\NPF_{D705A902-0D2E-4121-A88B-E7A6C582EAE7}\" -U -n -S -tt -v tcp";
 
         Process pb = null;
@@ -51,8 +49,61 @@ public class PacketStream implements Runnable {
         }
     }
 
-    private void processPacket(String line) {
+    private TCPFootprint processPacket(String line) {
 
+        String[] parsed = line.split("\\(", 2);
+        if(parsed.length != 2) {
+            return null;
+        }
+
+        final Long timestamp = parseTimestamp(parsed[0]);
+        if(timestamp == null) {
+            return null;
+        }
+
+        final Long id = parse(parsed[1],"id ",",");
+        final Long ipLength = parse(parsed[1], "length ", ")");
+        final Long tcpLength = parse(parsed[1], "length ", true);
+        final Long tcpWindow = parse(parsed[1],"win ",",");
+
+//        int idIndex = parsed[1].indexOf("id ");
+//        final long id = Long.valueOf(parsed[1].substring(idIndex, parsed[1].indexOf(',', idIndex)).split(" ", 2)[1]);
+
+        return new TCPFootprint(id, timestamp, ipLength, tcpLength, tcpWindow);
+    }
+
+    private Long parse(String dataPart, String expression, boolean isLast) {
+        return parse(dataPart, expression, isLast, null);
+    }
+
+    private Long parse(String dataPart, String expression, String divider) {
+        return parse(dataPart, expression, false, divider);
+    }
+
+    private Long parse(String dataPart, String expression, boolean isLast, String divider) {
+
+        int idIndex = dataPart.indexOf(expression);
+        if(isLast) {
+            idIndex = dataPart.lastIndexOf(expression);
+        }
+
+        int endIndex = dataPart.indexOf(divider, idIndex);
+
+        if(divider == null) {
+            endIndex = dataPart.length()-1;
+        }
+
+        return Long.valueOf(dataPart.substring(idIndex, endIndex).split(" ", 2)[1]);
+    }
+
+    private Long parseTimestamp(String infoPart) {
+
+        String[] info = infoPart.substring(0, infoPart.length()-2).split(" ", 2);
+        if(info.length != 2) {
+            return null;
+        }
+
+        return Long.valueOf(info[0].split("\\.", 2)[0]);
     }
 
 
