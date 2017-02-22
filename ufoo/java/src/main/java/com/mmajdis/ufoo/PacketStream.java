@@ -6,6 +6,7 @@ import org.apache.commons.lang3.SystemUtils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -31,17 +32,17 @@ public class PacketStream implements Runnable {
         Process pb;
 
         try {
-           if(SystemUtils.IS_OS_WINDOWS){
-               pb = Runtime.getRuntime().exec(cmdWindows);
-           } else {
-               pb = Runtime.getRuntime().exec(cmdLinux);
-           }
+            if (SystemUtils.IS_OS_WINDOWS) {
+                pb = Runtime.getRuntime().exec(cmdWindows);
+            } else {
+                pb = Runtime.getRuntime().exec(cmdLinux);
+            }
 
             String line;
             BufferedReader input = new BufferedReader(new InputStreamReader(pb.getInputStream()));
             while ((line = input.readLine()) != null) {
+                Map.Entry<String, TCPFootprint> tcpFootprint = processPacket(line);
                 System.out.println(line);
-                processPacket(line);
             }
             input.close();
         } catch (IOException e) {
@@ -49,28 +50,41 @@ public class PacketStream implements Runnable {
         }
     }
 
-    private TCPFootprint processPacket(String line) {
+    private Map.Entry<String, TCPFootprint> processPacket(String line) {
 
         line = line + ", ";
         String[] parsed = line.split("\\(", 2);
-        if(parsed.length != 2) {
+        if (parsed.length != 2) {
             return null;
         }
 
         final Long timestamp = parseTimestamp(parsed[0]);
-        if(timestamp == null) {
+        if (timestamp == null) {
             return null;
         }
 
-        final Long id = parse(parsed[1],"id ",',');
+        final Long id = parse(parsed[1], "id ", ',');
         final Long ipLength = parse(parsed[1], "length", ')');
         final Long tcpLength = parse(parsed[1], "length ", true, ',');
-        final Long tcpWindow = parse(parsed[1],"win ",',');
+        final Long tcpWindow = parse(parsed[1], "win ", ',');
 
-//        int idIndex = parsed[1].indexOf("id ");
-//        final long id = Long.valueOf(parsed[1].substring(idIndex, parsed[1].indexOf(',', idIndex)).split(" ", 2)[1]);
+        final String IP = parseIP(parsed[1]);
+        if (IP == null) {
+            return null;
+        }
 
-        return new TCPFootprint(id, timestamp, ipLength, tcpLength, tcpWindow);
+        return new AbstractMap.SimpleEntry<>(IP, new TCPFootprint(id, timestamp, ipLength, tcpLength, tcpWindow));
+    }
+
+    private String parseIP(String dataPart) {
+
+        String[] parsed = dataPart.split(">", 2);
+        if(parsed.length != 2) {
+            return null;
+        }
+        String ipPart[] = parsed[0].split(" ");
+
+        return ipPart[ipPart.length -1];
     }
 
     private Long parse(String dataPart, String expression, char divider) {
@@ -80,11 +94,11 @@ public class PacketStream implements Runnable {
     private Long parse(String dataPart, String expression, boolean useLast, char divider) {
 
         int idIndex = dataPart.indexOf(expression);
-        if(useLast) {
+        if (useLast) {
             idIndex = dataPart.lastIndexOf(expression);
         }
 
-        if(idIndex == -1) {
+        if (idIndex == -1) {
             return null;
         }
 
@@ -92,21 +106,17 @@ public class PacketStream implements Runnable {
         int end = dataPart.indexOf(" ", start);
         String substr = dataPart.substring(start, end);
 
-        if(substr.charAt(substr.length()-1) == divider) {
-            substr = substr.substring(0, substr.length()-1);
+        if (substr.charAt(substr.length() - 1) == divider) {
+            substr = substr.substring(0, substr.length() - 1);
         }
 
         return Long.valueOf(substr);
-
-//        int endIndex = dataPart.indexOf(divider, idIndex);
-//
-//        return Long.valueOf(dataPart.substring(idIndex, endIndex).split(" ", 2)[1]);
     }
 
     private Long parseTimestamp(String infoPart) {
 
-        String[] info = infoPart.substring(0, infoPart.length()-2).split(" ", 2);
-        if(info.length != 2) {
+        String[] info = infoPart.substring(0, infoPart.length() - 2).split(" ", 2);
+        if (info.length != 2) {
             return null;
         }
 
