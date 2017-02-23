@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * @author Matej Majdis
  */
-public class PacketStream implements Runnable {
+public class PacketStream {
 
     private RuntimeProcessor runtimeProcessor;
 
@@ -32,27 +32,31 @@ public class PacketStream implements Runnable {
         InputStreamReader inputStreamReader = new InputStreamReader(runtimeProcessor.startTCPInputStream());
         try(BufferedReader input = new BufferedReader(inputStreamReader)) {
 
-            String line;
-            while ((line = input.readLine()) != null) {
-                if (!isComplete(line)) {
-                    String next = input.readLine();
-                    if (next != null) {
-                        line = line + next;
-                    }
-                }
+            processInput(input);
 
-                Map.Entry<String, TCPFootprint> tcpFootprint = packetDeserializer.parse(line);
-
-                if (tcpFootprint != null) {
-                    addToMap(tcpFootprint);
-                }
-
-                System.out.println(line);
-            }
-
-            //input.close();
         } catch (IOException e) {
             throw new PacketStreamException("Error while reading TCP InputStream", e);
+        }
+    }
+
+    private void processInput(BufferedReader input) throws IOException {
+
+        String line;
+        while ((line = input.readLine()) != null) {
+            if (!isComplete(line)) {
+                String next = input.readLine();
+                if (next != null) {
+                    line = line + next;
+                }
+            }
+
+            Map.Entry<String, TCPFootprint> tcpFootprint = packetDeserializer.parse(line);
+
+            if (tcpFootprint != null) {
+                addToMap(tcpFootprint);
+            }
+
+            System.out.println(line);
         }
     }
 
@@ -74,10 +78,6 @@ public class PacketStream implements Runnable {
     }
 
     public Map<String, Set<TCPFootprint>> getActualTcpStream() {
-        return Collections.unmodifiableMap(tcpStream);
-    }
-
-    @Override
-    public void run() {
+        return Collections.unmodifiableMap(tcpStream); 
     }
 }

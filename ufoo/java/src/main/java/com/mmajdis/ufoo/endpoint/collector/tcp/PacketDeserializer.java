@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @author Matej Majdis
  */
-public class PacketDeserializer {
+class PacketDeserializer {
 
     public Map.Entry<String, TCPFootprint> parse(String packetString) {
 

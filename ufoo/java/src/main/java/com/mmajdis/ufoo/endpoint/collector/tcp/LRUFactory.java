@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @author Matej Majdis
  */
-public class LRUFactory {
+class LRUFactory {
 
     public static <K, V> Map<K, V> createLRUMap(final int maxEntries) {
 

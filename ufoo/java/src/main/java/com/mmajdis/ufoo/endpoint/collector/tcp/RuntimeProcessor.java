@@ -9,7 +9,7 @@ import java.io.InputStream;
 /**
  * @author Matej Majdis
  */
-public class RuntimeProcessor {
+class RuntimeProcessor {
 
     public InputStream startTCPInputStream() {
 
