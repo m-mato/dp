@@ -1,4 +1,4 @@
-package com.mmajdis.ufoo;
+package com.mmajdis.ufoo.endpoint.collector.tcp;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;

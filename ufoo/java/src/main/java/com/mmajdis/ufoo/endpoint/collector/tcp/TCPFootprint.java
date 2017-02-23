@@ -1,4 +1,4 @@
-package com.mmajdis.ufoo;
+package com.mmajdis.ufoo.endpoint.collector.tcp;
 
 /**
  * @author Matej Majdis <matej.majdis@avg.com>

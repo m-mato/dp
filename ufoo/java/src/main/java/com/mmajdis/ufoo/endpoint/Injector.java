@@ -1,5 +1,6 @@
-package com.mmajdis.ufoo;
+package com.mmajdis.ufoo.endpoint;
 
+import com.mmajdis.ufoo.endpoint.collector.tcp.PacketStream;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -8,11 +9,11 @@ import org.aspectj.lang.annotation.Pointcut;
 import javax.inject.Named;
 
 /**
- * @author Matej Majdis <matej.majdis@avg.com>
+ * @author Matej Majdis
  */
 @Aspect
 @Named
-public class RequestCollector {
+public class Injector {
 
     @Pointcut(
             "within(@org.springframework.web.bind.annotation.RestController *) && " +
