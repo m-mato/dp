@@ -6,10 +6,7 @@ import org.apache.commons.lang3.SystemUtils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.AbstractMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @author Matej Majdis
@@ -17,16 +14,18 @@ import java.util.Queue;
 public class PacketStream implements Runnable {
 
     Queue<Map<String, List<TCPFootprint>>> tcpStream;
+    Map<String, Set<TCPFootprint>> tcpStream2;
 
     public PacketStream() {
         tcpStream = new CircularFifoQueue<>(10);
+        tcpStream2 = LRUFactory.createLRUMap(10);
     }
 
     /**
      * Main startup method
      */
     public void start() {
-        String[] cmdLinux = {"/bin/bash", "-c", "tcpdump -e -U -n -ieth0 \"tcp\" -P in -S -tt -v"};
+        String[] cmdLinux = {"/bin/bash", "-c", "tcpdump -U -n -ieth0 \"tcp\" -P in -S -tt -v"};
         String cmdWindows = "cmd /c tcpdump -i \"\\Device\\NPF_{D705A902-0D2E-4121-A88B-E7A6C582EAE7}\" -U -n -S -tt -v tcp";
 
         Process pb;
@@ -41,7 +40,26 @@ public class PacketStream implements Runnable {
             String line;
             BufferedReader input = new BufferedReader(new InputStreamReader(pb.getInputStream()));
             while ((line = input.readLine()) != null) {
+                if(SystemUtils.IS_OS_LINUX) {
+                    String next = input.readLine();
+                    if (next != null) {
+                        line = line + next;
+                    }
+                }
                 Map.Entry<String, TCPFootprint> tcpFootprint = processPacket(line);
+
+                if(tcpFootprint != null) {
+                    final String IP = tcpFootprint.getKey();
+                    final Set<TCPFootprint> existing = tcpStream2.get(IP);
+                    if(existing != null) {
+                        existing.add(tcpFootprint.getValue());
+                    } else {
+                        Set<TCPFootprint> newSet = LRUFactory.createLRUSet(2);
+                        newSet.add(tcpFootprint.getValue());
+                        tcpStream2.put(IP, newSet);
+                    }
+                }
+
                 System.out.println(line);
             }
             input.close();
