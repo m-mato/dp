@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * @author Matej Majdis
  */
-public class PacketStream {
+public class PacketStream implements Runnable{
 
     private RuntimeProcessor runtimeProcessor;
 
@@ -25,6 +25,11 @@ public class PacketStream {
         this.runtimeProcessor = new RuntimeProcessor();
         this.packetDeserializer = new PacketDeserializer();
         this.tcpStream = LRUFactory.createLRUMap(10);
+    }
+
+    @Override
+    public void run() {
+        start();
     }
 
     public void start() {
@@ -78,6 +83,6 @@ public class PacketStream {
     }
 
     public Map<String, Set<TCPFootprint>> getActualTcpStream() {
-        return Collections.unmodifiableMap(tcpStream); 
+        return Collections.unmodifiableMap(tcpStream);
     }
 }
