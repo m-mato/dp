@@ -1,6 +1,6 @@
 package com.mmajdis.ufoo.endpoint.collector.http;
 
-import com.mmajdis.ufoo.endpoint.collector.http.location.GeoIP;
+import com.mmajdis.ufoo.endpoint.collector.http.location.GeoIPLocation;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -65,7 +65,7 @@ public class HTTPFootprint {
 
         private String clientIp;
 
-        private GeoIP geoIP;
+        private GeoIPLocation geoIPLocation;
 
         private Set<String> locales;
 
@@ -75,10 +75,10 @@ public class HTTPFootprint {
             this.locales = new HashSet<>();
         }
 
-        public RequestInfo(String servletPath, String clientIp, GeoIP geoIP, Set<String> locales, String encoding) {
+        public RequestInfo(String servletPath, String clientIp, GeoIPLocation geoIPLocation, Set<String> locales, String encoding) {
             this.servletPath = servletPath;
             this.clientIp = clientIp;
-            this.geoIP = geoIP;
+            this.geoIPLocation = geoIPLocation;
             this.locales = locales;
             this.encoding = encoding;
         }
@@ -99,12 +99,12 @@ public class HTTPFootprint {
             this.clientIp = clientIp;
         }
 
-        public GeoIP getGeoIP() {
-            return geoIP;
+        public GeoIPLocation getGeoIPLocation() {
+            return geoIPLocation;
         }
 
-        public void setGeoIP(GeoIP geoIP) {
-            this.geoIP = geoIP;
+        public void setGeoIPLocation(GeoIPLocation geoIPLocation) {
+            this.geoIPLocation = geoIPLocation;
         }
 
         public Set<String> getLocales() {
@@ -132,7 +132,7 @@ public class HTTPFootprint {
 
             if (servletPath != null ? !servletPath.equals(that.servletPath) : that.servletPath != null) return false;
             if (clientIp != null ? !clientIp.equals(that.clientIp) : that.clientIp != null) return false;
-            if (geoIP != null ? !geoIP.equals(that.geoIP) : that.geoIP != null) return false;
+            if (geoIPLocation != null ? !geoIPLocation.equals(that.geoIPLocation) : that.geoIPLocation != null) return false;
             if (locales != null ? !locales.equals(that.locales) : that.locales != null) return false;
             return encoding != null ? encoding.equals(that.encoding) : that.encoding == null;
         }
@@ -141,7 +141,7 @@ public class HTTPFootprint {
         public int hashCode() {
             int result = servletPath != null ? servletPath.hashCode() : 0;
             result = 31 * result + (clientIp != null ? clientIp.hashCode() : 0);
-            result = 31 * result + (geoIP != null ? geoIP.hashCode() : 0);
+            result = 31 * result + (geoIPLocation != null ? geoIPLocation.hashCode() : 0);
             result = 31 * result + (locales != null ? locales.hashCode() : 0);
             result = 31 * result + (encoding != null ? encoding.hashCode() : 0);
             return result;
