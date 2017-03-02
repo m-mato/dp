@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class RequestHandler {
 
-    public boolean handleRequest(HttpServletRequest request) {
+    public boolean handle(HttpServletRequest request) {
         return false;
     }
 }

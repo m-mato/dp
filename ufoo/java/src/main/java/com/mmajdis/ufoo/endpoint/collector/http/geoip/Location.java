@@ -1,18 +1,18 @@
-package com.mmajdis.ufoo.endpoint.collector.http.location;
+package com.mmajdis.ufoo.endpoint.collector.http.geoip;
 
 /**
  * @author Matej Majdis
  */
-public class GeoIPLocation {
+public class Location {
 
     private String country;
 
     private String city;
 
-    public GeoIPLocation() {
+    public Location() {
     }
 
-    public GeoIPLocation(String country, String city) {
+    public Location(String country, String city) {
         this.country = country;
         this.city = city;
     }
@@ -38,11 +38,11 @@ public class GeoIPLocation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        GeoIPLocation geoIPLocation = (GeoIPLocation) o;
+        Location location = (Location) o;
 
-        if (country != null ? !country.equals(geoIPLocation.country) : geoIPLocation.country != null) return false;
+        if (country != null ? !country.equals(location.country) : location.country != null) return false;
 
-        return city != null ? city.equals(geoIPLocation.city) : geoIPLocation.city == null;
+        return city != null ? city.equals(location.city) : location.city == null;
     }
 
     @Override

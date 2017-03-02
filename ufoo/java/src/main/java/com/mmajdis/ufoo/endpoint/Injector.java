@@ -47,7 +47,7 @@ public class Injector {
         //TODO - do the magic
         HttpServletRequest request = getRequestObject(thisJoinPoint);
         if(request != null) {
-            requestHandler.handleRequest(request);
+            requestHandler.handle(request);
         }
 
         Map<String, Set<TCPFootprint>> map =  packetStream.getActualTcpStream();
