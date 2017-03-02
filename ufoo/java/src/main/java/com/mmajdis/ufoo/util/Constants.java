@@ -5,5 +5,5 @@ package com.mmajdis.ufoo.util;
  */
 public class Constants {
 
-    public static final String GEO_IP_DB_PATH = "location/GeoIP.mmdb";
+    public static final String GEO_IP_DB_PATH = "maxmind/GeoIP.mmdb";
 }

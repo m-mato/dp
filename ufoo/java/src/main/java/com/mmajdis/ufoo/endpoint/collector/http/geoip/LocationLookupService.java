@@ -11,7 +11,10 @@ import com.mmajdis.ufoo.util.Constants;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * @author Matej Majdis
@@ -55,8 +58,10 @@ public class LocationLookupService {
     }
 
     private DatabaseReader initReader() {
+
         try {
-            return new DatabaseReader.Builder(new File(Constants.GEO_IP_DB_PATH)).build();
+            InputStream is = this.getClass().getClassLoader().getResourceAsStream(Constants.GEO_IP_DB_PATH);
+            return new DatabaseReader.Builder(is).build();
         } catch (IOException e) {
             throw new DBInitException("Error while initializing MaxMind DB Reader", e);
         }
