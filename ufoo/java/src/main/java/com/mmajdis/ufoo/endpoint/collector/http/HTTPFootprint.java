@@ -59,7 +59,7 @@ public class HTTPFootprint {
         return result;
     }
 
-    public class RequestInfo {
+    public static class RequestInfo {
 
         private String servletPath;
 

@@ -6,6 +6,7 @@ import com.maxmind.geoip2.model.CityResponse;
 import com.maxmind.geoip2.model.CountryResponse;
 import com.maxmind.geoip2.record.City;
 import com.maxmind.geoip2.record.Country;
+import com.mmajdis.ufoo.exception.DBInitException;
 import com.mmajdis.ufoo.util.Constants;
 
 import java.io.File;
@@ -19,8 +20,8 @@ public class LocationLookupService {
 
     private DatabaseReader databaseReader;
 
-    public LocationLookupService() throws IOException {
-        databaseReader = new DatabaseReader.Builder(new File(Constants.GEO_IP_DB_PATH)).build();
+    public LocationLookupService() {
+        databaseReader = initReader();
     }
 
     public Location getLocation(String ipAddress) {
@@ -51,5 +52,13 @@ public class LocationLookupService {
         }
 
         return new Location(country.getIsoCode(), city.getName());
+    }
+
+    private DatabaseReader initReader() {
+        try {
+            return new DatabaseReader.Builder(new File(Constants.GEO_IP_DB_PATH)).build();
+        } catch (IOException e) {
+            throw new DBInitException("Error while initializing MaxMind DB Reader", e);
+        }
     }
 }

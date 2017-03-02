@@ -1,5 +1,8 @@
 package com.mmajdis.ufoo;
 
+import com.mmajdis.ufoo.endpoint.collector.http.HTTPFootprint;
+import com.mmajdis.ufoo.util.Response;
+
 /**
  * @author Matej Majdis
  *
@@ -10,4 +13,8 @@ package com.mmajdis.ufoo;
  * Matches and Creates markers [analyzer]
  */
 public class UFooProcessor {
+
+    public Response run(HTTPFootprint httpFootprint) {
+        return Response.ERROR;
+    }
 }

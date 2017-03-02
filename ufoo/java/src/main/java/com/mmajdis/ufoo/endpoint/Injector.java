@@ -1,6 +1,8 @@
 package com.mmajdis.ufoo.endpoint;
 
+import com.mmajdis.ufoo.UFooProcessor;
 import com.mmajdis.ufoo.endpoint.collector.http.RequestHandler;
+import com.mmajdis.ufoo.endpoint.collector.http.geoip.LocationLookupService;
 import com.mmajdis.ufoo.endpoint.collector.tcp.PacketStream;
 import com.mmajdis.ufoo.endpoint.collector.tcp.TCPFootprint;
 import org.aspectj.lang.JoinPoint;
@@ -23,10 +25,14 @@ public class Injector {
     private static final boolean tcpSupported = true;
 
     private RequestHandler requestHandler;
-    private PacketStream packetStream = null;
+    private PacketStream packetStream;
 
     public Injector() {
-        this.requestHandler = new RequestHandler();
+        UFooProcessor uFooProcessorInstance = new UFooProcessor();
+        LocationLookupService locationLookupServiceInstance = new LocationLookupService();
+
+        this.requestHandler = new RequestHandler(uFooProcessorInstance, locationLookupServiceInstance);
+        this.packetStream = null;
     }
 
     @Pointcut(
@@ -50,7 +56,7 @@ public class Injector {
             requestHandler.handle(request);
         }
 
-        Map<String, Set<TCPFootprint>> map =  packetStream.getActualTcpStream();
+        //Map<String, Set<TCPFootprint>> map =  packetStream.getActualTcpStream();
     }
 
     private Thread startNetworkAnalysis() {
