@@ -52,11 +52,11 @@ public class Injector {
 
         //TODO - do the magic
         HttpServletRequest request = getRequestObject(thisJoinPoint);
-        if(request != null) {
+        if (request != null) {
             requestHandler.handle(request);
         }
 
-        Map<String, Set<TCPFootprint>> map =  packetStream.getActualTcpStream();
+        Map<String, Set<TCPFootprint>> map = packetStream.getActualTcpStream();
     }
 
     private Thread startNetworkAnalysis() {

@@ -10,9 +10,9 @@ import java.util.*;
 
 /**
  * @author Matej Majdis
- *
- * Handles HTTP requests
- * Calls UFooProcessor for every request
+ *         <p>
+ *         Handles HTTP requests
+ *         Calls UFooProcessor for every request
  */
 public class RequestHandler {
 
@@ -27,32 +27,26 @@ public class RequestHandler {
 
     public boolean handle(HttpServletRequest request) {
 
-        if(request == null) {
+        if (request == null) {
             return false;
         }
 
-        String ipAddress = request.getHeader("X-FORWARDED-FOR");
-        if (ipAddress == null) {
-            ipAddress = request.getRemoteAddr();
+        HTTPFootprint httpFootprint = mapFromRequest(request);
+
+        Response response = uFooProcessor.run(httpFootprint);
+        if (response.equals(Response.DETECTED)) {
+            //TODO - reaction
+            return true;
         }
 
-        Location location = locationLookupService.getLocation(ipAddress);
+        return !response.equals(Response.ERROR);
+    }
 
-        Set<String> locales = new HashSet<>();
-        Enumeration<Locale> requestLocales = request.getLocales();
-        while (requestLocales.hasMoreElements()) {
-            Locale locale = requestLocales.nextElement();
-            locales.add(locale.getISO3Country());
-        }
+    private HTTPFootprint mapFromRequest(HttpServletRequest request) {
 
-        Map<String, String> headers = new TreeMap<>();
-        Enumeration headerNames = request.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-            String key = (String) headerNames.nextElement();
-            String value = request.getHeader(key);
-            headers.put(key, value);
-        }
-
+        final String ipAddress = getIpAddress(request);
+        final Location location = locationLookupService.getLocation(ipAddress);
+        final Set<String> locales = getLocales(request.getLocales());
         HTTPFootprint.RequestInfo requestInfo = new HTTPFootprint.RequestInfo(
                 request.getServletPath(),
                 ipAddress,
@@ -61,14 +55,42 @@ public class RequestHandler {
                 request.getCharacterEncoding()
         );
 
-        HTTPFootprint httpFootprint = new HTTPFootprint(requestInfo, headers);
+        return new HTTPFootprint(requestInfo, getHeaders(request));
+    }
 
-        Response response = uFooProcessor.run(httpFootprint);
-        if(response.equals(Response.DETECTED)) {
-            //TODO - reaction
-            return true;
+    private Map<String, String> getHeaders(HttpServletRequest request) {
+
+        Map<String, String> headers = new TreeMap<>();
+
+        Enumeration headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String key = (String) headerNames.nextElement();
+            String value = request.getHeader(key);
+            headers.put(key, value);
         }
 
-        return !response.equals(Response.ERROR);
+        return headers;
+    }
+
+    private String getIpAddress(HttpServletRequest request) {
+
+        String ipAddress = request.getHeader("X-FORWARDED-FOR");
+        if (ipAddress == null) {
+            ipAddress = request.getRemoteAddr();
+        }
+
+        return ipAddress;
+    }
+
+    private Set<String> getLocales(Enumeration<Locale> requestLocales) {
+
+        Set<String> locales = new HashSet<>();
+
+        while (requestLocales.hasMoreElements()) {
+            Locale locale = requestLocales.nextElement();
+            locales.add(locale.getISO3Country());
+        }
+
+        return locales;
     }
 }
