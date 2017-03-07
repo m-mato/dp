@@ -1,6 +1,7 @@
 package com.mmajdis.ufoo.endpoint.collector.tcp;
 
 import com.mmajdis.ufoo.exception.PacketStreamException;
+import com.mmajdis.ufoo.util.LRUFactory;
 import org.apache.commons.lang3.SystemUtils;
 
 import java.io.BufferedReader;
@@ -17,13 +18,13 @@ public class PacketStream implements Runnable{
 
     private RuntimeProcessor runtimeProcessor;
 
-    private PacketDeserializer packetDeserializer;
+    private Parser parser;
 
     private Map<String, Set<TCPFootprint>> tcpStream;
 
     public PacketStream() {
         this.runtimeProcessor = new RuntimeProcessor();
-        this.packetDeserializer = new PacketDeserializer();
+        this.parser = new Parser();
         this.tcpStream = LRUFactory.createLRUMap(10);
     }
 
@@ -55,7 +56,7 @@ public class PacketStream implements Runnable{
                 }
             }
 
-            Map.Entry<String, TCPFootprint> tcpFootprint = packetDeserializer.parse(line);
+            Map.Entry<String, TCPFootprint> tcpFootprint = parser.parse(line);
 
             if (tcpFootprint != null) {
                 addToMap(tcpFootprint);

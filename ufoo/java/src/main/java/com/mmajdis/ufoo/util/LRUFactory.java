@@ -1,4 +1,4 @@
-package com.mmajdis.ufoo.endpoint.collector.tcp;
+package com.mmajdis.ufoo.util;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @author Matej Majdis
  */
-class LRUFactory {
+public class LRUFactory {
 
     public static <K, V> Map<K, V> createLRUMap(final int maxEntries) {
 

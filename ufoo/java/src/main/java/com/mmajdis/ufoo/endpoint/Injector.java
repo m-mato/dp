@@ -8,6 +8,7 @@ import com.mmajdis.ufoo.endpoint.collector.http.geoip.LocationLookupService;
 import com.mmajdis.ufoo.endpoint.collector.tcp.PacketStream;
 import com.mmajdis.ufoo.endpoint.collector.tcp.TCPFootprint;
 import com.mmajdis.ufoo.stock.MarkerStockManager;
+import com.mmajdis.ufoo.util.Constants;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -24,8 +25,6 @@ import java.util.Set;
 @Aspect
 @Named
 public class Injector {
-
-    private static final boolean tcpSupported = true;
 
     private RequestHandler requestHandler;
     private PacketStream packetStream;
@@ -54,22 +53,21 @@ public class Injector {
     public void advice(JoinPoint thisJoinPoint) {
 
 
+        //TODO remove
         System.out.println("--------" + thisJoinPoint);
 
-        startNetworkAnalysis();
-
-        //TODO - do the magic
         HttpServletRequest request = getRequestObject(thisJoinPoint);
         if (request != null) {
             requestHandler.handle(request);
         }
 
+        //TODO remove
         Map<String, Set<TCPFootprint>> map = packetStream.getActualTcpStream();
     }
 
     private Thread startNetworkAnalysis() {
 
-        if (!tcpSupported || packetStream != null) {
+        if (!Constants.TCP_SUPPORTED || packetStream != null) {
             return null;
         }
 
