@@ -5,11 +5,9 @@ import com.mmajdis.ufoo.analyzer.Serializer;
 import com.mmajdis.ufoo.endpoint.collector.http.HTTPFootprint;
 import com.mmajdis.ufoo.endpoint.collector.tcp.PacketStream;
 import com.mmajdis.ufoo.endpoint.collector.tcp.TCPFootprint;
-import com.mmajdis.ufoo.stock.MarkerStockManager;
-import com.mmajdis.ufoo.util.Constants;
+import com.mmajdis.ufoo.stock.UFooStockManager;
 import com.mmajdis.ufoo.util.Response;
 
-import java.util.Arrays;
 import java.util.Set;
 
 /**
@@ -29,13 +27,13 @@ public class UFooProcessor {
 
     private FootprintMatcher footprintMatcher;
 
-    private MarkerStockManager markerStockManager;
+    private UFooStockManager UFooStockManager;
 
-    public UFooProcessor(PacketStream packetStream, Serializer serializer, FootprintMatcher footprintMatcher, MarkerStockManager markerStockManager) {
+    public UFooProcessor(PacketStream packetStream, Serializer serializer, FootprintMatcher footprintMatcher, UFooStockManager UFooStockManager) {
         this.packetStream = packetStream;
         this.serializer = serializer;
         this.footprintMatcher = footprintMatcher;
-        this.markerStockManager = markerStockManager;
+        this.UFooStockManager = UFooStockManager;
     }
 
     public Response run(HTTPFootprint httpFootprint) {

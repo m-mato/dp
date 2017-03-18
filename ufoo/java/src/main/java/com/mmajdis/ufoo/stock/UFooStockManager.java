@@ -5,5 +5,5 @@ package com.mmajdis.ufoo.stock;
  *
  * Accessor of basic operations on Marker Stock
  */
-public class MarkerStockManager {
+public class UFooStockManager {
 }

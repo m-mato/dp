@@ -5,5 +5,5 @@ package com.mmajdis.ufoo.stock;
  *
  * Class representing Stock of Footprint's markers
  */
-public class MarkerStock {
+public class UFooStock {
 }

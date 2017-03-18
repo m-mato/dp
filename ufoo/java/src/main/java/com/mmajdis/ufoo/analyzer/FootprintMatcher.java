@@ -1,7 +1,7 @@
 package com.mmajdis.ufoo.analyzer;
 
 
-import com.mmajdis.ufoo.stock.MarkerStockManager;
+import com.mmajdis.ufoo.stock.UFooStockManager;
 
 /**
  * @author Matej Majdis
@@ -10,10 +10,10 @@ import com.mmajdis.ufoo.stock.MarkerStockManager;
  */
 public class FootprintMatcher {
 
-    private MarkerStockManager markerStockManager;
+    private UFooStockManager UFooStockManager;
 
-    public FootprintMatcher(MarkerStockManager markerStockManager) {
-        this.markerStockManager = markerStockManager;
+    public FootprintMatcher(UFooStockManager UFooStockManager) {
+        this.UFooStockManager = UFooStockManager;
     }
 
     public double match(String sketch) {
