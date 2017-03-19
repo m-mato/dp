@@ -37,7 +37,7 @@ public class UFooProcessor {
         this.uFooStock = uFooStock;
     }
 
-    public Result run(HTTPFootprint httpFootprint) {
+    public Result analyze(HTTPFootprint httpFootprint) {
 
         Set<TCPFootprint> tcpFootprints;
         if (packetStream == null) {

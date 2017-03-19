@@ -10,7 +10,6 @@ import java.util.*;
 
 /**
  * @author Matej Majdis
- *         <p>
  *         Handles HTTP requests
  *         Calls UFooProcessor for every request
  */
@@ -33,7 +32,7 @@ public class RequestHandler {
 
         HTTPFootprint httpFootprint = mapFromRequest(request);
 
-        Result result = uFooProcessor.run(httpFootprint);
+        Result result = uFooProcessor.analyze(httpFootprint);
         if (result.equals(Result.DETECTED)) {
             //TODO - reaction
             return true;

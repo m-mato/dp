@@ -59,6 +59,7 @@ public class Injector {
 
         HttpServletRequest request = getRequestObject(thisJoinPoint);
         if (request != null) {
+            // TODO - async
             requestHandler.handle(request);
         }
 
