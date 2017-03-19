@@ -7,6 +7,7 @@ import java.util.Map;
  */
 public class UFooEntity {
 
+    //format - "[h1|h2|h3|...|hn|hash(unknown headers)]|IP|countryCode|city|encoding|[locales]|path|tcpWindow|length"
     private String staticData;
 
     private RelationData relationData;
@@ -52,6 +53,8 @@ public class UFooEntity {
 
         private long timestamp;
 
+        private String country;
+
         public Map<String, String> getRelationHeaders() {
             return relationHeaders;
         }
@@ -68,6 +71,14 @@ public class UFooEntity {
             this.timestamp = timestamp;
         }
 
+        public String getCountry() {
+            return country;
+        }
+
+        public void setCountry(String country) {
+            this.country = country;
+        }
+
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -76,13 +87,16 @@ public class UFooEntity {
             RelationData that = (RelationData) o;
 
             if (getTimestamp() != that.getTimestamp()) return false;
-            return getRelationHeaders() != null ? getRelationHeaders().equals(that.getRelationHeaders()) : that.getRelationHeaders() == null;
+            if (getRelationHeaders() != null ? !getRelationHeaders().equals(that.getRelationHeaders()) : that.getRelationHeaders() != null)
+                return false;
+            return getCountry() != null ? getCountry().equals(that.getCountry()) : that.getCountry() == null;
         }
 
         @Override
         public int hashCode() {
             int result = getRelationHeaders() != null ? getRelationHeaders().hashCode() : 0;
             result = 31 * result + (int) (getTimestamp() ^ (getTimestamp() >>> 32));
+            result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
             return result;
         }
     }
