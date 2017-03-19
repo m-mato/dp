@@ -3,7 +3,7 @@ package com.mmajdis.ufoo.util;
 /**
  * @author Matej Majdis
  */
-public enum Response {
+public enum Result {
     CREATED,
 
     INSERTED,

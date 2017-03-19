@@ -1,5 +1,6 @@
 package com.mmajdis.ufoo.analyzer;
 
+import com.mmajdis.ufoo.UFooEntity;
 import com.mmajdis.ufoo.endpoint.collector.http.HTTPFootprint;
 import com.mmajdis.ufoo.endpoint.collector.tcp.TCPFootprint;
 
@@ -12,24 +13,24 @@ import java.util.Set;
  */
 public class Serializer {
 
-    public String serialize(HTTPFootprint httpFootprint) {
+    public UFooEntity serialize(HTTPFootprint httpFootprint) {
 
         return serialize(httpFootprint, null);
     }
 
-    public String serialize (HTTPFootprint httpFootprint, Set<TCPFootprint> tcpFootprints) {
+    public UFooEntity serialize (HTTPFootprint httpFootprint, Set<TCPFootprint> tcpFootprints) {
 
         //TODO implement
         return null;
     }
 
-    public HTTPFootprint deserializeHTTP(String sketch) {
+    public HTTPFootprint deserializeHTTP(UFooEntity uFooEntity) {
 
         //TODO implement
         return null;
     }
 
-    public TCPFootprint deserializeTCP(String sketch) {
+    public TCPFootprint deserializeTCP(UFooEntity uFooEntity) {
 
         //TODO implement
         return null;

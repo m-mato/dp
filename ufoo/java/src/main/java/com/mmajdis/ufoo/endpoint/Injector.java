@@ -7,7 +7,8 @@ import com.mmajdis.ufoo.endpoint.collector.http.RequestHandler;
 import com.mmajdis.ufoo.endpoint.collector.http.geoip.LocationLookupService;
 import com.mmajdis.ufoo.endpoint.collector.tcp.PacketStream;
 import com.mmajdis.ufoo.endpoint.collector.tcp.TCPFootprint;
-import com.mmajdis.ufoo.stock.UFooStockManager;
+import com.mmajdis.ufoo.stock.UFooStock;
+import com.mmajdis.ufoo.stock.UFooStockImpl;
 import com.mmajdis.ufoo.util.Constants;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -34,9 +35,9 @@ public class Injector {
         startNetworkAnalysis();
 
         Serializer serializer = new Serializer();
-        UFooStockManager UFooStockManager = new UFooStockManager();
-        FootprintMatcher footprintMatcher = new FootprintMatcher(UFooStockManager);
-        UFooProcessor uFooProcessorInstance = new UFooProcessor(packetStream,  serializer, footprintMatcher, UFooStockManager);
+        UFooStock uFooStock = new UFooStockImpl();
+        FootprintMatcher footprintMatcher = new FootprintMatcher(uFooStock);
+        UFooProcessor uFooProcessorInstance = new UFooProcessor(packetStream,  serializer, footprintMatcher, uFooStock);
         LocationLookupService locationLookupServiceInstance = new LocationLookupService();
 
         this.requestHandler = new RequestHandler(uFooProcessorInstance, locationLookupServiceInstance);

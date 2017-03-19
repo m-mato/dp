@@ -3,7 +3,7 @@ package com.mmajdis.ufoo.endpoint.collector.http;
 import com.mmajdis.ufoo.UFooProcessor;
 import com.mmajdis.ufoo.endpoint.collector.http.geoip.Location;
 import com.mmajdis.ufoo.endpoint.collector.http.geoip.LocationLookupService;
-import com.mmajdis.ufoo.util.Response;
+import com.mmajdis.ufoo.util.Result;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -33,13 +33,13 @@ public class RequestHandler {
 
         HTTPFootprint httpFootprint = mapFromRequest(request);
 
-        Response response = uFooProcessor.run(httpFootprint);
-        if (response.equals(Response.DETECTED)) {
+        Result result = uFooProcessor.run(httpFootprint);
+        if (result.equals(Result.DETECTED)) {
             //TODO - reaction
             return true;
         }
 
-        return !response.equals(Response.ERROR);
+        return !result.equals(Result.ERROR);
     }
 
     private HTTPFootprint mapFromRequest(HttpServletRequest request) {

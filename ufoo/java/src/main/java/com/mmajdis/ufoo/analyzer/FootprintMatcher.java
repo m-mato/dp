@@ -1,7 +1,9 @@
 package com.mmajdis.ufoo.analyzer;
 
 
-import com.mmajdis.ufoo.stock.UFooStockManager;
+import com.mmajdis.ufoo.UFooEntity;
+import com.mmajdis.ufoo.stock.UFooStock;
+import com.mmajdis.ufoo.util.MatchResponse;
 
 /**
  * @author Matej Majdis
@@ -10,14 +12,15 @@ import com.mmajdis.ufoo.stock.UFooStockManager;
  */
 public class FootprintMatcher {
 
-    private UFooStockManager UFooStockManager;
+    private UFooStock uFooStock;
 
-    public FootprintMatcher(UFooStockManager UFooStockManager) {
-        this.UFooStockManager = UFooStockManager;
+    public FootprintMatcher(UFooStock uFooStock) {
+        this.uFooStock = uFooStock;
     }
 
-    public double match(String sketch) {
+    public MatchResponse match(UFooEntity uFooEntity) {
 
-        return -1;
+        //TODO similarity search
+        return new MatchResponse(0, null);
     }
 }

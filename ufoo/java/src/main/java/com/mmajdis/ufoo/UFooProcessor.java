@@ -5,8 +5,9 @@ import com.mmajdis.ufoo.analyzer.Serializer;
 import com.mmajdis.ufoo.endpoint.collector.http.HTTPFootprint;
 import com.mmajdis.ufoo.endpoint.collector.tcp.PacketStream;
 import com.mmajdis.ufoo.endpoint.collector.tcp.TCPFootprint;
-import com.mmajdis.ufoo.stock.UFooStockManager;
-import com.mmajdis.ufoo.util.Response;
+import com.mmajdis.ufoo.stock.UFooStock;
+import com.mmajdis.ufoo.util.MatchResponse;
+import com.mmajdis.ufoo.util.Result;
 
 import java.util.Set;
 
@@ -27,16 +28,16 @@ public class UFooProcessor {
 
     private FootprintMatcher footprintMatcher;
 
-    private UFooStockManager UFooStockManager;
+    private UFooStock uFooStock;
 
-    public UFooProcessor(PacketStream packetStream, Serializer serializer, FootprintMatcher footprintMatcher, UFooStockManager UFooStockManager) {
+    public UFooProcessor(PacketStream packetStream, Serializer serializer, FootprintMatcher footprintMatcher, UFooStock uFooStock) {
         this.packetStream = packetStream;
         this.serializer = serializer;
         this.footprintMatcher = footprintMatcher;
-        this.UFooStockManager = UFooStockManager;
+        this.uFooStock = uFooStock;
     }
 
-    public Response run(HTTPFootprint httpFootprint) {
+    public Result run(HTTPFootprint httpFootprint) {
 
         Set<TCPFootprint> tcpFootprints;
         if (packetStream == null) {
@@ -46,17 +47,17 @@ public class UFooProcessor {
         }
 
         try {
-            String sketch = serializer.serialize(httpFootprint, tcpFootprints);
-            double result = footprintMatcher.match(sketch);
+            UFooEntity uFooEntity = serializer.serialize(httpFootprint, tcpFootprints);
+            MatchResponse response = footprintMatcher.match(uFooEntity);
 
-            if (result < 0) {
+            if (response.getProbability() == 0) {
                 //TODO create
-                return Response.CREATED;
+                return Result.CREATED;
             }
 
-            return null; //TODO Response.INSERTED || Response.DETECTED;
+            return null; //TODO Result.INSERTED || Result.DETECTED;
         } catch (Exception ex) {
-            return Response.ERROR;
+            return Result.ERROR;
         }
     }
 }

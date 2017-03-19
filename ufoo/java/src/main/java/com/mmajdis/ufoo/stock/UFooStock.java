@@ -1,9 +1,17 @@
 package com.mmajdis.ufoo.stock;
 
+import com.mmajdis.ufoo.UFooEntity;
+
+import java.util.Map;
+
 /**
- * @author Matej Majdis
- *
- * Class representing Stock of Footprint's markers
+ * @author Matej Majdis <matej.majdis@avg.com>
  */
-public class UFooStock {
+public interface UFooStock {
+
+    void add(UFooEntity uFooEntity);
+
+    void addFirst(UFooEntity uFooEntity);
+
+    Map<UFooEntity, Integer> getUFooStock();
 }
