@@ -7,24 +7,24 @@ import com.mmajdis.ufoo.UFooEntity;
  */
 public class MatchResponse {
 
-    private double probability;
+    private double similarity;
 
     private UFooEntity matchedEntity;
 
     public MatchResponse() {
     }
 
-    public MatchResponse(double probability, UFooEntity matchedEntity) {
-        this.probability = probability;
+    public MatchResponse(double similarity, UFooEntity matchedEntity) {
+        this.similarity = similarity;
         this.matchedEntity = matchedEntity;
     }
 
-    public double getProbability() {
-        return probability;
+    public double getSimilarity() {
+        return similarity;
     }
 
-    public void setProbability(double probability) {
-        this.probability = probability;
+    public void setSimilarity(double similarity) {
+        this.similarity = similarity;
     }
 
     public UFooEntity getMatchedEntity() {

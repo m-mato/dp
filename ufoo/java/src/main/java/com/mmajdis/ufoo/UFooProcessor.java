@@ -1,6 +1,6 @@
 package com.mmajdis.ufoo;
 
-import com.mmajdis.ufoo.analyzer.FootprintMatcher;
+import com.mmajdis.ufoo.analyzer.FootprintSimilarityService;
 import com.mmajdis.ufoo.analyzer.Serializer;
 import com.mmajdis.ufoo.endpoint.collector.http.HTTPFootprint;
 import com.mmajdis.ufoo.endpoint.collector.tcp.PacketStream;
@@ -26,14 +26,14 @@ public class UFooProcessor {
 
     private Serializer serializer;
 
-    private FootprintMatcher footprintMatcher;
+    private FootprintSimilarityService footprintSimilarityService;
 
     private UFooStock uFooStock;
 
-    public UFooProcessor(PacketStream packetStream, Serializer serializer, FootprintMatcher footprintMatcher, UFooStock uFooStock) {
+    public UFooProcessor(PacketStream packetStream, Serializer serializer, FootprintSimilarityService footprintSimilarityService, UFooStock uFooStock) {
         this.packetStream = packetStream;
         this.serializer = serializer;
-        this.footprintMatcher = footprintMatcher;
+        this.footprintSimilarityService = footprintSimilarityService;
         this.uFooStock = uFooStock;
     }
 
@@ -48,9 +48,9 @@ public class UFooProcessor {
 
         try {
             UFooEntity uFooEntity = serializer.serialize(httpFootprint, tcpFootprints);
-            MatchResponse response = footprintMatcher.match(uFooEntity);
+            MatchResponse response = footprintSimilarityService.getNearestNeighbour(uFooEntity);
 
-            if (response.getProbability() == 0) {
+            if (response.getSimilarity() == 0) {
                 //TODO create
                 return Result.CREATED;
             }

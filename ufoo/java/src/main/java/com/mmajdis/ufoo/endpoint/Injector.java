@@ -1,7 +1,7 @@
 package com.mmajdis.ufoo.endpoint;
 
 import com.mmajdis.ufoo.UFooProcessor;
-import com.mmajdis.ufoo.analyzer.FootprintMatcher;
+import com.mmajdis.ufoo.analyzer.FootprintSimilarityService;
 import com.mmajdis.ufoo.analyzer.Serializer;
 import com.mmajdis.ufoo.endpoint.collector.http.RequestHandler;
 import com.mmajdis.ufoo.endpoint.collector.http.geoip.LocationLookupService;
@@ -36,8 +36,8 @@ public class Injector {
 
         Serializer serializer = new Serializer();
         UFooStock uFooStock = new UFooStockImpl();
-        FootprintMatcher footprintMatcher = new FootprintMatcher(uFooStock);
-        UFooProcessor uFooProcessorInstance = new UFooProcessor(packetStream,  serializer, footprintMatcher, uFooStock);
+        FootprintSimilarityService footprintSimilarityService = new FootprintSimilarityService(uFooStock);
+        UFooProcessor uFooProcessorInstance = new UFooProcessor(packetStream,  serializer, footprintSimilarityService, uFooStock);
         LocationLookupService locationLookupServiceInstance = new LocationLookupService();
 
         this.requestHandler = new RequestHandler(uFooProcessorInstance, locationLookupServiceInstance);
