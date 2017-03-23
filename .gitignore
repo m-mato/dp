@@ -21,7 +21,11 @@ thesis-example/*.run.xml
 thesis-example/*.synctex.gz
 thesis-example/*.toc
 
-ufoo/*.td
+ufoo/utils/*.td
 ufoo/java/.idea
 ufoo/java/*.iml
 ufoo/java/target/
+ufoo/example/client/.idea
+ufoo/example/client/*.iml
+ufoo/example/client/target/
+
