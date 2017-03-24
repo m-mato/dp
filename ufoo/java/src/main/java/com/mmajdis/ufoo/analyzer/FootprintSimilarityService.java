@@ -23,11 +23,11 @@ public class FootprintSimilarityService {
         double minDistance = 2;
         for(UFooEntity stockUFooEntity : uFooStock.getUFooStock().keySet()) {
             double newDistance = computeDistance(uFooEntity.getStaticData(), stockUFooEntity.getStaticData());
+            if(Math.abs(uFooEntity.getRelationData().getTimestamp() - stockUFooEntity.getRelationData().getTimestamp())< Constants.MAX_HIGH_FREQUENT_REQ_MILIS) {
+                //TODO lower distance;
+            }
             if(newDistance < minDistance) {
                 minDistance = newDistance;
-            }
-            if(Math.abs(uFooEntity.getRelationData().getTimestamp() - stockUFooEntity.getRelationData().getTimestamp())< Constants.MAX_HIGH_FREQUENT_REQ_MILIS) {
-                //TODO higher similarity;
             }
         }
 
