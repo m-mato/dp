@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public interface UFooStock {
 
-    void add(UFooEntity uFooEntity);
+    int insertNext(UFooEntity oldEntity, UFooEntity newEntity);
 
     void addFirst(UFooEntity uFooEntity);
 

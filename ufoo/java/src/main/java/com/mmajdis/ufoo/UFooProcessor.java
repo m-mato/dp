@@ -13,12 +13,12 @@ import java.util.Set;
 
 /**
  * @author Matej Majdis
- *
- * Main application class
- * Called by every collected HTTP request [endpoint.collector.http]
- * Looks up for relevant TCP info [endpoint.collector.tcp]
- * Analyzes collected HTTP and TCP info [analyzer]
- * Matches and Creates markers [analyzer]
+ *         <p>
+ *         Main application class
+ *         Called by every collected HTTP request [endpoint.collector.http]
+ *         Looks up for relevant TCP info [endpoint.collector.tcp]
+ *         Analyzes collected HTTP and TCP info [analyzer]
+ *         Matches and Creates markers [analyzer]
  */
 public class UFooProcessor {
 
@@ -50,12 +50,21 @@ public class UFooProcessor {
             UFooEntity uFooEntity = serializer.serialize(httpFootprint, tcpFootprints);
             MatchResponse response = footprintSimilarityService.getNearestNeighbour(uFooEntity);
 
-            if (response.getSimilarity() == 0) {
-                //TODO create
+            //TODO apply relation data
+            double distanceThreshold = 0.4; //TODO change
+            if (response.getDistance() >= distanceThreshold) {
+                uFooStock.addFirst(uFooEntity);
                 return Result.CREATED;
             }
 
-            return null; //TODO Result.INSERTED || Result.DETECTED;
+            long alertThreshold = 50; //TODO change
+            int count = uFooStock.insertNext(response.getMatchedEntity(), uFooEntity);
+            int i = 0;
+            if (count > alertThreshold) {
+                //TODO throw new RequestCountAlertException("Request count threshold exceeded by: " + uFooEntity);
+                return Result.DETECTED;
+            }
+            return Result.INSERTED;
         } catch (Exception ex) {
             return Result.ERROR;
         }

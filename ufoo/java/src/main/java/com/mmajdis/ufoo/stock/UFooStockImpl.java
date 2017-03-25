@@ -7,8 +7,8 @@ import java.util.Map;
 
 /**
  * @author Matej Majdis
- *
- * Class representing Stock of Footprint's markers
+ *         <p>
+ *         Class representing Stock of Footprint's markers
  */
 public class UFooStockImpl implements UFooStock {
 
@@ -19,11 +19,15 @@ public class UFooStockImpl implements UFooStock {
     }
 
     @Override
-    public void add(UFooEntity uFooEntity) {
-        if(uFooStock.containsKey(uFooEntity)) {
-            uFooStock.put(uFooEntity, uFooStock.get(uFooEntity)+1);
+    public int insertNext(UFooEntity oldEntity, UFooEntity newEntity) {
+        if (uFooStock.containsKey(oldEntity)) {
+            int count = uFooStock.get(oldEntity);
+            uFooStock.remove(oldEntity);
+            uFooStock.put(newEntity, count + 1);
+            return count + 1;
         } else {
-            addFirst(uFooEntity);
+            addFirst(newEntity);
+            return 1;
         }
     }
 

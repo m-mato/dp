@@ -62,9 +62,6 @@ public class Injector {
             // TODO - async
             requestHandler.handle(request);
         }
-
-        //TODO remove
-        Map<String, Set<TCPFootprint>> map = packetStream.getActualTcpStream();
     }
 
     private Thread startNetworkAnalysis() {

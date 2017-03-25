@@ -7,24 +7,24 @@ import com.mmajdis.ufoo.UFooEntity;
  */
 public class MatchResponse {
 
-    private double similarity;
+    private double distance;
 
     private UFooEntity matchedEntity;
 
     public MatchResponse() {
     }
 
-    public MatchResponse(double similarity, UFooEntity matchedEntity) {
-        this.similarity = similarity;
+    public MatchResponse(double distance, UFooEntity matchedEntity) {
+        this.distance = distance;
         this.matchedEntity = matchedEntity;
     }
 
-    public double getSimilarity() {
-        return similarity;
+    public double getDistance() {
+        return distance;
     }
 
-    public void setSimilarity(double similarity) {
-        this.similarity = similarity;
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 
     public UFooEntity getMatchedEntity() {
