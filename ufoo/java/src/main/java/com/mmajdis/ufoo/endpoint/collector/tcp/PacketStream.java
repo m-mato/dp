@@ -61,8 +61,6 @@ public class PacketStream implements Runnable{
             if (tcpFootprint != null) {
                 addToMap(tcpFootprint);
             }
-
-            System.out.println(line);
         }
     }
 

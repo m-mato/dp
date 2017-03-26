@@ -53,10 +53,6 @@ public class Injector {
     @Before("controller()")
     public void advice(JoinPoint thisJoinPoint) {
 
-
-        //TODO remove
-        System.out.println("--------" + thisJoinPoint);
-
         HttpServletRequest request = getRequestObject(thisJoinPoint);
         if (request != null) {
             // TODO - async

@@ -49,8 +49,12 @@ public class FootprintSimilarityService {
                 newDistance = 0;
             }
 
-            if (Math.abs(uFooEntity.getRelationData().getTimestamp() - stockUFooEntity.getRelationData().getTimestamp()) < Constants.MAX_HIGH_FREQUENT_REQ_MILIS) {
-                //TODO lower distance;
+            long highFreqReq = (uFooEntity.getRelationData().getTimestamp() == -1 || stockUFooEntity.getRelationData().getTimestamp()==-1)
+                    ? Constants.MAX_HIGH_FREQUENT_REQ_MILIS + 1
+                    : Math.abs(uFooEntity.getRelationData().getTimestamp() - stockUFooEntity.getRelationData().getTimestamp());
+
+            if (highFreqReq < Constants.MAX_HIGH_FREQUENT_REQ_MILIS) {
+                newDistance = newDistance - (newDistance * 0.3);
             }
 
             if (newDistance < minDistance) {

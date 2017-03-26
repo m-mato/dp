@@ -6,8 +6,11 @@ import com.mmajdis.ufoo.endpoint.collector.http.HTTPFootprint;
 import com.mmajdis.ufoo.endpoint.collector.tcp.PacketStream;
 import com.mmajdis.ufoo.endpoint.collector.tcp.TCPFootprint;
 import com.mmajdis.ufoo.stock.UFooStock;
+import com.mmajdis.ufoo.util.Constants;
 import com.mmajdis.ufoo.util.MatchResponse;
 import com.mmajdis.ufoo.util.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 
@@ -21,6 +24,8 @@ import java.util.Set;
  *         Matches and Creates markers [analyzer]
  */
 public class UFooProcessor {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UFooProcessor.class);
 
     private PacketStream packetStream;
 
@@ -51,22 +56,33 @@ public class UFooProcessor {
             MatchResponse response = footprintSimilarityService.getNearestNeighbour(uFooEntity);
 
             //TODO apply relation data
-            double distanceThreshold = 0.4; //TODO change
-            if (response.getDistance() >= distanceThreshold) {
+            if (response.getDistance() >= Constants.DISTANCE_THRESHOLD) {
                 uFooStock.addFirst(uFooEntity);
+                LOGGER.info("---> New UFoo created, distance: {}", response.getDistance());
                 return Result.CREATED;
             }
 
-            long alertThreshold = 50; //TODO change
+            long alertThreshold = getAlertThreshold(uFooEntity.getRelationData());
             int count = uFooStock.insertNext(response.getMatchedEntity(), uFooEntity);
-            int i = 0;
+
             if (count > alertThreshold) {
                 //TODO throw new RequestCountAlertException("Request count threshold exceeded by: " + uFooEntity);
+                LOGGER.warn("---> Possible attack detected for UFoo: {}", uFooEntity);
                 return Result.DETECTED;
             }
+            LOGGER.info("---> Next UFoo inserted, distance: {}", response.getDistance());
             return Result.INSERTED;
         } catch (Exception ex) {
+            LOGGER.error("Error while processing UFoo for: {}", httpFootprint);
             return Result.ERROR;
         }
+    }
+
+    private long getAlertThreshold(UFooEntity.RelationData relationData) {
+        long threshold = 50;
+        if (Constants.UNTRUSTED_COUNTRIES.contains(relationData.getCountry())) {
+            return threshold - (threshold / 3);
+        }
+        return threshold; //TODO change
     }
 }
