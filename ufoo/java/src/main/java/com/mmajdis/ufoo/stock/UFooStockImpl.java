@@ -7,7 +7,6 @@ import java.util.Map;
 
 /**
  * @author Matej Majdis
- *         <p>
  *         Class representing Stock of Footprint's markers
  */
 public class UFooStockImpl implements UFooStock {
@@ -19,7 +18,7 @@ public class UFooStockImpl implements UFooStock {
     }
 
     @Override
-    public int insertNext(UFooEntity oldEntity, UFooEntity newEntity) {
+    public synchronized int insertNext(UFooEntity oldEntity, UFooEntity newEntity) {
         if (uFooStock.containsKey(oldEntity)) {
             int count = uFooStock.get(oldEntity);
             uFooStock.remove(oldEntity);
@@ -32,7 +31,7 @@ public class UFooStockImpl implements UFooStock {
     }
 
     @Override
-    public void addFirst(UFooEntity uFooEntity) {
+    public synchronized void addFirst(UFooEntity uFooEntity) {
         uFooStock.put(uFooEntity, 1);
     }
 

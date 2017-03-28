@@ -44,6 +44,7 @@ public class LocationLookupService {
             CityResponse cityResponse = databaseReader.city(inetAddress);
             city = cityResponse.getCity();
         } catch (GeoIp2Exception ex) {
+            // TODO exceptions
             // if the IP address is not in our database
             // AddressNotFoundException extends GeoIp2Exception
             return null;

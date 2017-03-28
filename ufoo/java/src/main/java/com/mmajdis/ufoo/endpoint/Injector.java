@@ -19,6 +19,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.*;
 
 /**
  * @author Matej Majdis
@@ -29,6 +30,8 @@ public class Injector {
 
     private RequestHandler requestHandler;
     private PacketStream packetStream;
+
+    ExecutorService executor;
 
     public Injector() {
 
@@ -41,6 +44,7 @@ public class Injector {
         LocationLookupService locationLookupServiceInstance = new LocationLookupService();
 
         this.requestHandler = new RequestHandler(uFooProcessorInstance, locationLookupServiceInstance);
+        executor = Executors.newFixedThreadPool(Constants.MAX_THREADS);
     }
 
     @Pointcut(
@@ -55,8 +59,10 @@ public class Injector {
 
         HttpServletRequest request = getRequestObject(thisJoinPoint);
         if (request != null) {
-            // TODO - async
-            requestHandler.handle(request);
+            Callable<Boolean> task = () -> {
+                return requestHandler.handle(request);
+            };
+            executor.submit(task);
         }
     }
 
