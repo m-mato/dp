@@ -276,10 +276,6 @@ Source ref: https://www.eecis.udel.edu/~sunshine/publications/ccr.pdf
 
 \subsection{Reflexia a zosilnenie}
 TODO
-
-Source ref (reflection): Vern Paxson. An Analysis of Using Reflectors for Distributed Denialof-service Attacks. SIGCOMM Comput. Commun. Rev., 31(3):38–47, July 2001.
-
-Source ref (amplification): http://crt.io/DNS-Amplification-Attacks.pdf
 % A reflector is any IP host that will return a packet if sent a packet. Attackers
 % orchestrate the hosts under their control to send the spoofed traffic purportedly
 % coming from the victim to reflectors. The result is that the flood at the
@@ -299,7 +295,6 @@ Source ref (amplification): http://crt.io/DNS-Amplification-Attacks.pdf
 
 \subsection{HTTP POST DoS útoky}
 TODO
-
 % First discovered in 2009, the HTTP POST attack sends a complete, legitimate HTTP POST header, which includes a 'Content-Length' field to specify the size of the message body to follow. However, the attacker then proceeds to send the actual message body at an extremely slow rate (e.g. 1 byte/110 seconds). Due to the entire message being correct and complete, the target server will attempt to obey the 'Content-Length' field in the header, and wait for the entire body of the message to be transmitted, which can take a very long time. The attacker establishes hundreds or even thousands of such connections, until all resources for incoming connections on the server (the victim) are used up, hence making any further (including legitimate) connections impossible until all data has been sent. It is notable that unlike many other (D)DoS attacks, which try to subdue the server by overloading its network or CPU, a HTTP POST attack targets the logical resources of the victim, which means the victim would still have enough network bandwidth and processing power to operate. Further combined with the fact that Apache will, by default, accept requests up to 2GB in size, this attack can be particularly powerful. HTTP POST attacks are difficult to differentiate from legitimate connections, and are therefore able to bypass some protection systems. OWASP, an open source web application security project, has released a testing tool to test the security of servers against this type of attacks.
 
 \section{DoS nástroje a DoS as a Service}
@@ -336,8 +331,6 @@ majiteľa. Príkladom je distribuovaný útok \textit{Operation Payback} organiz
 ---
 
 TODO DoSaaS
-
-Source ref: http://krebsonsecurity.com/2015/08/stress-testing-the-booter-services-financially/ 
 % The LOIC has typically been used in this way. Along with HOIC a wide variety of DDoS tools are available today, including paid and free versions, with different features available. There is an underground market for these in hacker related forums and IRC channels.
 
 % UK's GCHQ has tools built for DDoS, named PREDATORS FACE and ROLLING THUNDER.
@@ -358,7 +351,7 @@ TODO
 Nasledujúca kapitola sa venuje popisu, porovnaniu a hodnoteniu existujúcich
 prístupov, ktoré sú momentálne využívané na účely identifikácie používateľa.
 Ide najmä o techniky využívajúce: protokoly sieťovej vrstvy (najmä IP adresy),
-monitorovanie TCP \textit{trafficu} a vlastné aplikačné identifikátory.
+monitorovanie TCP komunikácie a vlastné aplikačné identifikátory.
 
 \section{Využitie sieťovej vrstvy}
 Jedným z najtypickejších spôsobov identifickácie užívateľa a jeho zriadenia je
@@ -367,7 +360,7 @@ IP protokol sieťovej vrstvy. Táto technika je veľmi rozšírená napíklad pr
 podobne.
 
 \subsection{Internet Protocol (IP)}
-Ako popisuje \ref{ch:net-layers} Internet Protocol slúži na prenos paketov
+Ako popisuje kapitola \ref{ch:net-layers} Internet Protocol slúži na prenos paketov
 medzi jednotlivými sieťovými uzlami - zariadeniami, ktoré sú identifikovné
 IP adresami. V ideálnom 
 
