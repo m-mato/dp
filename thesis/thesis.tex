@@ -358,20 +358,131 @@ Jedným z najtypickejších spôsobov identifickácie užívateľa a jeho zriade
 IP protokol sieťovej vrstvy. Táto technika je veľmi rozšírená napíklad pre
 účely blokovania prístupu na server u systémových \textit{firewallov} a
 podobne.
+TODO - rozšíriť
 
 \subsection{Internet Protocol (IP)}
-Ako popisuje kapitola \ref{ch:net-layers} Internet Protocol slúži na prenos paketov
-medzi jednotlivými sieťovými uzlami - zariadeniami, ktoré sú identifikovné
-IP adresami. V ideálnom 
+Ako popisuje kapitola \ref{ch:net-layers}, Internet Protocol slúži na prenos
+paketov medzi jednotlivými sieťovými uzlami - zariadeniami, ktoré sú
+identifikované IP adresami. V ideálnom by bolo každé zariadenie v sieti
+identifikované jednou statickou IP adresou. Bolo by teda možné užívateľa
+rozpoznať len na základe množiny jeho adries. Bohužiaľ adresový priestor
+protokolu IPv4 je obmedzený na 3.7 miliardy verejne dostupných adries
+\footnote{
+  Uvedené množstvo zahŕňa všetky možné dostupné IPv4 adresy - približne 4.2
+  miliardy po odpočítaní rezervovaných adries - 588 miliónov.
+}.
+Z toho vyplýva potreba metód ich dynamického prideľovania, proxy serverov a
+prekladu, čo identifikáciu značne komplikuje.
 
+U dynamického prideľovania adries ide o jednoduché mapovanie pre zariadenia
+na úrovni smerovača. Identifikácia je teda stále možná, len sťažená o vyšší
+počet možných adries pre jedno zariadenie.
 
-\subsection{Vyhody a nevyhody}
+Preklad (\textit{Network Address Translation} IP adries však identifikáciu
+prakticky znemožňuje. Vo všeobecnosti ide o techniku prekladu jednej podmnožiny
+IP adries na inú pomocou zmeny informácie o sieťovej adrese v datagrame IP
+protokolu. Pôvodne sa táto technika používala pre zjednodušenie presmerovania
+komunikácie bez nutnosti opätovnej adresácie každého uzlu. V pokročilých
+implementáciách však dnes \textit{NAT} predstavuje veľmi populárnu možnosť
+takzvaného  IP maskovania. Maskoavanie IP adries je technika zdieľania jednej
+verejnej IP adresy celou privátnou podsieťou. Adresný priestor privátnej
+podsiete, ktorá má byť skrytá je teda vždy mapovaný na verejnú IP adresu
+smerovača. Táto adresa samotná je taktiež zvyčajne súčasťou väčšej podmnožiny
+adresného priestoru. Pojem prekladu (\textit{NAT}) IP adries sa dnes už stal
+synonymom ich maskovania. Paket odoslaný zo zariadenia, ktoré je prekryté
+\textit{NAT} smerovačom bude teda ako zdrojovú adresu niesť namiesto IP adresy
+zariadenia z ktorého pochádza hodnotu verejnej IP adresy smerovača.
+Identifikácia na základe IP adresy preto v tomto prípade stráca význam.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.99\textwidth]{images/tech-IP-NAT.png}
+  \caption{Vizualizácia rozloženia IP adresového priestoru pri použití techniky
+  prekladu \textit{NAT}}
+  \label{fig:tech-IP-NAT}
+\end{figure}
+
+\subsection{Výhody a nevýhody}
+Hlavnými výhodami použitia IP adries sú jednoduchosť, rýchlosť a flexibilita.
+Napríklad pre účely znemožnenia prístupu stačí filtrovať len povolené IP
+adresy, prípadne neumožniť prístup tým zakázaným. Oba spôsoby sú technicky veľmi
+ľahko implementovateľné.
+
+Ich nevýhodou je najmä rastúci trend použitia proxy serverov a \textit{NAT}
+prekladu, čo má napríklad pri banovaní za následok znemožnenie prístupu aj
+užívateľom, u ktorých to nie je potrebné, ale stoja za rovnakou IP adresou.
+
+Vo všeobecnosti je teda identifikácia zariadení používateľa na základe IP
+adresy možná. V prípade, že sa však zariadenie skrýva za proxy serverom,
+prípadne sú adresy prekryté \textit{NATom} bude táto technika viesť takisto k
+prekrytiu jednotlivých užívateľov v rámci podsiete.
+
 \section{Monitoring TCP}
 //TODO - Popis
 \subsection{Vyhody a nevyhody}
 \section{Aplikačné identifikátory}
-//TODO - Popis
-\subsection{Vyhody a nevyhody}
+Na aplikačnej úrovni je identifikácia užívateľa oveľa komplexnejším a do istej
+miery aj abstraktnejším procesom. Z pohľadu systému sú jeho používateľmi
+typicky ľudia, prípadne procesy iných služieb, ktoré existujú mimo neho.
+Identifikátorom (ďalej len ID) užívateľa je teda projekcia aktuálneho
+jednotlivca, prípadne procesu do počítačového systému. Systém používa typicky
+abstraktný objekt - účet užívateľa, ktorý obsahuje množinu atribútov pre
+každého jednotlivca, prípadne proces. Tento objekt má jednoznačné a unikátne
+ID, prípadne meno, ktorým je reprezentovaný v rámci systému. Ďalej môže objekt
+obsahovať dodatočné atribúty, ktoré ho popisujú. Atribúty môžu, ale nemusia
+zahŕňať osobné údaje jednotlivca. Odhliadnuc od ID objektu, bezpečný systém
+typicky priradí každému z používateľov jednoznačný identifikátor (číslo, alebo
+reťazec), ktorým sa odkazuje na abstraktný objekt reprezentujúci aktuálnu
+entitu. Tvorba unikátneho abstraktného objektu vo forme užívateľského účtu
+pre každého jednotlivca, alebo proces komunikujúci so systémom je na aplikačnej
+úrovni veľmi dôležitá. Tento objekt je následne používaný na identifikáciu
+užívateľa v rámci celého systému. Zároveň tento objekt slúži ako odkaz pre
+jednotlivé akcie systému umožňujúce prístup k údajom komunikujúcej entity.
+ID používateľa sa tak stáva základom pre kontrolu prístupu. Z toho dôvodu je 
+nevyhnutné uchovávať unikátne ID pre každého používateľa, keďže každý z nich
+môže mať rozličné požiadavky a individuálne zodpovednosti v rámci akcií tohto
+systému.
+
+Metóda identifikácie systému poskytuje na aplikačnej úrovni jednoznačnú
+identitu používateľa. Táto identita je typicky reprezentovaná jeho
+identifikátorom. Systém preto prehľadáva všetky dostupné abstraktné objekty a
+vráti objekt vyhovujúci privilégiám a atribútom entity s ktorou aktuálne
+komunikuje. Po úspešnom dokončení tohto procesu je užívateľ jednoznačne
+identifikovaný.
+
+Po úspešnej identifikácií typicky nasleduje krok validácie získanej identity,
+vo všeobecnosti nazývaný autentizácia používateľa. Fakt, že užívateľ tvrdí,
+že je reprezentovaný špecifickým abstraktným objektom nemusí totiž nutne
+znamenať, že je to pravda. Pre potvrdenie, že aktuálny používateľ môže byť
+skutočne mapovaný na konkrétny abstraktný objekt, čim mu budú udelené jeho
+práva a privilégiá musí komunikujúci preukázať svoju identitu systému.
+Autentizácia je teda procesom validácie danej poskytnutej identity. Informácie,
+ktoré predkladá komunikujúca entita sa nazývajú poverenia
+(\textit{credentials}). Tieto poverenia sa môžu v rôznych systémoch líšiť, 
+prípadne môžu niektoré systémy vyžadovať ich väčšie množstvo. Najčastejšími
+formami týchto údajov sú: meno, heslo, pin, token, prípadne certifikáty, a iné.
+
+Akonáhle prebehne úspešná autentizácia môže používateľ vykonať akcie, na ktoré
+ma oprávnenia. Všetky akcie ktoré vykoná sú zviazané s jeho identitou a je ich
+preto možné dodatočne trasovať.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.80\textwidth]{images/tech-app.png}
+  \caption{Grafické znázornenie procesu identifikácie užívateľa na aplikačnej
+  úrovni a jeho následnej autentizácie}
+  \label{fig:tech-app}
+\end{figure}
+
+\subsection{Výhody a nevýhody}
+Identifikátory na aplikačnej úrovni sú veľmi jednoznačné a presné z hľadiska
+priradenia účtu užívateľovi. Je pomocou nich preto následne možné presne
+sledovať jeho akcie a manipulovať s privilégiami.
+
+Tieto identifikátory sa však v abstrakcií komunikácie nachádzajú príliš vysoko,
+preto nie je pomocou nich možné ovplyvniť napríklad DoS útoky popísané v kapitole
+\ref{ch:dos}.
+
 \section{Zhrnutie}
 
 \chapter{Tvorba unikátneho identifikátoru}
