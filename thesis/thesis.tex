@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[
-  printed, %% This option enables the default options for the
+  digital, %% This option enables the default options for the
            %% printed version of a document. Replace with `digital`
            %% to enable the default options for the digital version
            %% of a document.
@@ -354,8 +354,8 @@ Ide najmä o techniky využívajúce: protokoly sieťovej vrstvy (najmä IP adre
 monitorovanie TCP komunikácie a vlastné aplikačné identifikátory.
 
 \section{Využitie sieťovej vrstvy}
-Jedným z najtypickejších spôsobov identifickácie užívateľa a jeho zriadenia je
-IP protokol sieťovej vrstvy. Táto technika je veľmi rozšírená napíklad pre
+Jedným z najtypickejších spôsobov identifikácie užívateľa a jeho zriadenia je
+IP protokol sieťovej vrstvy. Táto technika je veľmi rozšírená napríklad pre
 účely blokovania prístupu na server u systémových \textit{firewallov} a
 podobne.
 TODO - rozšíriť
@@ -418,8 +418,35 @@ prípadne sú adresy prekryté \textit{NATom} bude táto technika viesť takisto
 prekrytiu jednotlivých užívateľov v rámci podsiete.
 
 \section{Monitoring TCP}
-//TODO - Popis
+Ako popisuje predchádzajúca kapitola, TCP
+\textit{(Transmission Control Protocol)} je jedným z protokolov transportnej
+vrstvy sieťovej hierarchie. Jeho najtypickejším znakom je na rozdiel
+od UDP garancia spoľahlivého doručenia paketov v presnom poradí. Prijatie
+každého z paketov musí byť potvrdené príjemcom, inak je paket odoslaný znovu.
+Poradie jednotlivých paketov je zaručené ich sekvenčnými číslami. Tieto 
+vlastnosti robia z TCP jasnú voľbu pre aplikácie, ktoré vyžadujú nulovú
+stratovosť dát. Aplikácie typicky zasielajú na TCP vrstvu \textit{stream} dát
+pomocou takzvaných \textit{stream socketov}, čím sú dáta \textit{streamu}
+rozdelené na primerane veľké segmenty. K segmentom je zároveň spočítaný
+kontrolný súčet \textit{(TCP checksum)}, pomocou ktorého je možné určiť či
+dáta neobsahujú poškodené pakety. Kontrolné súčty však nie sú v žiadnom ohľade
+kryptograficky zabezpečené. Podrobný popis štruktúry TCP paketu znázorňuje
+==obrazok kapitola 2?==
+
+//TODO dokončiť
+%Identifiers and their uniqueness
+%The TCP protocol itself contains no data which can be used to identify a user (except such information is contained within the (unencrypted) data part of the packet). In addition to the lower level IP protocol, this is not true any more. The source and destination ports in cooperation with the IP address of the sender and receiver can identify both participating parties. 
+%TCP is a good example for identifying information introduced by the “protocol obscurities” as described in Section 2.2 Although the meaning of the Sequence number field is defined – the initial value is not. It is up to the implementer how the initial sequence number is chosen (e.g., randomly). The same is true for instance for the Window field used for congestion control. As the congestion control has a key influence on the overall performance of TCP, many attempts to optimise them are done e.g., by operating system manufactures. 
+%All these implementation depended information could be used for so called TCP/IP stack fingerprinting. The goal is to guess which TCP/IP stack and operating system is running on a remote machine. TCP/IP fingerprinting (as many other fingerprinting methods) can be done actively or passively; observing or modifying. A passive observing attempt would just listen on the networks links and tries to guess the TCP/IP stack from the eavesdropped data packets. An active observing attempt would also send data packets. The attacker would intelligently choose the data packets he sends to concluded as much information as possible from the remote host. But as it is still an observing attack the attacker would behave according to the protocol. Of course he could also violate the protocol rules. This typically gives him more possibilities for guessing the TCP/IP stack – but would make his attack also more obvious. 
+%The software Nmap (“Network Mapper”) is a well-known representative for tools which are able to do TCP/IP fingerprinting. According to the developers, Nmap currently has more than 1500 fingerprints in its database.
+%Of course the identifying information described above cannot only be used to guess the TCP/IP stack and operating system used but can also be used to link different TCP connections, especially if the guessed TCP/IP stack or operating system is a rather unusual one. Note that the information mentioned above can also be used to decide if TCP packets belong to the same TCP stream or not. Imagine for instance the situation that an attacker can monitor network traffic on different locations of the network whilst he cannot easily “follow” the TCP packets as an anonymisation service (operating at the IP layer) is used by the communication partners. Nevertheless chances are high that the attacker can still conclude who is communicating with whom just by looking at the TCP information. 
+ 
+%Personal data
+%The ports can leak information about the application used without looking at the data content. This is possible since there are standard ports used in the Internet, like port 25 for FTP, or port 80 for HTTP requests. If an application uses the Options field, this can contain personal information too, but this is very unlikely, since most application will use the Data field for such information. The Data field therefore can contain the most sensitive information, i.e., the application data.
+
 \subsection{Vyhody a nevyhody}
+TODO
+
 \section{Aplikačné identifikátory}
 Na aplikačnej úrovni je identifikácia užívateľa oveľa komplexnejším a do istej
 miery aj abstraktnejším procesom. Z pohľadu systému sú jeho používateľmi
@@ -480,10 +507,14 @@ priradenia účtu užívateľovi. Je pomocou nich preto následne možné presne
 sledovať jeho akcie a manipulovať s privilégiami.
 
 Tieto identifikátory sa však v abstrakcií komunikácie nachádzajú príliš vysoko,
-preto nie je pomocou nich možné ovplyvniť napríklad DoS útoky popísané v kapitole
-\ref{ch:dos}.
+preto nie je pomocou nich možné ovplyvniť napríklad DoS útoky popísané v
+kapitole \ref{ch:dos}.
 
 \section{Zhrnutie}
+Na identifikáciu užívateľa, prípadne jeho zariadenia je možné sú v súčasnosti
+používané rôzne techniky na rôznych vrstvách sieťovej infraštruktúry. Od IP
+adries sieťovej vrstvy cez atribút TCP protokolu až po komplexné aplikačné
+identifikátory.
 
 \chapter{Tvorba unikátneho identifikátoru}
 \label{ch:footprint}
@@ -492,7 +523,7 @@ preto nie je pomocou nich možné ovplyvniť napríklad DoS útoky popísané v 
 \section{Možnosti TCP}
 \section{Popis Algoritmu}
 
-\section{Záver}
+\chapter{Záver}
 
 \makeatletter\thesis@blocks@clear\makeatother
 \phantomsection %% Print the index and insert it into the
