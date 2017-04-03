@@ -495,7 +495,7 @@ preto možné dodatočne trasovať.
 
 \begin{figure}[h]
   \centering
-    \includegraphics[width=.80\textwidth]{images/tech-app.png}
+    \includegraphics[width=.99\textwidth]{images/tech-app.png}
   \caption{Grafické znázornenie procesu identifikácie užívateľa na aplikačnej
   úrovni a jeho následnej autentizácie}
   \label{fig:tech-app}
@@ -511,10 +511,13 @@ preto nie je pomocou nich možné ovplyvniť napríklad DoS útoky popísané v
 kapitole \ref{ch:dos}.
 
 \section{Zhrnutie}
-Na identifikáciu užívateľa, prípadne jeho zariadenia je možné sú v súčasnosti
+Na identifikáciu užívateľa, prípadne jeho zariadenia sú v súčasnosti
 používané rôzne techniky na rôznych vrstvách sieťovej infraštruktúry. Od IP
-adries sieťovej vrstvy cez atribút TCP protokolu až po komplexné aplikačné
-identifikátory.
+adries sieťovej vrstvy cez atribúty TCP protokolu až po komplexné aplikačné
+identifikátory. V praktickej časti tejto práce, ktorá sa zaoberá tvorbou
+unikátneho identifikátoru, bude použitá kombinácia informácií zo všetkých
+spomínaných vrstiev (IP adresy, informácie z HTTP a TCP protokolu, ...) tak,
+aby vznikol čo najpresnejší možný odtlačok aktivity jedného užívateľa.
 
 \chapter{Tvorba unikátneho identifikátoru}
 \label{ch:footprint}
