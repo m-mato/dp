@@ -8,7 +8,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import java.util.concurrent.Future;
 
 /**
- * @author Matej Majdis <matej.majdis@avg.com>
+ * @author Matej Majdis
  */
 public class RequestAsync {
 

@@ -1,7 +1,7 @@
 package com.mmajdis.ufoo.client;
 
 /**
- * @author Matej Majdis <matej.majdis@avg.com>
+ * @author Matej Majdis
  */
 public class ClientApplication {
 

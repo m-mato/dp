@@ -4,7 +4,7 @@ import com.mashape.unirest.http.HttpResponse;
 import java.util.concurrent.Future;
 
 /**
- * @author Matej Majdis <matej.majdis@avg.com>
+ * @author Matej Majdis
  */
 public class ActionRunner {
 
