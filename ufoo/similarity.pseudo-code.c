@@ -14,7 +14,7 @@ algorithm get-nearest-neigbour is
         # Addition analysis - manual checks based on Relation Data
         # Possibly can SLIGHTLY afffect distance 
 
-        if minDistance < acctualDistance then
+        if acctualDistance < minDistance then
             minDistance ← acctualDistance;
             nearestneigbour ← stockUFooEntity;
         end if
@@ -54,7 +54,7 @@ algorithm get-distance is
     attributesIndex ← attributesIndex * ATTR_WEIGHT
 
     # Final similarity value is computed as sum of weighted: staticHeaders, unknownHeaders and attributes
-    # Distance as 1 - sim value is returned
+    # Distance as 1 - sim value is returne
     similarity ← ∑(jaccardStaticHeaders,  jaccardUnknownHeaders, attributesIndex) / ∑(SH_WEIGHT, UH_WEIGHT, ATTR_WEIGHT)
 
     return 1 - similarity;
