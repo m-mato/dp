@@ -25,7 +25,7 @@ public class StandartTestController {
     public String resourceShort(final HttpServletRequest request) throws InterruptedException {
 
         final int low = 100;
-        final int high = 500;
+        final int high = 700;
         long timeout = getTimeout(low, high);
 
         TimeUnit.MILLISECONDS.sleep(timeout);
@@ -35,8 +35,8 @@ public class StandartTestController {
     @RequestMapping(value = "/medium", method = RequestMethod.GET)
     public String resourceMedium(final HttpServletRequest request) throws InterruptedException {
 
-        final int low = 400;
-        final int high = 1000;
+        final int low = 500;
+        final int high = 1500;
         long timeout = getTimeout(low, high);
 
         TimeUnit.MILLISECONDS.sleep(timeout);

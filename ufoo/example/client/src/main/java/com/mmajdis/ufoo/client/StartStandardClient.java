@@ -1,12 +1,14 @@
 package com.mmajdis.ufoo.client;
 
+import com.mmajdis.ufoo.client.request.StandardRequestAsync;
+
 /**
  * @author Matej Majdis
  */
-public class ClientApplication {
+public class StartStandardClient {
 
     public static void main(String[] args)  {
         ActionRunner actionRunner = new ActionRunner();
-        actionRunner.start(1000);
+        actionRunner.start(new StandardRequestAsync(), 1000);
     }
 }
