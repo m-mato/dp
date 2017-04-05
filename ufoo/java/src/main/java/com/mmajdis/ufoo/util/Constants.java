@@ -9,7 +9,7 @@ import java.util.Set;
  */
 public class Constants {
 
-    public static final int MAX_THREADS = 8;
+    public static final int MAX_THREADS = 4;
 
     public static final String GEO_IP_DB_PATH = "maxmind/GeoIP.mmdb";
 

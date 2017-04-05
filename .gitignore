@@ -28,10 +28,7 @@ ufoo/java/target/
 ufoo/example/client/.idea
 ufoo/example/client/*.iml
 ufoo/example/client/target/
-ufoo/example/sem/.idea
-ufoo/example/sem/*.iml
-ufoo/example/sem/target/
-ufoo/example/sem/*/.idea
-ufoo/example/sem/*/*.iml
-ufoo/example/sem/*/target/
+ufoo/example/server/.idea
+ufoo/example/server/*.iml
+ufoo/example/server/target/
 
