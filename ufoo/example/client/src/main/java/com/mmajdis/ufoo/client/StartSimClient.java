@@ -9,6 +9,6 @@ public class StartSimClient {
 
     public static void main(String[] args) {
         ActionRunner actionRunner = new ActionRunner();
-        actionRunner.start(new SimRequestAsync(), 2000000000);
+        actionRunner.start(new SimRequestAsync(), 1345446);
     }
 }

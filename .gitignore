@@ -32,3 +32,5 @@ ufoo/example/server/.idea
 ufoo/example/server/*.iml
 ufoo/example/server/target/
 
+ufoo/example/client/src/main/java/com/mmajdis/ufoo/client/HeaderParser.java
+
