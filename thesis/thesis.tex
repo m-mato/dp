@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[
-  digital, %% This option enables the default options for the
+  printed, %% This option enables the default options for the
            %% printed version of a document. Replace with `digital`
            %% to enable the default options for the digital version
            %% of a document.
@@ -183,20 +183,178 @@ klient (\textit{thincient}).
 
 Nasledujúce kapitoly tejto práce sa budú zaoberať jedným z najdôležitejších
 problémov Webových aplikácií, ktorým je identifikácia užívateľa. Najskôr kapitola
-\ref{ch:net-layers} analyzuje jednotlivé sieťové vrstvy a protokoly, ktorých
+\ref{ch:net-layers} popisuje jednotlivé sieťové vrstvy a protokoly, ktorých
 informácie je možné použiť ka následnej identifikácií. Ďalšou časťou je zhrnutie
 existujúcich prístupov k rozoznaniu užívateľov v kapitole \ref{ch:existing} a 
 popis útokov typu DOS v kapitole \ref{ch:dos}. Najdôležitejšou časťou je však
 samozrejme kapitola \ref{ch:footprint}, ktorá popisuje návrh samotného 
 algoritmu identifikátoru.
 
-\chapter{Analýza sieťových vrstiev a protokolov}
+\chapter{Sieťové vrstvy}
+Nasledujúca kapitola stručne popisuje jednotlivé sieťové vrstvy TCP/IP modelu a
+ich protokoly. Zameriava sa na štruktúry a informácie, ktorých pochopenie je
+dôležité pre ďalšie zložky teoretickej a praktickej časti práce. Ide najmä o
+konkrétne informácie jednotlivých protokolov skutočne použité v implementácií
+identifikačného algoritmu.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.80\textwidth]{images/net-layers.png}
+  \caption{Vizualizácia vrstiev TCP/IP modelu, jeho najpoužívanejších protokolov
+  a prenosových štruktúr, zdroj: vlastné spracovanie}
+  \label{fig:net-layers}
+\end{figure}
+
 \label{ch:net-layers}
-//TODO - Úvod
 \section{Aplikačná vrstva}
+Na vrchole hierarchie je Aplikačná vrstva abstrakciou, ktorá špecifikuje
+konkrétne protokoly a metódy používané hostiteľskými uzlami v sieti. Táto
+vrstva je definovaná jednak v TCP/IP ale aj OSI
+\textit{(Open Systems Interconnection)} modele sieťovej komunikácie.
+
+Táto práca narába s modelom TCP/IP, v ktorom aplikačná vrstva definuje práve
+protokoly a metódy rozhraní pre komunikáciu medzi jednotlivými procesmi
+spájaných strán v sieti. Samotná aplikačná vrstva však len štandardizuje formu
+komunikácie, pri čom ustálenie uceleného dátového spojenia a správu prenosu dát
+u aplikácií typu klient-server a \textit{peer-to-peer} ponecháva na protokoloch
+nasledujúcej - transportnej vrstvy. Keďže aplikačná vrstva nijakým spôsobom
+nepopisuje a nešpecifikuje konkrétne pravidlá pre formu prenášaných dát,
+aplikácie samotné musia obsahovať logiku, ktorá zabezpečí, že obe komunikujúce
+strany budú v tomto ohľade navzájom kompatibilné.
+
+Aplikačná vrstva definuje veľké množstvo protokolov, ako napríklad:
+\begin{itemize}
+	\item HTTP/HTTPS
+	\item TLS/SSL poskytujúci zabezpečenú vzdialenú komunikáciu po sieti
+	\item FTP využívaný na prenos súborov
+	\item SMTP určený pre emailovú komunikáciu
+	\item DNS realizujúci systém hierarchie doménovým mien, a iné...
+\end{itemize}
+Pri tvorbe identifikátoru sa však budeme venovať najmä informáciám z protokolov
+rodiny HTTP, konkrétne teda hlavičkám a atribútom HTTP a HTTPS.
+
+\subsection{HTTP}
+HTTP \textit{(Hypertext Transfer Protocol)} je distribuovaný protokol určený
+pre spoluprácu a prenos informácií medzi jednotlivými systémami určenými na
+prácu s hyper-médiami. Tento protokol je bez-stavový a vo všeobecnosti
+použiteľný nielen pre prenos hypertextu, ale aj správu DNS serverov, prípadne
+zložitejších objektov a systémov, v ktorých uplatní rozsiahlu škálu svojich
+hlavičiek a chybových hlášok. Charakteristickým znakom tohto protokolu je aj
+možnosť voľby reprezentácie dát, čo dáva systémom veľkú nezávislosť na
+prenášanom formáte.
+
+HTTP funguje na princípe požiadavku a odpovede \textit{(request - respone)}
+založenom na fungovaní samotného klient-server modelu. Klientom môže byť
+napríklad webový prehliadač, serverom zasa aplikácia spustená na počítači
+hostiteľského uzla. V tomto prípade teda webový prehliadač zašle správu vo
+forme HTTP požiadavku na server. V ideálnom prípade server tento požiadavok
+\textit{(request)} spracuje a vygeneruje odpoveď (napríklad HTML stránku),
+ktorú vráti klientovi ako správu vo formáte HTTP odpovede \textit{(response)}.
+Odpoveď pre klienta vždy obsahuje takzvaný \textit{(status)}, ktorý informuje o
+dokončení požiadavku a prípadne samotné telo so správou odpovede.
+
+Celá relácia HTTP spojenia medzi dvoma uzlami je teda sekvenciou niekoľkých
+takýchto \textit{(request - respone)} transakcií. Samotný prenos dát však nie
+je realizovaný na úrovni HTTP protokolu, ale prostredníctvom protokolu TCP
+na úrovni transportnej vrstvy. HTTP Klient iniciuje ustálenie TCP spojenia pre
+špecifický port serveru (typickými portmi sú 80, 443 alebo 8080). HTTP server
+počúva na danom porte a čaká na správu požiadavku klienta. Po prijatí správy ju
+už server štandardne spracuje a vráti odpoveď. 
+
+Klient a server komunikujú prostredníctvom zasielanie plain-textových správ.
+Požiadavok pozostáva z nasledujúcich informácií: 
+\begin{itemize}
+	\item Definícia požiadavku
+	\item HTTP hlavičky (napríklad: \textit{Accept-Language: en})
+	\item Prázdny riadok
+	\item Prípadné telo správy
+\end{itemize}
+
+Takisto správa odpovede má definovaný formát podobný formátu požiadavku, ktorý
+sa skladá z nasledujúcich položiek:
+\begin{itemize}
+	\item Status spracovania požiadavku a dôvod
+	\item HTTP hlavičky odpovede (napríklad: \textit{Content-Type: text/html})
+	\item Prázdny riadok
+	\item Prípadné telo správy odpovede
+\end{itemize}
+
+Prvý riadok definície a každá z hlavičiek musia byť zakončené znakmi
+\textit{<CR><LF>}
+(znak pre \textit{carriage return} nasledovaný znakom \textit{line feed}).
+Prázdny riadok musí zároveň pozostávať výlučne zo znakov \textit{<CR><LF>}.
+Z pohľadu identifikácie budú neskôr veľmi dôležité práve HTTP hlavičky. U HTTP
+verzie 1.1 je jedinou povinnou hlavičkou \textit{Host} definujúci server, na
+ktorý bol požiadavok odoslaný.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.80\textwidth]{images/net-http.png}
+  \caption{Príklad štruktúry HTTP požiadavku a odpovede}
+  \label{fig:net-http}
+\end{figure}
+
 \section{Transportná vrstva}
+%In computer networking, the transport layer is a conceptual division of methods in the layered architecture of protocols in the network stack in the Internet Protocol Suite and the Open Systems Interconnection (OSI). The protocols of the layer provide host-to-host communication services for applications.[1] It provides services such as connection-oriented data stream support, reliability, flow control, and multiplexing.
+
+%The best-known transport protocol of TCP/IP is the Transmission Control Protocol (TCP), and lent its name to the title of the entire suite. It is used for connection-oriented transmissions, whereas the connectionless User Datagram Protocol (UDP) is used for simpler messaging transmissions. TCP is the more complex protocol, due to its stateful design incorporating reliable transmission and data stream services. Other prominent protocols in this group are the Datagram Congestion Control Protocol (DCCP) and the Stream Control Transmission Protocol (SCTP).
+
+\subsection{Protokol TCP}
+%The Transmission Control Protocol (TCP) is one of the core protocols of the Internet protocol suite, supporting many important Internet protocols such as HTTP, FTP and POP3. TCP guarantees reliable (received packets are acknowledged by the receiver, else, they are sent again) and in-order (by the use of sequence numbers) packet delivery.
+K samotným dátam aplikačnej vrstvy preto TCP pripája ku každému paketu aj
+takazvanú TCP halvičku \textit{TCP Header}, ktorá ho dopĺňa o potrebné
+informácie.
+
+---
+TODO obrázok TCP header
+---
+
+%In order to send data via TCP, a connection between the sending and the receiving computer has to be established. A three-way handshake is used for this, as illustrated in Figure 7 which shows connection establishment, data exchange and two-sided connection termination. The termination of the session is realised by a handshake too.
+
+---
+TODO obrázok 3-way handshake
+---
+
+\subsection{Protokol UDP}
+%UDP is the abbreviation of User Datagram Protocol and is defined in the RFC 768. UDP offers fast but unreliable data transmission - packets may get lost without automatic retransmission. No guarantee of order is given by UDP either. Because of these features, UDP is a lightweight protocol, which delivers each packet independently of other packets. UDP contains no state, cf. Figure 10 which shows request and response being stateless and independent of each other. Thus it is often used for services where small packets have to be sent in a fast way to many clients (or servers). Services which use UDP are: DNS, streaming media like IPTV, Voice over IP, online games, etc.
+
+%UDP, like TCP, uses ports to allow “parallel” sending and receiving of data in application-to-application scenarios. It has to be noted that UDP and TCP ports exist independently of each other, meaning that a port of a computer can be used at the same time for a TCP socket (stream socket) and a UDP socket (datagram socket). The UDP header has a very simple layout as shown in Table 7. 
+
+%As can be seen, a UDP packet is noticeable smaller than a TCP packet, and so such a packet can be processed faster than a TCP packet. But it is also evident that the lack of most of the TCP packet control fields leads to a loss of functionality. 
+
+---
+TODO obrázok UDP header
+---
+
 \section{Sieťová vrstva}
+%The internet layer is a group of internetworking methods, protocols, and specifications in the Internet protocol suite that are used to transport datagrams (packets) from the originating host across network boundaries, if necessary, to the destination host specified by a network address (IP address) which is defined for this purpose by the Internet Protocol (IP). The internet layer derives its name from its function of forming an internet (uncapitalized), or facilitating internetworking, which is the concept of connecting multiple networks with each other through gateways.
+
+%Internet-layer protocols use IP-based packets. The internet layer does not include the protocols that define communication between local (on-link) network nodes which fulfill the purpose of maintaining link states between the local nodes, such as the local network topology, and that usually use protocols that are based on the framing of packets specific to the link types. Such protocols belong to the link layer.
+
+\subsection{Protokol IP}
+%The Internet Protocol is responsible for addressing hosts and for routing datagrams (packets) from a source host to a destination host across one or more IP networks. For this purpose, the Internet Protocol defines the format of packets and provides an addressing system that has two functions: Identifying hosts and providing a logical location service
+
+---
+TODO obrázok IP header
+---
+
+%There are two versions of the Internet Protocol (IP): IP version 4 and IP version 6. Each version defines an IP address differently. An IP address in IPv4 is 32-bits in size, which limits the address space to 4294967296 (232) IP addresses. Of this number, IPv4 reserves some addresses for special purposes such as private networks (~18 million addresses) or multicast addresses (~270 million addresses). The rapid exhaustion of IPv4 address space prompted the Internet Engineering Task Force (IETF) to explore new technologies to expand the addressing capability in the Internet. The permanent solution was deemed to be a redesign of the Internet Protocol itself. This new generation of the Internet Protocol was eventually named Internet Protocol Version 6 (IPv6) in 1995.[2][3] The address size was increased from 32 to 128 bits (16 octets), thus providing up to 2128 (approximately 3.403×1038) addresses. This is deemed sufficient for the foreseeable future.
+
 \section{Vrstva sieťového rozhrania}
+Vrstva sieťového rozhrania funguje v TCP/IP modeli na najnižšej úrovni.
+Táto vrstva popisuje samotnú sieťovú architektúru a jej komunikáciu na úrovni
+fyzického pripojenia. Ide o skupinu metód a komunikačných protokolov, ktoré 
+teda operujú na fyzickom spojení dvoch uzlov.
+
+Niektorými z jej dôležitých protokolov sú: ARP
+\textit{(Address Resolution Protocol)}, RARP
+\textit{(Reverse Address Resolution Protocol)},
+NDP \textit{(Neighbor Discovery Protocol)}, OSPF
+\textit{(Open Shortest Path First)} a iné.
+
+Informácie týchto protokolov však operujú na príliš nízkej úrovni sieťovej
+infraštruktúry, preto ich nebude možné využiť pri identifikácií. V prehľade je 
+teda vrstva sieťového rozhrania uvedené len pre úplnosť.
 
 \chapter{Útoky typu \textit{Denial of Service}}
 \label{ch:dos}
@@ -398,7 +556,7 @@ Identifikácia na základe IP adresy preto v tomto prípade stráca význam.
   \centering
     \includegraphics[width=.99\textwidth]{images/tech-IP-NAT.png}
   \caption{Vizualizácia rozloženia IP adresového priestoru pri použití techniky
-  prekladu \textit{NAT}}
+  prekladu \textit{NAT}, zdroj: vlastné spracovanie}
   \label{fig:tech-IP-NAT}
 \end{figure}
 
@@ -497,7 +655,7 @@ preto možné dodatočne trasovať.
   \centering
     \includegraphics[width=.99\textwidth]{images/tech-app.png}
   \caption{Grafické znázornenie procesu identifikácie užívateľa na aplikačnej
-  úrovni a jeho následnej autentizácie}
+  úrovni a jeho následnej autentizácie, zdroj: vlastné spracovanie}
   \label{fig:tech-app}
 \end{figure}
 
