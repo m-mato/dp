@@ -23,12 +23,16 @@ class Parser {
 
         final Long id = parse(parsed[1], "id ", ',');
         final Long ipLength = parse(parsed[1], "length", ')');
-        final Long tcpLength = parse(parsed[1], "length ", true, ',');
+        final Long tcpLength = parse(parsed[1], "length", true, ',');
         final Long tcpWindow = parse(parsed[1], "win ", ',');
 
-        final String IP = parseIP(parsed[1]);
+        String IP = parseIP(parsed[1]);
         if (IP == null) {
             return null;
+        }
+        if(IP.matches(".*\\..*\\..*\\..*\\..*")) {
+            int lastDot = IP.lastIndexOf(".");
+            IP = IP.substring(0, lastDot);
         }
 
         return new AbstractMap.SimpleEntry<>(IP, new TCPFootprint(id, timestamp, ipLength, tcpLength, tcpWindow));

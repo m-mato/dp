@@ -18,7 +18,7 @@ public class Constants {
     public static final int MAX_UNKNOWN_HEADERS = 10;
     public static final String UNDEFINED = "<->";
 
-    public static final long MAX_HIGH_FREQUENT_REQ_MILIS = 2000;
+    public static final long MAX_HIGH_FREQUENT_REQ_SEC = 30;
 
     public static final String SEPARATOR = "|";
 
@@ -39,4 +39,6 @@ public class Constants {
     public static final Set<String> UNTRUSTED_COUNTRIES = new HashSet<>(Arrays.asList(UNTRUSTED_COUNTRIES_ARRAY));
 
     public static final double DISTANCE_THRESHOLD = 0.35;
+
+    public static final boolean TESTING_MODE = true;
 }
