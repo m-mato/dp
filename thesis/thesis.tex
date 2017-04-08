@@ -191,6 +191,7 @@ samozrejme kapitola \ref{ch:footprint}, ktorá popisuje návrh samotného
 algoritmu identifikátoru.
 
 \chapter{Sieťové vrstvy}
+\label{ch:net-layers}
 Nasledujúca kapitola stručne popisuje jednotlivé sieťové vrstvy TCP/IP modelu a
 ich protokoly. Zameriava sa na štruktúry a informácie, ktorých pochopenie je
 dôležité pre ďalšie zložky teoretickej a praktickej časti práce. Ide najmä o
@@ -205,7 +206,6 @@ identifikačného algoritmu.
   \label{fig:net-layers}
 \end{figure}
 
-\label{ch:net-layers}
 \section{Aplikačná vrstva}
 Na vrchole hierarchie je Aplikačná vrstva abstrakciou, ktorá špecifikuje
 konkrétne protokoly a metódy používané hostiteľskými uzlami v sieti. Táto
@@ -295,50 +295,136 @@ ktorý bol požiadavok odoslaný.
 \end{figure}
 
 \section{Transportná vrstva}
-%In computer networking, the transport layer is a conceptual division of methods in the layered architecture of protocols in the network stack in the Internet Protocol Suite and the Open Systems Interconnection (OSI). The protocols of the layer provide host-to-host communication services for applications.[1] It provides services such as connection-oriented data stream support, reliability, flow control, and multiplexing.
+V kontexte TCP/IP modelu sieťovej komunikácie sa transportná vrstva nachádza
+ako druhá v poradí medzi aplikačnou a sieťovou vrstvou. Ide o súbor protokolov
+a metód, ktoré poskytujú takzvanú \textit{host-to-host} komunikáciu
+jednotlivých sieťových uzlov protokolom vyššie popísanej aplikačnej vrstvy.
+Konkrétne implementuje funkcionalitu samotného prenosu dát v dátovom toku,
+zabezpečuje jeho spoľahlivosť, riadenie a multiplexovanie. 
 
-%The best-known transport protocol of TCP/IP is the Transmission Control Protocol (TCP), and lent its name to the title of the entire suite. It is used for connection-oriented transmissions, whereas the connectionless User Datagram Protocol (UDP) is used for simpler messaging transmissions. TCP is the more complex protocol, due to its stateful design incorporating reliable transmission and data stream services. Other prominent protocols in this group are the Datagram Congestion Control Protocol (DCCP) and the Stream Control Transmission Protocol (SCTP).
+Medzi najznámejšie protokoly tejto vrstvy patrí napríklad TCP
+\textit{(Transmission Control Protocol)}, ktorého názov nesie aj samotný
+sieťový model. Tento protokol je orientovaný na prenos zložitejších spojení,
+naproti čomu druhý z protokolov - UDP \textit{(User Datagram Protocol )} je
+vhodný a používaný skôr pre jednoduchšie správy a spojenia. Protokol TCP je
+komplexnejší najmä kvôli svojmu návrhu, ktorý uchováva stav jednotlivých
+transakcií a zabezpečuje spoľahlivosť doručenia dátových správ. Ďalšími
+významnými protokolmi transportnej vrstvy sú DCCP
+\textit{(Datagram Congestion Control Protocol)} využívaný napríklad pri prenose
+multimédií, alebo SCTP \textit{(Stream Control Transmission Protocol)}, ktorý
+sa zaoberá prenosom telefónnej signalizácie.
 
 \subsection{Protokol TCP}
-%The Transmission Control Protocol (TCP) is one of the core protocols of the Internet protocol suite, supporting many important Internet protocols such as HTTP, FTP and POP3. TCP guarantees reliable (received packets are acknowledged by the receiver, else, they are sent again) and in-order (by the use of sequence numbers) packet delivery.
-K samotným dátam aplikačnej vrstvy preto TCP pripája ku každému paketu aj
-takazvanú TCP halvičku \textit{TCP Header}, ktorá ho dopĺňa o potrebné
-informácie.
+TCP je jeden z najdôležitejších a najpoužívanejších protokolov celého sieťového
+modelu. Pracuje s ním množstvo ďalších protokolov aplikačnej vrstvy ako
+napríklad: HTTP, FTP alebo POP3. Jeho najdôležitejšou charakteristikou je
+pravdepodobne garancia kompletného doručenia všetkých paketov v správnom
+poradí. K samotným dátam aplikačnej vrstvy preto TCP pripája ku každému paketu
+aj takzvanú TCP hlavičku \textit{TCP Header}, ktorá ho dopĺňa o informácie
+potrebné pre dosiahnutie tejto funkcionality.
 
----
-TODO obrázok TCP header
----
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.80\textwidth]{images/net-tcp-head.png}
+  \caption{Schéma popisujúca štruktúru TCP hlavičky a informácií, ktoré sú v
+  nej uložené}
+  \label{fig:net-tcp-head}
+\end{figure}
 
-%In order to send data via TCP, a connection between the sending and the receiving computer has to be established. A three-way handshake is used for this, as illustrated in Figure 7 which shows connection establishment, data exchange and two-sided connection termination. The termination of the session is realised by a handshake too.
+Niektoré informácie týchto hlavičiek sú využívané jednak u existujúcich
+nástrojov na identifikáciu užívateľov, ktorým sa podrobne venuje kapitola
+\ref{ch:existing}. Ich vyžitie v algoritme identifikátoru tejto práce následne
+popisuje kapitola \ref{ch:footprint}.
 
----
-TODO obrázok 3-way handshake
----
+Aby mohlo dôjsť k samotnému odoslaniu požadovaných dát, musí byť medzi klientom
+a hostiteľom ustálené TCP spojenie. Ustálenie aj ukončenie tohto spojenia má
+presne definovanú formu komunikácie nazývanú \textit{three-way handshake}, ktorú
+popisuje nasledujúci diagram.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.80\textwidth]{images/net-tcp-flow.png}
+  \caption{\textit{Three-way handshake} v TCP}
+  \label{fig:net-tcp-flow}
+\end{figure}
 
 \subsection{Protokol UDP}
-%UDP is the abbreviation of User Datagram Protocol and is defined in the RFC 768. UDP offers fast but unreliable data transmission - packets may get lost without automatic retransmission. No guarantee of order is given by UDP either. Because of these features, UDP is a lightweight protocol, which delivers each packet independently of other packets. UDP contains no state, cf. Figure 10 which shows request and response being stateless and independent of each other. Thus it is often used for services where small packets have to be sent in a fast way to many clients (or servers). Services which use UDP are: DNS, streaming media like IPTV, Voice over IP, online games, etc.
+UDP je na rozdiel od TCP protokolom, ktorý poskytuje takzvaný nespoľahlivý
+prenos dát medzi uzlami. Táto nespoľahlivosť spočíva v stratovosti jednotlivých
+paketov počas prenosu dát bez možnosti automatického preposielania stratených
+informácií. UDP zároveň negarantuje žiadne poradie ich doručenia. Vďaka týmto
+vlastnostiam je tento protokol veľmi rýchly a jednoduchý, pričom doručuje
+pakety nezávisle a v pomerne krátkom čase. Ďalšou z jeho typických vlastností
+je bezstavovosť, vďaka ktorej ho využívajú najmä systémy, ktoré odosielajú
+veľké množstvo malých paketov viacerým príjemcom. Ide napríklad o: DNS servery,
+IPTV médiá, online hry a podobne.
 
-%UDP, like TCP, uses ports to allow “parallel” sending and receiving of data in application-to-application scenarios. It has to be noted that UDP and TCP ports exist independently of each other, meaning that a port of a computer can be used at the same time for a TCP socket (stream socket) and a UDP socket (datagram socket). The UDP header has a very simple layout as shown in Table 7. 
+Hlavička UDP protokolu je veľmi jednoduchá a pozostáva len z nevyhnutných
+informácií ako číslo portu odosielateľa, dĺžka paketu a špecifikácia portu
+príjemcu. Preto je aj samotný UDP paket znateľne menší ako paket TCP, čo
+taktiež napomáha rýchlosti jeho prenosu a spracovania. Keďže však UDP poskytuje
+len minimálne množstvo informácií jeho využitie pri identifikácií je minimálne.
 
-%As can be seen, a UDP packet is noticeable smaller than a TCP packet, and so such a packet can be processed faster than a TCP packet. But it is also evident that the lack of most of the TCP packet control fields leads to a loss of functionality. 
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.80\textwidth]{images/net-udp-head.png}
+  \caption{Schéma popisujúca štruktúru UDP hlavičky a informácií}
+  \label{fig:net-udp-head}
+\end{figure}
 
----
-TODO obrázok UDP header
----
+Napriek tomu, že tieto dva protokoly sú pomerne odlišné a slúžia na rôzne
+účely, ich spoločnou funkcionalitou je použitie portov pre identifikáciu
+aplikácií komunikujúcich strán. Porty pre TCP a UDP sú na sebe navzájom
+nezávislé, čo prináša možnosť komunikácie jedného zariadenie zároveň v TCP aj
+UDP kontexte.
 
 \section{Sieťová vrstva}
-%The internet layer is a group of internetworking methods, protocols, and specifications in the Internet protocol suite that are used to transport datagrams (packets) from the originating host across network boundaries, if necessary, to the destination host specified by a network address (IP address) which is defined for this purpose by the Internet Protocol (IP). The internet layer derives its name from its function of forming an internet (uncapitalized), or facilitating internetworking, which is the concept of connecting multiple networks with each other through gateways.
+Sieťová vrstva je skupina internetových metód, protokolov a špecifikácií, ktorá
+v sieťovom modely TCP/IP slúži (transportnej vrstve) na prenos datagramov
+(paketov) od odosielateľa, cez jednotlivé sieťové rozhrania až k príjemcovi.
+Každý z uzlov v sieti je na sieťovej vrstve identifikovaný takzvanou IP
+\textit{(Internte Protocol)} adresou. Táto vrstva teda odvodzuje svoj názov od
+svojej hlavnej funkcionality, ktorou je formovanie a tvorba pripojenia k
+internetovej sieti prostredníctvom navzájom prepojených uzlov.
 
-%Internet-layer protocols use IP-based packets. The internet layer does not include the protocols that define communication between local (on-link) network nodes which fulfill the purpose of maintaining link states between the local nodes, such as the local network topology, and that usually use protocols that are based on the framing of packets specific to the link types. Such protocols belong to the link layer.
+Protokoly sieťovej vrstvy pracujú s paketmi založenými na IP adresách
+jednotlivých zariadení. Jednoznačne najznámejším protokolom tejto vrstvy je už
+spomínaný IP \textit{(Internte Protocol)}, sieťová vrstva však definuje aj iné
+dôležite protokoly ako napríklad: ICMP
+\textit{(Internet Control Message Protocol)}, ktorý slúži na odosielanie
+chybových správ operačnými systémami, alebo IGMP
+\textit{(Internet Group Management Protocol)}pre podporu multicastu smerovačov.
+Sieťová vrstva však neobsahuje žiadne protokoly, ktoré definujú komunikáciu na
+úrovni lokálnej podsiete a fyzických spojení.
 
 \subsection{Protokol IP}
-%The Internet Protocol is responsible for addressing hosts and for routing datagrams (packets) from a source host to a destination host across one or more IP networks. For this purpose, the Internet Protocol defines the format of packets and provides an addressing system that has two functions: Identifying hosts and providing a logical location service
+IP protokol sieťovej vrstvy je zodpovedný za adresáciu hostiteľského uzlu a
+prenos datagramu (paketu) od odosielateľa k príjemcovi cez jednu, alebo viacero
+IP sietí. Pre tento účel definuje IP vlastný formát hlavičky paketov, čím
+poskytuje logiku jednoznačnej identifikácie v rámci siete. Štruktúru hlavičky
+IP paketu znázorňuje nasledujúci diagram.
 
----
-TODO obrázok IP header
----
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.80\textwidth]{images/net-ip-head.png}
+  \caption{Schéma popisujúca štruktúru hlavičky IP protokolu}
+  \label{fig:net-ip-head}
+\end{figure}
 
-%There are two versions of the Internet Protocol (IP): IP version 4 and IP version 6. Each version defines an IP address differently. An IP address in IPv4 is 32-bits in size, which limits the address space to 4294967296 (232) IP addresses. Of this number, IPv4 reserves some addresses for special purposes such as private networks (~18 million addresses) or multicast addresses (~270 million addresses). The rapid exhaustion of IPv4 address space prompted the Internet Engineering Task Force (IETF) to explore new technologies to expand the addressing capability in the Internet. The permanent solution was deemed to be a redesign of the Internet Protocol itself. This new generation of the Internet Protocol was eventually named Internet Protocol Version 6 (IPv6) in 1995.[2][3] The address size was increased from 32 to 128 bits (16 octets), thus providing up to 2128 (approximately 3.403×1038) addresses. This is deemed sufficient for the foreseeable future.
+Zrejme najzaujímavejšou informáciu z hľadiska identifikácie bude samotná IP
+adresa, ktorá okrem identifikácie zariadenia poskytuje aj informáciu o
+približnej polohe uzlu ktorému bola priradené. Podrobne sa problematike
+identifikácie pomocou IP adries venuje kapitola \ref{ch:existing}. 
+
+V skutočnosti existujú dve verzie IP protokolu: IP verzie 4 a IP verzie 6.
+Každá z týchto verzií definuje štruktúru IP adries rozdielne. IP adresy v IPv4
+sú 32 bitové, čo obmedzuje ich počet na približne 4,2 miliardy adries. Z tohto
+počtu sú niektoré konkrétne adresy rezervované na špeciálne účely ako napríklad
+privátne siete (~18 miliónov adries), alebo adresy určené pre multicast
+(~270 miliónov). Rapídny pokles počtu voľných IPv4 adries preto vyústil do
+rozšírenia protokolu o IPv6. IPv6 definuje 128 bitové adresy, z čoho vyplýva,
+že poskytne 3.4x1038 adries. Tento počet by mal byť do budúcna viac ako
+dostačujúci.
 
 \section{Vrstva sieťového rozhrania}
 Vrstva sieťového rozhrania funguje v TCP/IP modeli na najnižšej úrovni.
@@ -361,7 +447,7 @@ teda vrstva sieťového rozhrania uvedené len pre úplnosť.
 Jedným z hlavných dôvodov identifikácie užívateľov je prevencia proti útokom. Medzi
 najznámejšie z útokov patrí tzv. \textit{Denial of Service}, ďalej len \textit{DoS}.
 
-Vo všeobecnosti je za \textit{DoS} útok považovaná snaha utočníka zabrániť oprávneným
+Vo všeobecnosti je za \textit{DoS} útok považovaná snaha útočníka zabrániť oprávneným
 užívateľom v prístupe k informáciám, prípadne službám poskytovateľa. Snahou útočníka
 je znefunkčniť pripojenie neustálym narúšaním služby serveru, prípadne sieťovej
 infraštruktúry, v dôsledku čoho môže dôjsť k čiastočnej, či úplnej strate
