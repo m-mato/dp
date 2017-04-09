@@ -42,7 +42,7 @@ public class UFooProcessor {
         this.uFooStock = uFooStock;
     }
 
-    public Result analyze(HTTPFootprint httpFootprint) {
+    public synchronized Result analyze(HTTPFootprint httpFootprint) {
 
         Set<TCPFootprint> tcpFootprints;
         if (packetStream == null) {
@@ -79,7 +79,7 @@ public class UFooProcessor {
     }
 
     private long getAlertThreshold(UFooEntity.RelationData relationData) {
-        long threshold = 50;
+        long threshold = 3000;
         if (Constants.UNTRUSTED_COUNTRIES.contains(relationData.getCountry())) {
             return threshold - (threshold / 3);
         }
