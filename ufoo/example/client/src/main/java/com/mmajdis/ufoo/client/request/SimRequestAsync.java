@@ -45,7 +45,7 @@ public class SimRequestAsync implements RequestAsync {
     @Override
     public Future<HttpResponse<String>> compose() {
         Map<String, String> actualHeaders = HEADERS_GROUPS.get(Math.abs(new Random().nextInt()) % HEADERS_GROUPS.size());
-        return Unirest.get("http://127.0.0.1:8060/test/sim")
+        return Unirest.get("http://192.168.56.2:8060/test/sim")
                 .headers(actualHeaders)
                 .asStringAsync(new Callback<String>() {
 
