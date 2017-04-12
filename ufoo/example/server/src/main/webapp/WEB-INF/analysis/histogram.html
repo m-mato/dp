@@ -1,0 +1,53 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://rawgit.com/mholt/PapaParse/master/papaparse.min.js"></script>
+    <script type="text/javascript">
+
+        google.charts.load("current", {packages: ["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var parsed;
+            Papa.parse("distances.csv", {
+                download: true,
+                complete: function (results) {
+                    console.log(results);
+                    console.log("All done!");
+
+
+                    var data = google.visualization.arrayToDataTable(results.data);
+
+                    var options = {
+                        title: 'Approximating Normal Distribution',
+                        legend: {position: 'none'},
+                        colors: ['#4285F4'],
+
+                        chartArea: {width: 720},
+                        hAxis: {
+                            ticks: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
+                        },
+                        bar: {gap: 0},
+
+                        histogram: {
+                            bucketSize: 0.02,
+                            maxNumBuckets: 200,
+                            minValue: 0,
+                            maxValue: 1
+                        }
+                    };
+
+                    var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
+                    chart.draw(data, options);
+
+                    console.log("All done 2!");
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div id="chart_div" style="width: 1280px; height: 720px;"></div>
+</body>
+</html>

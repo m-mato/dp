@@ -1,16 +1,10 @@
 package com.mmajdis.ufoo.server.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
-import javax.validation.groups.Default;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 

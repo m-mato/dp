@@ -12,7 +12,13 @@ import com.mmajdis.ufoo.util.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Matej Majdis
@@ -35,11 +41,14 @@ public class UFooProcessor {
 
     private UFooStock uFooStock;
 
+    private List<String> distances;
+
     public UFooProcessor(PacketStream packetStream, Serializer serializer, FootprintSimilarityService footprintSimilarityService, UFooStock uFooStock) {
         this.packetStream = packetStream;
         this.serializer = serializer;
         this.footprintSimilarityService = footprintSimilarityService;
         this.uFooStock = uFooStock;
+        this.distances = new ArrayList<>();
     }
 
     public synchronized Result analyze(HTTPFootprint httpFootprint) {
@@ -56,6 +65,11 @@ public class UFooProcessor {
             MatchResponse response = footprintSimilarityService.getNearestNeighbour(uFooEntity);
 
             //TODO apply relation data
+
+            if (Constants.TESTING_MODE) {
+                markDistance(httpFootprint.getRequestInfo().getClientIp(), response.getDistance());
+            }
+
             if (response.getDistance() >= Constants.DISTANCE_THRESHOLD) {
                 uFooStock.addFirst(uFooEntity);
                 LOGGER.info("---> New UFoo created, distance: {}", response.getDistance());
@@ -75,6 +89,21 @@ public class UFooProcessor {
         } catch (Exception ex) {
             LOGGER.error("Error while processing UFoo for: {}", httpFootprint);
             return Result.ERROR;
+        }
+    }
+
+    private void markDistance(String ip, double distance) {
+        distances.add(ip + "," + String.valueOf(distance));
+        if (distances.size() > 9) {
+            try (FileWriter writer = new FileWriter("./src/main/webapp/analysis/distances.csv", true)) {
+                String collect = distances.stream().collect(Collectors.joining("\n"));
+                writer.write(collect);
+                writer.close();
+            } catch (IOException e) {
+                LOGGER.warn("Can not write output distances !");
+                return;
+            }
+            distances.clear();
         }
     }
 
