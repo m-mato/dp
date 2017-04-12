@@ -97,6 +97,7 @@ public class UFooProcessor {
         if (distances.size() > 9) {
             try (FileWriter writer = new FileWriter("./src/main/webapp/analysis/distances.csv", true)) {
                 String collect = distances.stream().collect(Collectors.joining("\n"));
+                writer.write("\n");
                 writer.write(collect);
                 writer.close();
             } catch (IOException e) {

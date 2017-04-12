@@ -15,8 +15,9 @@ public class StandardRequestAsync implements RequestAsync {
 
     public Future<HttpResponse<String>> compose() {
         final String resource = getRandomResource();
-        Future<HttpResponse<String>> future = Unirest.get("http://192.168.56.2:8060" + resource)
+        Future<HttpResponse<String>> future = Unirest.get("http://127.0.0.1:8060" + resource)
                 .header("accept", "application/json")
+                //TODO .header("X-FORWARDED-FOR", "124.2.3.12")
                 .asStringAsync(new Callback<String>() {
 
                     @Override

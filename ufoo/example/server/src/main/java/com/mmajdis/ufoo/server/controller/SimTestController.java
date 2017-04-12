@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/test")
 public class SimTestController {
 
-    @RequestMapping(value = "/sim", method = RequestMethod.GET)
+    @RequestMapping(value = "/sim", method = RequestMethod.POST)
     public String sim(final HttpServletRequest request) throws InterruptedException {
 
         final int low = 100;

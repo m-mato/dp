@@ -27,7 +27,7 @@ public class SimRequestAsync implements RequestAsync {
         String content;
         List<List<String>> headersGroupsSet = new ArrayList<>();
         try {
-            content = new String(Files.readAllBytes(Paths.get("C:\\Users\\matej.majdis\\Downloads\\headers-groups.json")));
+            content = new String(Files.readAllBytes(Paths.get("C:\\Users\\matej.majdis\\Downloads\\headers-groups4.json")));
             headersGroupsSet = GSON.fromJson(content, headersGroupsSet.getClass());
             headersGroupsSet.forEach(set -> {
                 Map<String, String> mappedGroup = new HashMap<>();
@@ -44,14 +44,15 @@ public class SimRequestAsync implements RequestAsync {
 
     @Override
     public Future<HttpResponse<String>> compose() {
-        Map<String, String> actualHeaders = HEADERS_GROUPS.get(Math.abs(new Random().nextInt()) % HEADERS_GROUPS.size());
-        return Unirest.get("http://192.168.56.2:8060/test/sim")
+        int actual = Math.abs(new Random().nextInt()) % HEADERS_GROUPS.size();
+        Map<String, String> actualHeaders = HEADERS_GROUPS.get(actual);
+        return Unirest.post("http://127.0.0.1:8060/test/sim")
                 .headers(actualHeaders)
                 .asStringAsync(new Callback<String>() {
 
                     @Override
                     public void completed(HttpResponse<String> httpResponse) {
-                        System.out.println("SIM - The future has completed successfully");
+                        System.out.println("SIM - The future has completed successfully for headers set: " + actual);
                     }
 
                     @Override
