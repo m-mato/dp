@@ -73,7 +73,13 @@ class Parser {
             substr = substr.substring(0, substr.length() - 1);
         }
 
-        return Long.valueOf(substr);
+        Long value;
+        try {
+            value = Long.valueOf(substr);
+        } catch (NumberFormatException ex) {
+            return null;
+        }
+        return value;
     }
 
     private Long parseTimestamp(String infoPart) {
