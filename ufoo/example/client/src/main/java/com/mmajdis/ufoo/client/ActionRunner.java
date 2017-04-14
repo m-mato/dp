@@ -13,7 +13,7 @@ public class ActionRunner {
     private ExecutorService executor;
 
     public ActionRunner() {
-        executor = Executors.newFixedThreadPool(8);
+        executor = Executors.newFixedThreadPool(4);
     }
 
     public void start(RequestAsync requestAsync, int times) {

@@ -7,8 +7,8 @@ import com.mmajdis.ufoo.client.request.StandardRequestAsync;
  */
 public class StartStandardClient {
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
         ActionRunner actionRunner = new ActionRunner();
-        actionRunner.start(new StandardRequestAsync(), 1000);
+        actionRunner.start(new StandardRequestAsync(), Constants.STANDARD_COUNT);
     }
 }
