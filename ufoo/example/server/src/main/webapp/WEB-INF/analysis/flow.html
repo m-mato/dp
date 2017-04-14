@@ -12,30 +12,23 @@
             Papa.parse("distances.csv", {
                 download: true,
                 complete: function (results) {
-                    console.log(results);
 
+                    var arrayLength = results.data.length;
+                    for (var i = 1; i < arrayLength; i++) {
+                        results.data[i][0]=null;
+                        results.data[i][1]=parseFloat(results.data[i][1]);
+                    }
                     var data = google.visualization.arrayToDataTable(results.data);
 
                     var options = {
-                        title: 'Approximating Normal Distribution of Distance',
-                        legend: {position: 'none'},
-                        colors: ['#4285F4'],
-
+                        title: 'Flow of Requests Distances in time',
+                        curveType: 'function',
                         chartArea: {width: 720},
-                        hAxis: {
-                            ticks: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
-                        },
-                        bar: {gap: 0},
-
-                        histogram: {
-                            bucketSize: 0.02,
-                            maxNumBuckets: 200,
-                            minValue: 0,
-                            maxValue: 1
-                        }
+                        legend: { position: 'none' }
                     };
 
-                    var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
+                    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
                     chart.draw(data, options);
                 }
             });
@@ -43,6 +36,6 @@
     </script>
 </head>
 <body>
-<div id="chart_div" style="width: 1280px; height: 720px;"></div>
+<div id="curve_chart" style="width: 1280px; height: 720px;"></div>
 </body>
 </html>

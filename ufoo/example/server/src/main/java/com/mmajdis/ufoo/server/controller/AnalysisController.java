@@ -14,8 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 public class AnalysisController {
 
     @RequestMapping(value = "/histogram", method = RequestMethod.GET)
-    public String test(final HttpServletRequest request) throws InterruptedException {
+    public String histogram(final HttpServletRequest request) throws InterruptedException {
 
         return "analysis/histogram";
+    }
+
+    @RequestMapping(value = "/flow", method = RequestMethod.GET)
+    public String flow(final HttpServletRequest request) throws InterruptedException {
+
+        return "analysis/flow";
     }
 }
