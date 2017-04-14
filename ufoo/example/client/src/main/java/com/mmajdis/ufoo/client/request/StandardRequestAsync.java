@@ -19,6 +19,7 @@ public class StandardRequestAsync implements RequestAsync {
 
     public Future<HttpResponse<String>> compose() {
         final String resource = getRandomResource();
+        //TODO repeat values
         String classAorBorCIP = MockNeat.threadLocal().ipv4s().types(CLASS_A, CLASS_B).val();
         Future<HttpResponse<String>> future = Unirest.get("http://192.168.56.2:8060" + resource)
                 .header("accept", "application/json")
