@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/test")
 public class StandartTestController {
 
-    @RequestMapping(value = "/short", method = RequestMethod.GET)
+    @RequestMapping(value = "/short", method = RequestMethod.POST)
     public String resourceShort(final HttpServletRequest request) throws InterruptedException {
 
         final int low = 100;
@@ -26,7 +26,7 @@ public class StandartTestController {
         return "OK !";
     }
 
-    @RequestMapping(value = "/medium", method = RequestMethod.GET)
+    @RequestMapping(value = "/medium", method = RequestMethod.POST)
     public String resourceMedium(final HttpServletRequest request) throws InterruptedException {
 
         final int low = 500;
@@ -37,7 +37,7 @@ public class StandartTestController {
         return "OK !";
     }
 
-    @RequestMapping(value = "/long", method = RequestMethod.GET)
+    @RequestMapping(value = "/long", method = RequestMethod.POST)
     public String resourceLong(final HttpServletRequest request) throws InterruptedException {
 
         final int low = 1000;

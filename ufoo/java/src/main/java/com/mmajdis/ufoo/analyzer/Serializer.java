@@ -76,6 +76,7 @@ public class Serializer {
             if (headerValue != null && !headerValue.isEmpty()) {
                 stringJoiner.add(headerValue);
                 headers.remove(header);
+                headers.remove(header.toLowerCase());
             } else {
                 stringJoiner.add(UNDEFINED);
             }

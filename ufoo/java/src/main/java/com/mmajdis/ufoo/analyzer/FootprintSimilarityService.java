@@ -43,13 +43,9 @@ public class FootprintSimilarityService {
 
         for (UFooEntity stockUFooEntity : uFooStock.getUFooStock().keySet()) {
             double newDistance;
-            if (!stockUFooEntity.getStaticData().equals(uFooEntity.getStaticData())) {
-                newDistance = computeDistance(attributes, actualStaticHeaders, actualUnknownHeaders, stockUFooEntity.getStaticData());
-            } else {
-                newDistance = 0;
-            }
+            newDistance = computeDistance(attributes, actualStaticHeaders, actualUnknownHeaders, stockUFooEntity.getStaticData());
 
-            long highFreqReq = (uFooEntity.getRelationData().getTimestamp() == -1 || stockUFooEntity.getRelationData().getTimestamp()==-1)
+            long highFreqReq = (uFooEntity.getRelationData().getTimestamp() == -1 || stockUFooEntity.getRelationData().getTimestamp() == -1)
                     ? Constants.MAX_HIGH_FREQUENT_REQ_SEC + 1
                     : Math.abs(uFooEntity.getRelationData().getTimestamp() - stockUFooEntity.getRelationData().getTimestamp());
 

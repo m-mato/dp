@@ -64,7 +64,7 @@ public class UFooProcessor {
             UFooEntity uFooEntity = serializer.serialize(httpFootprint, tcpFootprints);
             MatchResponse response = footprintSimilarityService.getNearestNeighbour(uFooEntity);
 
-            //TODO apply relation data
+            //possibly apply more relation data
 
             if (Constants.TESTING_MODE) {
                 markDistance(httpFootprint.getRequestInfo().getClientIp(), response.getDistance());
@@ -80,7 +80,7 @@ public class UFooProcessor {
             int count = uFooStock.insertNext(response.getMatchedEntity(), uFooEntity);
 
             if (count > alertThreshold) {
-                //TODO throw new RequestCountAlertException("Request count threshold exceeded by: " + uFooEntity);
+                //TODO possibly throw new RequestCountAlertException("Request count threshold exceeded by: " + uFooEntity);
                 LOGGER.warn("---> Possible attack detected for UFoo: {}", uFooEntity);
                 return Result.DETECTED;
             }
@@ -113,6 +113,6 @@ public class UFooProcessor {
         if (Constants.UNTRUSTED_COUNTRIES.contains(relationData.getCountry())) {
             return threshold - (threshold / 3);
         }
-        return threshold; //TODO change
+        return threshold; //TODO set threshold
     }
 }

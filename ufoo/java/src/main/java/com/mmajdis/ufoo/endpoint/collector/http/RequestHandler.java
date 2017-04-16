@@ -32,6 +32,10 @@ public class RequestHandler {
 
         HTTPFootprint httpFootprint = mapFromRequest(request);
 
+        if(httpFootprint.getRequestInfo().getClientIp() == null) {
+            return false;
+        }
+
         Result result = uFooProcessor.analyze(httpFootprint);
         if (result.equals(Result.DETECTED)) {
             //TODO - reaction
