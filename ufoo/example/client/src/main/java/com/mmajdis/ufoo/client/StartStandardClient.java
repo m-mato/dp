@@ -1,6 +1,7 @@
 package com.mmajdis.ufoo.client;
 
 import com.mmajdis.ufoo.client.request.StandardRequestAsync;
+import com.mmajdis.ufoo.client.util.Constants;
 
 /**
  * @author Matej Majdis

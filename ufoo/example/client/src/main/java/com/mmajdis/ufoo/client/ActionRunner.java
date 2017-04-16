@@ -21,12 +21,16 @@ public class ActionRunner {
             Future<HttpResponse<String>> future = requestAsync.compose();
             Runnable action = () -> {
                 try {
-                    TimeUnit.SECONDS.sleep(10);
                     future.get();
                 } catch (InterruptedException | ExecutionException e) {
                     System.err.println("Execution failure");
                 }
             };
+            try {
+                TimeUnit.MILLISECONDS.sleep(500);
+            } catch (InterruptedException ex) {
+                System.err.println("Execution failure");
+            }
             executor.submit(action);
         }
     }

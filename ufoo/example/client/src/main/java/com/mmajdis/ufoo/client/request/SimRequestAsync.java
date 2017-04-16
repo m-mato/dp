@@ -14,6 +14,7 @@ import java.util.concurrent.Future;
 
 import static net.andreinc.mockneat.types.enums.IPv4Type.CLASS_A;
 import static net.andreinc.mockneat.types.enums.IPv4Type.CLASS_B;
+import static net.andreinc.mockneat.types.enums.IPv4Type.CLASS_C;
 
 /**
  * @author Matej Majdis
@@ -22,13 +23,13 @@ public class SimRequestAsync implements RequestAsync {
 
     private static final List<Map<String, String>> HEADERS_GROUPS = new ArrayList<>();
     private static final Gson GSON = new Gson();
-    private static final int IP_COUNT = 136;
+    private static final int IP_COUNT = 13;
 
     private List<String> IPList;
 
     public SimRequestAsync() {
         initHeaders();
-        this.IPList = MockNeat.threadLocal().ipv4s().types(CLASS_A, CLASS_B).list(IP_COUNT).val();
+        this.IPList = MockNeat.threadLocal().ipv4s().types(CLASS_A, CLASS_B, CLASS_C).list(IP_COUNT).val();
     }
 
     private static void initHeaders() {
