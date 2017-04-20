@@ -767,7 +767,7 @@ aby vznikol čo najpresnejší možný odtlačok aktivity jedného užívateľa.
 \label{ch:footprint}
 Hlavným cieľom a výstupom tejto práce je algoritmus definujúci jednoznačný
 identifikátor užívateľa. Nasledujúca kapitola sa zaoberá práve popisom jeho
-fungovania, štruktúty, použitých technológií a následnou implementáciou. Na
+fungovania, štruktúry, použitých technológií a následnou implementáciou. Na
 jeho tvorbu boli použité práve informácie HTTP a TCP protokolu popísané v
 kapitolách \ref{ch:net-layers} a \ref{ch:existing}. Vďaka nim je algoritmus
 schopný rozpoznať a priradiť aktivitu každému z používateľov hostiteľského
@@ -779,16 +779,16 @@ Vo všeobecnosti pozostáva celý algoritmus z piatich hlavných krokov:
   \item Zachytenie requestu pred samotným spracovaním hostiteľskou aplikáciou
   \item Zhromaždenie HTTP a TCP informácií daného spojenia
   \begin{itemize}
-    \item HTTP dáta sú parsované zo zachyteného requestu
+    \item HTTP dáta sú pasované zo zachyteného requestu
     \item TCP dáta poskytuje samostatný sieťový monitor
   \end{itemize}
-  \item Spracovanie informácií a vytvorenie unikátneho odtalčku requestu
-  \item Nájdenie najbližšieho podobného identifikátoru v databázi
-  \item Spracovanie výsledu v podobe vzdialenosti odtlačkov a následná reakcia
+  \item Spracovanie informácií a vytvorenie unikátneho odtlačku requestu
+  \item Nájdenie najbližšieho podobného identifikátoru v databázy
+  \item Spracovanie výsledku v podobe vzdialenosti odtlačkov a následná reakcia
   \begin{itemize}
     \item Ak ide o novú reláciu, pre identifikátor je vytvorený nový záznam
     \item V prípade, že miera podobnosti prekročila stanovený prah, nevytvára
-    sa nový záznam. Frekvencia daného odtlačku v databázi je však zvýšená.
+    sa nový záznam. Frekvencia daného odtlačku v databázy je však zvýšená.
     \item Ak je frekvencia výskytu konkrétneho odtlačku veľmi vysoká existuje
     možnosť upozornenia hostiteľskej aplikácie.
   \end{itemize}
@@ -817,36 +817,81 @@ Vo všeobecnosti pozostáva celý algoritmus z piatich hlavných krokov:
 
 Ako je znázornené na diagrame \ref{fig:footprint-hl} analýzu spúšťa každý nový
 HTTP request, na ktorý ďalej nadväzujú akcie tvorby a porovnávania
-identifikátorov. Zároveň je pri štarte aplikácie spustné vlákno vykonávajúce
+identifikátorov. Zároveň je pri štarte aplikácie spustené vlákno vykonávajúce
 sieťovú analýzu transportnej vrstvy, ktorá uchováva informácie z niekoľkých
 posledných spojení. Z týchto HTTP a TCP informácií je teda pre každý request
-zostavený unikátny odtlačok - identifkátor \textit{Unique Footprint - UFoo}.
+zostavený unikátny odtlačok - identifikátor \textit{(Unique Footprint - UFoo)}.
 Aktuálny identifikátor je následne porovnávaný s každým odtlačkom v databázi.
 Algoritmus na hľadanie najbližšieho suseda k nemu následne pomocou porovnávacej
-funckie nájde najviac podobný identifikátor. Podľa miery podobnosti ďalej
+funkcie nájde najviac podobný identifikátor. Podľa miery podobnosti ďalej
 algoritmus určí či ide o requesty jedného užívateľa, čo spôsobí zvýšenie jeho
-frekvencie, alebo ide o nový odtlačok, pre ktorý vytovrí nový záznam v DB.
+frekvencie, alebo ide o nový odtlačok, pre ktorý vytvorí nový záznam v DB.
 Jednou z dodatočných funkcionalít je aj upozornenie hostiteľskej aplikácie pri
-prekročení limitu frekvencie requestov od jendého užívateľa, čo by mohlo
+prekročení limitu frekvencie requestov od jedného užívateľa, čo by mohlo
 indikovať napríklad DoS útok.
 
 \section{Štruktúra identifikátoru}
-co z http a tcp som pouzil
-tcp stream
-rozdelenie na static a relation
+Odtlačok je teda kombináciou konkrétne vybraných HTTP a TCP informácií.
+Objekt sa skladá z dvoch častí = statických a relačných dát. Dôležitejšou z
+nich sú takzvané statické dáta, ktoré slúžia porovnávacej funkcií na samotné
+určenie vzdialenosti dvoch identifikátorov. Vzdialenosť vypočítaná touto
+funkciou môže byť ďalej ovplyvňovaná vzťahmi relačných dát, ktoré riešia
+špecifické aspekty vybraných informácií, ako napríklad určenie menej bezpečných
+geo-zón geolokáciou IP adresy klienta.
 
 \subsection{Statické dáta}
-ktore info
-3 casti
-obrazok
-TODO
+Statická časť identifikátora obsahuje väčšie množstvo dát, preto je
+ukladaná reprezentovaná v podobe reťazca. Skladá sa z troch kategórií dát:
+\begin{itemize}
+    \item Statické hlavičky \textit{(Static headers)}- špecifické vopred
+    vybrané HTTP hlavičky ako napríklad: \textit{authorization, cookie}, alebo
+    \textit{user-agent}
+    \item Ostatné hlavičky \textit{(Unknown headers)}- ostatné hlavičky daného
+    HTTP requestu, ktoré neboli použité ako statické
+    \item Atribúty- konkrétne informácie z HTTP a TCP protokolu ako napríklad
+    \textit{IP adresa, geo-lokácia}, alebo pre \textit{veľkosť TCP okna}
+\end{itemize}
+
+Súhrnne znázorňuje informácie použité pre statické dáta obrázok
+\ref{fig:footprint-data-static}.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.99\textwidth]{images/footprint-data-static.png}
+  \caption{Detailný pohľad na štruktúru statických dát identifikátoru}
+  \label{fig:footprint-data-static}
+\end{figure}
+
+Každá z týchto informácii má pri použití v porovnávacej funkcií svoj účel a
+konkrétnu váhu. Veľmi podstatný je napríklad obsah statických hlavičiek. Naopak
+váha hodnôt TCP okna je porovnaní z IP adresou a geolokáciu menšia, môže však
+hrať rolu u veľkého množstva requestov. Podrobnejšie sa porovnávacej funkcií a
+kalibrácií jednotlivých parametrov venuje podkapitola ??x??.
 
 \subsection{Relačné dáta}
-ktore info
-TODO
+Relačné dáta neslúžia na porovnávanie a hľadanie podobných hodnôt. Ich účelom
+je ošetriť špeciálne prípady u informácií ktoré si to vyžadujú. Takýchto
+informácií nie je mnoho, preto nie je nutné ich komprimovať a serializovať ako
+dáta statické.
+Konkrétne sa jedná o:
+\begin{itemize}
+    \item Timestamp - presný čas nadviazania spojenia aktuálnej relácie
+    \item Geolokáciu - krajina pôvodu určená na základe IP adresy klienta
+    \item Relačné hlavičky - HTTP hlavičky ako napríklad
+    \textit{forwarded}, alebo \textit{x-csrf-token}. 
+\end{itemize}
 
-celkovy popis
-obrazok
+Jednotlivé položky sú vyhodnocované samostatne a ich výsledky sú aplikované na
+hodnotu vrátenú funkciou pre výpočet podobnosti. Napríklad pri veľmi malom
+časovom rozdieli porovnávaných requestov, je ich podobnosť dodatočne zvýšená. U
+geolokácie môže byť toto zvýšenie dosiahnuté po vyhodnotení requestu klienta z
+krajiny s najčastejším pôvodom DoS útokov akými sú napríklad: Čína, Kórea, alebo
+Rusko.
+
+Táto štruktúra statických a relačných dát odtlačku je v aplikácií kalibrovaná
+pre čo najpresnejšie určenie podobnosti requestov od jedného používateľa.
+Samozrejme je však možné ju v budúcnosti obmieňať, prípadne pridávať do nej
+nové informácie.
 
 \section{Algoritmus hľadania podobnosti}
 TODO - Úvod
