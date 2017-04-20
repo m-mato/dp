@@ -774,16 +774,79 @@ schopný rozpoznať a priradiť aktivitu každému z používateľov hostiteľsk
 systému.
 
 \section{Popis Algoritmu}
-TODO
+Vo všeobecnosti pozostáva celý algoritmus z piatich hlavných krokov:
+\begin{enumerate}
+  \item Zachytenie requestu pred samotným spracovaním hostiteľskou aplikáciou
+  \item Zhromaždenie HTTP a TCP informácií daného spojenia
+  \begin{itemize}
+    \item HTTP dáta sú parsované zo zachyteného requestu
+    \item TCP dáta poskytuje samostatný sieťový monitor
+  \end{itemize}
+  \item Spracovanie informácií a vytvorenie unikátneho odtalčku requestu
+  \item Nájdenie najbližšieho podobného identifikátoru v databázi
+  \item Spracovanie výsledu v podobe vzdialenosti odtlačkov a následná reakcia
+  \begin{itemize}
+    \item Ak ide o novú reláciu, pre identifikátor je vytvorený nový záznam
+    \item V prípade, že miera podobnosti prekročila stanovený prah, nevytvára
+    sa nový záznam. Frekvencia daného odtlačku v databázi je však zvýšená.
+    \item Ak je frekvencia výskytu konkrétneho odtlačku veľmi vysoká existuje
+    možnosť upozornenia hostiteľskej aplikácie.
+  \end{itemize}
+\end{enumerate}
+
+%high level flow
+%5 main steps
+%1) Handle request before it’s processed by host application
+%2) Collect it’s HTTP and TCP data
+%  a) HTTP data from request
+%  b) TCP data from monitor of network traffic
+%3) Process the data and create unique footprint for request
+%4) Find nearest neighbour of actual footprint in stock
+%5) Return distance and perform reaction
+%  a) Create new UFoo entry in stock (distance above threshold)
+%  b) Match UFoos and increase its frequency  (distance below threshold)
+%  c) Possibly notify host application (UFoo frequency is above the limit)
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.99\textwidth]{images/footprint-hl.png}
+  \caption{Diagram znázorňujúci celý proces algoritmu spracovania requestu a
+  hľadania podobnosti, zdroj: vlastné spracovanie}
+  \label{fig:footprint-hl}
+\end{figure}
+
+Ako je znázornené na diagrame \ref{fig:footprint-hl} analýzu spúšťa každý nový
+HTTP request, na ktorý ďalej nadväzujú akcie tvorby a porovnávania
+identifikátorov. Zároveň je pri štarte aplikácie spustné vlákno vykonávajúce
+sieťovú analýzu transportnej vrstvy, ktorá uchováva informácie z niekoľkých
+posledných spojení. Z týchto HTTP a TCP informácií je teda pre každý request
+zostavený unikátny odtlačok - identifkátor \textit{Unique Footprint - UFoo}.
+Aktuálny identifikátor je následne porovnávaný s každým odtlačkom v databázi.
+Algoritmus na hľadanie najbližšieho suseda k nemu následne pomocou porovnávacej
+funckie nájde najviac podobný identifikátor. Podľa miery podobnosti ďalej
+algoritmus určí či ide o requesty jedného užívateľa, čo spôsobí zvýšenie jeho
+frekvencie, alebo ide o nový odtlačok, pre ktorý vytovrí nový záznam v DB.
+Jednou z dodatočných funkcionalít je aj upozornenie hostiteľskej aplikácie pri
+prekročení limitu frekvencie requestov od jendého užívateľa, čo by mohlo
+indikovať napríklad DoS útok.
 
 \section{Štruktúra identifikátoru}
-TODO - Úvod
+co z http a tcp som pouzil
+tcp stream
+rozdelenie na static a relation
 
 \subsection{Statické dáta}
+ktore info
+3 casti
+obrazok
 TODO
 
 \subsection{Relačné dáta}
+ktore info
 TODO
+
+celkovy popis
+obrazok
 
 \section{Algoritmus hľadania podobnosti}
 TODO - Úvod
