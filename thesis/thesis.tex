@@ -907,19 +907,34 @@ relačnými dátami.
 \end{figure}
 
 \subsection{Použité postupy}
-vysvetlenie postupov
-  porovnavanie na zhodu
-  jaccard index
-TODO - Popis
+Pred samotným popisom funkcie pre výpočet vzdialeností odtlačkov je nutné
+vysvetliť techniky a pojmy, s ktorými tento algoritmus pracuje. Konkrétne ide
+okrem porovnávania komprimovaných reťazcov pre jednoduché atribúty najmä o 
+určenie miery podobnosti množín pomocou výpočtu takzvaného
+\textit{Jaccardovho indexu}.
 
-\subsubsection{Jaccard index}
+\subsubsection{Jaccardov index}
+The Jaccard index, also known as Intersection over Union and the Jaccard similarity coefficient (originally coined coefficient de communauté by Paul Jaccard), is a statistic used for comparing the similarity and diversity of sample sets. The Jaccard coefficient measures similarity between finite sample sets, and is defined as the size of the intersection divided by the size of the union of the sample sets:
+
+{\displaystyle J(A,B)={{|A\cap B|} \over {|A\cup B|}}={{|A\cap B|} \over {|A|+|B|-|A\cap B|}}.}  J(A,B) = {{|A \cap B|}\over{|A \cup B|}} = {{|A \cap B|}\over{|A| + |B| - |A \cap B|}}.
+(If A and B are both empty, we define J(A,B) = 1.)
+
+{\displaystyle 0\leq J(A,B)\leq 1.}  0\le J(A,B)\le 1.
+
+The Jaccard distance, which measures dissimilarity between sample sets, is complementary to the Jaccard coefficient and is obtained by subtracting the Jaccard coefficient from 1, or, equivalently, by dividing the difference of the sizes of the union and the intersection of two sets by the size of the union:
+
+{\displaystyle d_{J}(A,B)=1-J(A,B)={{|A\cup B|-|A\cap B|} \over |A\cup B|}.}  d_J(A,B) = 1 - J(A,B) = { { |A \cup B| - |A \cap B| } \over |A \cup B| }.
+
 jaccard index
 obrazok jaccard
 TODO
 
 \subsubsection{Porovnávanie atribútov}
-nie upne presna zhoda
-TODO
+Pri porovnávaní konkrétnych reťazcov u HTTP hlavičiek, alebo atribútov ako
+napríklad \textit{servletPath}, alebo \textit{locales} sú tieto hodnoty pred
+porovnaním komprimované. Konkrétne ide o odsránenie nadbitočných bielych znakov a
+symbolov, ktoré by mohli pri porovnaní spôsobovať nepresnosti. Rovnaké pravidlá
+sú použité aj pri porovnávaní položiek pri výpočte \textit{Jaccardovho indexu}.
 
 \subsection{Funkcia na výpočet vzdialenosti}
 \label{ss:distance-function}
