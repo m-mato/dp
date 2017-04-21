@@ -794,19 +794,6 @@ Vo všeobecnosti pozostáva celý algoritmus z piatich hlavných krokov:
   \end{itemize}
 \end{enumerate}
 
-%high level flow
-%5 main steps
-%1) Handle request before it’s processed by host application
-%2) Collect it’s HTTP and TCP data
-%  a) HTTP data from request
-%  b) TCP data from monitor of network traffic
-%3) Process the data and create unique footprint for request
-%4) Find nearest neighbour of actual footprint in stock
-%5) Return distance and perform reaction
-%  a) Create new UFoo entry in stock (distance above threshold)
-%  b) Match UFoos and increase its frequency  (distance below threshold)
-%  c) Possibly notify host application (UFoo frequency is above the limit)
-
 \begin{figure}[h]
   \centering
     \includegraphics[width=.99\textwidth]{images/footprint-hl.png}
@@ -882,11 +869,11 @@ Konkrétne sa jedná o:
 \end{itemize}
 
 Jednotlivé položky sú vyhodnocované samostatne a ich výsledky sú aplikované na
-hodnotu vrátenú funkciou pre výpočet podobnosti. Napríklad pri veľmi malom
-časovom rozdieli porovnávaných requestov, je ich podobnosť dodatočne zvýšená. U
-geolokácie môže byť toto zvýšenie dosiahnuté po vyhodnotení requestu klienta z
-krajiny s najčastejším pôvodom DoS útokov akými sú napríklad: Čína, Kórea, alebo
-Rusko.
+vzdialenosť vrátenú algoritmom pre nájdenie podobnosti. Napríklad pri veľmi
+malom časovom rozdieli porovnávaných requestov, je ich vzdialenosť dodatočne
+znížená. U geolokácie môže byť toto zníženie dosiahnuté po vyhodnotení requestu
+klienta z krajiny s najčastejším pôvodom DoS útokov akými sú napríklad: Čína,
+Kórea, alebo Rusko.
 
 Táto štruktúra statických a relačných dát odtlačku je v aplikácií kalibrovaná
 pre čo najpresnejšie určenie podobnosti requestov od jedného používateľa.
@@ -894,18 +881,54 @@ Samozrejme je však možné ju v budúcnosti obmieňať, prípadne pridávať do
 nové informácie.
 
 \section{Algoritmus hľadania podobnosti}
-TODO - Úvod
+Ako bolo spomínané v predchádzajúcej kapitole, hlavnou funkcionalitou práce je
+algoritmus na určenie podobnosti a hľadanie najbližšieho suseda aktuálne
+spracovávavaného identifikátoru. 
+
+Vstupom pre algoritmus je teda tento odtlačok
+spolu s množinou obsajhujúcou odtlačky doteraz analyzovaných requestov. Po
+inicializácií a načítaní vstupných parametrov je na každú dovjicu odtlačkov
+aplikovaná funkcia pre výpočet ich vzdialenosti, ktorá vráti hodnotu v rozmedzí
+od nula do jedna. Pre totožné odtlačky je vzdialenosť nulová, naopak u
+odtlačkov, ktoré sa lýšia v mnohých parametroch sa hodnota blíži k jednej.
+Funckia postupne porovnáva a zohľadňuje jednotlivé hodnoty statickej časti
+identifikátora podľa ich váhy a miery podobnosti. Detailným popisom fungovania
+tejto funkcie sa zaoberá podkapitola \ref{ss:distance-function}. Po spracovaní
+výsledkov algoritmus nájde najbližší identifikátor, ktorý spolu s jeho
+vzdialenosťou vráti ako výstup na ďalšie spracovanie a prípadnú úpravu
+relačnými dátami.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.99\textwidth]{images/footprint-alg-pseudo.png}
+  \caption{Pseudo-kód popisujúci algoritmus pre nájdenie odtlačku s najmenšou
+  vzdialenosťou}
+  \label{fig:footprint-alg-pseudo}
+\end{figure}
 
 \subsection{Použité postupy}
+vysvetlenie postupov
+  porovnavanie na zhodu
+  jaccard index
 TODO - Popis
 
 \subsubsection{Jaccard index}
+jaccard index
+obrazok jaccard
 TODO
 
 \subsubsection{Porovnávanie atribútov}
+nie upne presna zhoda
 TODO
 
 \subsection{Funkcia na výpočet vzdialenosti}
+\label{ss:distance-function}
+vypocet vzdialenosti 2 odtlackov
+3 podvzdialenosti
+vahy
+obrazok pesudokod
+
+zaver podkapitoly
 TODO
 
 \section{Implementácia}
