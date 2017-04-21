@@ -986,8 +986,7 @@ nasledovne:
 
 Každá z týchto častí je pri následnom sčítaní vážená vlastnou konštantou.
 Zároveň má vlastnú váhu každý z atribútov tretej časti. Konkrétnu kalibráciu
-váh jednotlivých položiek znázorňuje nasledujúca schéma
-\ref{fig:footprint-distance-cal}.
+váh jednotlivých položiek znázorňuje schéma \ref{fig:footprint-distance-cal}.
 
 \begin{figure}[H]
   \centering
@@ -997,10 +996,10 @@ váh jednotlivých položiek znázorňuje nasledujúca schéma
   \label{fig:footprint-distance-cal}
 \end{figure}
 
-Kľúčovú rolu pri výpočte teda zohráva kalibrácia váh a parametrov tohto
+Kľúčovú rolu pri výpočte samozrejme zohráva kalibrácia váh a parametrov tohto
 algoritmu. Nasledujúci pseud-kód podrobne popisuje funkciu a jej fungovanie:
 
-\vspace{5mm}
+\vspace{6mm}
 %noindent\rule{13cm}{0.4pt}
 \begin{lstlisting}[basicstyle=\footnotesize, language=Ruby, mathescape=true]
 algorithm get-distance is
@@ -1045,9 +1044,6 @@ algorithm get-distance is
     	                stockEntityData.length)
     	* LENGTH_SUB_WEIGHT;
 
-    # AttributesIndex based on SUM of weighted attributes
-    # is computed. Additional weight for all attributes 
-    # will be applied.
     attributesIndex 
     	$\leftarrow$ $\sum$(isSameIp, isSameCountry, ..., isSameLength) 
     	 / $\sum$(IP_SUB_WEIGHT, COUNTRY_SUB_WEIGHT,
@@ -1055,9 +1051,6 @@ algorithm get-distance is
     attributesIndex 
     	$\leftarrow$ attributesIndex * ATTR_WEIGHT
 
-    # Final similarity value is computed as sum of weighted:
-    # staticHeaders, unknownHeaders and attributes. Distance 
-    # as 1 - sim value is returned
     similarity 
     	$\leftarrow$ $\sum$(jaccardStaticHeaders,  jaccardUnknownHeaders,
     	     attributesIndex) 
@@ -1066,8 +1059,10 @@ algorithm get-distance is
     return 1 - similarity;
 \end{lstlisting}
 
-zaver podkapitoly
-TODO
+Hodnoty podobností jednotlivých častí sú teda násobené pridelenými váhami a
+sčítané. Podielom súčtov týchto hodnôt a ich možných váh je následne vypočítaný
+koeficient podobnosti statických dát vstupných identifikátorov. Výstupom 
+funkcie je vzdialenosť, ktorá je doplnkom k tomuto koeficientu.
 
 \section{Implementácia}
 TODO - Úvod
