@@ -81,6 +81,22 @@
 \usepackage{menukeys}
 \usepackage{float}
 \usepackage[plainpages=false, pdfpagelabels]{hyperref}
+\usepackage{listings}
+\usepackage{color}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{mystyle}{  
+    commentstyle=\color{codegray},
+    keywordstyle=\color{codegreen},
+    numberstyle=\tiny\color{codepurple},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize
+}
+ 
+\lstset{style=mystyle}
 
 \begin{document}
 
@@ -845,7 +861,8 @@ Súhrnne znázorňuje informácie použité pre statické dáta obrázok
 \begin{figure}[h]
   \centering
     \includegraphics[width=.99\textwidth]{images/footprint-data-static.png}
-  \caption{Detailný pohľad na štruktúru statických dát identifikátoru}
+  \caption{Detailný pohľad na štruktúru statických dát identifikátoru, zdroj:
+  vlastné spracovanie}
   \label{fig:footprint-data-static}
 \end{figure}
 
@@ -883,15 +900,15 @@ nové informácie.
 \section{Algoritmus hľadania podobnosti}
 Ako bolo spomínané v predchádzajúcej kapitole, hlavnou funkcionalitou práce je
 algoritmus na určenie podobnosti a hľadanie najbližšieho suseda aktuálne
-spracovávavaného identifikátoru. 
+spracovávaného identifikátoru. 
 
 Vstupom pre algoritmus je teda tento odtlačok
-spolu s množinou obsajhujúcou odtlačky doteraz analyzovaných requestov. Po
-inicializácií a načítaní vstupných parametrov je na každú dovjicu odtlačkov
+spolu s množinou obsahujúcou odtlačky doteraz analyzovaných requestov. Po
+inicializácií a načítaní vstupných parametrov je na každú dvojicu odtlačkov
 aplikovaná funkcia pre výpočet ich vzdialenosti, ktorá vráti hodnotu v rozmedzí
 od nula do jedna. Pre totožné odtlačky je vzdialenosť nulová, naopak u
-odtlačkov, ktoré sa lýšia v mnohých parametroch sa hodnota blíži k jednej.
-Funckia postupne porovnáva a zohľadňuje jednotlivé hodnoty statickej časti
+odtlačkov, ktoré sa líšia v mnohých parametroch sa hodnota blíži k jednej.
+Funkcia postupne porovnáva a zohľadňuje jednotlivé hodnoty statickej časti
 identifikátora podľa ich váhy a miery podobnosti. Detailným popisom fungovania
 tejto funkcie sa zaoberá podkapitola \ref{ss:distance-function}. Po spracovaní
 výsledkov algoritmus nájde najbližší identifikátor, ktorý spolu s jeho
@@ -902,7 +919,7 @@ relačnými dátami.
   \centering
     \includegraphics[width=.99\textwidth]{images/footprint-alg-pseudo.png}
   \caption{Pseudo-kód popisujúci algoritmus pre nájdenie odtlačku s najmenšou
-  vzdialenosťou}
+  vzdialenosťou, zdroj: vlastné spracovanie}
   \label{fig:footprint-alg-pseudo}
 \end{figure}
 
@@ -911,37 +928,143 @@ Pred samotným popisom funkcie pre výpočet vzdialeností odtlačkov je nutné
 vysvetliť techniky a pojmy, s ktorými tento algoritmus pracuje. Konkrétne ide
 okrem porovnávania komprimovaných reťazcov pre jednoduché atribúty najmä o 
 určenie miery podobnosti množín pomocou výpočtu takzvaného
-\textit{Jaccardovho indexu}.
+\textit{Jaccardovho} indexu.
 
 \subsubsection{Jaccardov index}
-The Jaccard index, also known as Intersection over Union and the Jaccard similarity coefficient (originally coined coefficient de communauté by Paul Jaccard), is a statistic used for comparing the similarity and diversity of sample sets. The Jaccard coefficient measures similarity between finite sample sets, and is defined as the size of the intersection divided by the size of the union of the sample sets:
+Výpočet Jaccardovho koeficientu, taktiež známi ako podiel prieniku a 
+zjednotenia, je funkcia pôvodne popísaná Paulom Jaccardom, ktorá slúži na
+porovnanie podobnosti a rozdielov testovaných množín. Jaccardov koeficient teda
+meria mieru podobnosti medzi dvoma konečnými množinami. Matematicky je
+definovaný ako podiel veľkostí zjednotenia a prieniku týchto množín:
 
-{\displaystyle J(A,B)={{|A\cap B|} \over {|A\cup B|}}={{|A\cap B|} \over {|A|+|B|-|A\cap B|}}.}  J(A,B) = {{|A \cap B|}\over{|A \cup B|}} = {{|A \cap B|}\over{|A| + |B| - |A \cap B|}}.
-(If A and B are both empty, we define J(A,B) = 1.)
+\begin{equation}
+ J(A,B) = {{|A \cap B|}\over{|A \cup B|}} = {{|A \cap B|}\over{|A| + |B| - |A \cap B|}}
+\end{equation}
 
-{\displaystyle 0\leq J(A,B)\leq 1.}  0\le J(A,B)\le 1.
+\begin{equation}
+ 0\le J(A,B)\le 1
+\end{equation}
 
-The Jaccard distance, which measures dissimilarity between sample sets, is complementary to the Jaccard coefficient and is obtained by subtracting the Jaccard coefficient from 1, or, equivalently, by dividing the difference of the sizes of the union and the intersection of two sets by the size of the union:
+V prípade, že sú obe množiny prázdne \textit{J(A,B) = 1}
+Jaccardova vzdialenosť, ktorá naopak určuje rozdielnosť dvoch množín je
+doplnkom k Jaccardovmu koeficientu. Počíta sa teda odrátaním jeho hodnoty od
+jednotky, prípadne ako podiel, ktorého čitateľom je rozdiel zjednotenia a
+prieniku a menovateľom je zjednotenie týchto množín:
 
-{\displaystyle d_{J}(A,B)=1-J(A,B)={{|A\cup B|-|A\cap B|} \over |A\cup B|}.}  d_J(A,B) = 1 - J(A,B) = { { |A \cup B| - |A \cap B| } \over |A \cup B| }.
+\begin{equation}
+ d_J(A,B) = 1 - J(A,B) = { { |A \cup B| - |A \cap B| } \over |A \cup B| }
+\end{equation}
 
-jaccard index
-obrazok jaccard
-TODO
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=.99\textwidth]{images/footprint-jacc-sets.png}
+  \caption{Znázornenie prieniku a zjednotenia množín pre výpočet Jaccardovho
+  koeficientu, zdroj: vlastné spracovanie}
+  \label{fig:footprint-jacc-sets}
+\end{figure}
 
 \subsubsection{Porovnávanie atribútov}
 Pri porovnávaní konkrétnych reťazcov u HTTP hlavičiek, alebo atribútov ako
 napríklad \textit{servletPath}, alebo \textit{locales} sú tieto hodnoty pred
-porovnaním komprimované. Konkrétne ide o odsránenie nadbitočných bielych znakov a
-symbolov, ktoré by mohli pri porovnaní spôsobovať nepresnosti. Rovnaké pravidlá
-sú použité aj pri porovnávaní položiek pri výpočte \textit{Jaccardovho indexu}.
+porovnaním komprimované. Konkrétne ide o odstránenie nadbytočných bielych
+znakov a symbolov, ktoré by mohli pri porovnaní spôsobovať nepresnosti. Rovnaké
+pravidlá sú použité aj pri porovnávaní položiek pri výpočte Jaccardovho indexu.
 
 \subsection{Funkcia na výpočet vzdialenosti}
 \label{ss:distance-function}
-vypocet vzdialenosti 2 odtlackov
-3 podvzdialenosti
-vahy
-obrazok pesudokod
+Vstupom pre funkciu na výpočet vzdialenosti sú teda vždy dve reprezentácie
+identifikátorov, konkrétne hodnoty v ich statickej časti. Výsledná vzdialenosť
+je počítaná ako doplnok váženého priemeru podobností troch podčastí týchto dát
+nasledovne:
+
+\begin{itemize}
+	\item Ako prvý je spočítaný Jaccardov koeficient pre statické hlavičky
+	\item Následne algoritmus použije Jaccardov index aj pre výpočet podobnosti
+	zvyšných hlavičiek
+	\item Nakoniec je vypočítaná miera podobnosti jednotlivých atribútov. 
+\end{itemize}
+
+Každá z týchto častí je pri následnom sčítaní vážená vlastnou konštantou.
+Zároveň má vlastnú váhu každý z atribútov tretej časti. Konkrétnu kalibráciu
+váh jednotlivých položiek znázorňuje nasledujúca schéma
+\ref{fig:footprint-distance-cal}.
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=.99\textwidth]{images/footprint-distance-cal.png}
+  \caption{Príklad kalibrácie váh jednotlivých parametrov statickej časti
+  odtlačku pre výpočet vzdialenosti}
+  \label{fig:footprint-distance-cal}
+\end{figure}
+
+Kľúčovú rolu pri výpočte teda zohráva kalibrácia váh a parametrov tohto
+algoritmu. Nasledujúci pseud-kód podrobne popisuje funkciu a jej fungovanie:
+
+\vspace{5mm}
+%noindent\rule{13cm}{0.4pt}
+\begin{lstlisting}[basicstyle=\footnotesize, language=Ruby, mathescape=true]
+algorithm get-distance is
+    input: String actualData
+           String stockEntityData
+    output: double distance
+
+    if actualData = stockEntityData
+        return 0
+    end if
+
+    # Compute Jaccard and consider weight (strength) for 
+    # static headers
+    jaccardStaticHeaders 
+    	$\leftarrow$ jaccardIndex(actualData.staticHeaders, 
+    	                stockEntityData.staticHeaders);
+    jaccardStaticHeaders 
+    	$\leftarrow$ jaccardStaticHeaders * SH_WEIGHT;
+
+    # Compute Jaccard and consider weight (strength) for 
+    # unknown headers
+    jaccardUnknownHeaders 
+    	$\leftarrow$ jaccardIndex(actualData.unknownHeaders,
+    	                stockEntityData.unknownHeaders);
+    jaccardUnknownHeaders 
+    	$\leftarrow$ jaccardUnknownHeaders * UH_WEIGHT;
+
+    # Compare values of remaining attributes by simple 
+    # similarValue function. Every of this attributes will
+    # have sub-weight which will be computed in
+    # attributesIndex.
+    isSameIp 
+    	$\leftarrow$ similarValue(actaulData.IP, stockEntityData.IP)
+    	* IP_SUB_WEIGHT;
+    isSameCountry 
+    	$\leftarrow$ similarValue(actaulData.country, 
+    	                stockEntityData.country)
+    	* COUNTRY_SUB_WEIGHT;
+    ...
+    isSameLength 
+    	$\leftarrow$ similarValue(actaulData.length, 
+    	                stockEntityData.length)
+    	* LENGTH_SUB_WEIGHT;
+
+    # AttributesIndex based on SUM of weighted attributes
+    # is computed. Additional weight for all attributes 
+    # will be applied.
+    attributesIndex 
+    	$\leftarrow$ $\sum$(isSameIp, isSameCountry, ..., isSameLength) 
+    	 / $\sum$(IP_SUB_WEIGHT, COUNTRY_SUB_WEIGHT,
+    	     ..., LENGTH_SUB_WEIGHT);
+    attributesIndex 
+    	$\leftarrow$ attributesIndex * ATTR_WEIGHT
+
+    # Final similarity value is computed as sum of weighted:
+    # staticHeaders, unknownHeaders and attributes. Distance 
+    # as 1 - sim value is returned
+    similarity 
+    	$\leftarrow$ $\sum$(jaccardStaticHeaders,  jaccardUnknownHeaders,
+    	     attributesIndex) 
+    	 / $\sum$(SH_WEIGHT, UH_WEIGHT, ATTR_WEIGHT)
+
+    return 1 - similarity;
+\end{lstlisting}
 
 zaver podkapitoly
 TODO
