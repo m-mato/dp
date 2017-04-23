@@ -23,17 +23,17 @@ public class Constants {
     public static final String SEPARATOR = "|";
 
     public static final int SH_WEIGHT = 4;
-    public static final int UH_WEIGHT = 3;
-    public static final int ATTR_WEIGHT = 3;
+    public static final int UH_WEIGHT = 6;
+    public static final int ATTR_WEIGHT = 5;
 
-    public static final int ATTR_IP_WEIGHT = 3;
-    public static final int ATTR_COUNTRY_WEIGHT = 2;
-    public static final int ATTR_CITY_WEIGHT = 2;
-    public static final int ATTR_ENCODING_WEIGHT = 2;
-    public static final int ATTR_LOCALES_WEIGHT = 2;
-    public static final int ATTR_PATH_WEIGHT = 2;
-    public static final int ATTR_WINDOW_WEIGHT = 1;
-    public static final int ATTR_LENGTH_WEIGHT = 1;
+    public static final int ATTR_IP_WEIGHT = 5;
+    public static final int ATTR_COUNTRY_WEIGHT = 4;
+    public static final int ATTR_CITY_WEIGHT = 5;
+    public static final int ATTR_ENCODING_WEIGHT = 3;
+    public static final int ATTR_LOCALES_WEIGHT = 3;
+    public static final int ATTR_PATH_WEIGHT = 7;
+    public static final int ATTR_WINDOW_WEIGHT = 2;
+    public static final int ATTR_LENGTH_WEIGHT = 2;
 
     private static final String[] UNTRUSTED_COUNTRIES_ARRAY = new String[] {"A1", "KP", "KR", "RU", "CN", "UA", "VN",  "TH", "CO"};
     public static final Set<String> UNTRUSTED_COUNTRIES = new HashSet<>(Arrays.asList(UNTRUSTED_COUNTRIES_ARRAY));
