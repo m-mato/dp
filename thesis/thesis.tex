@@ -992,7 +992,7 @@ váh jednotlivých položiek znázorňuje schéma \ref{fig:footprint-distance-ca
   \centering
     \includegraphics[width=.99\textwidth]{images/footprint-distance-cal.png}
   \caption{Príklad kalibrácie váh jednotlivých parametrov statickej časti
-  odtlačku pre výpočet vzdialenosti}
+  odtlačku pre výpočet vzdialenosti, zdroj: vlastné spracovanie}
   \label{fig:footprint-distance-cal}
 \end{figure}
 
@@ -1065,13 +1065,112 @@ koeficient podobnosti statických dát vstupných identifikátorov. Výstupom
 funkcie je vzdialenosť, ktorá je doplnkom k tomuto koeficientu.
 
 \section{Implementácia}
-TODO - Úvod
+Súčasťou tejto práce je okrem návrhu algoritmu aj jeho implementácia v jazyku
+Java. Ide o presnú implementáciu funkcionality popísanej v predchádzajúcich
+podkapitolách. Knižnica samotná je čo najuniverzálnejšia a nezávislá na
+konkrétnom frameworku, či technológií. Po vložení jej závislosti do
+hostiteľského projektu sama detekuje prístupové metódy a zachytáva jednotlivé
+HTTP requesty pre ďalšie spracovanie. Zároveň pri spustení, ak je to možné,
+začne monitorovať sieť pre doplnenie informácií z TCP protokolu.
 
 \subsection{Použité technológie}
-TODO
+Pre korektnú implementáciu funkcionality celého algoritmu bolo nutné použitie
+mnohých Špecifických technológií od knižnice pre monitoring TCP paketov až po
+geolokáciu IP adreis. Nasledujúce odseky popisujú najdôležitejšie z nich.
 
-\subsection{Štruktúra a rozdelenie funkcionality}
-TODO
+\subsubsection{Aspektovo-orientované programovanie}
+Aspektovo-orientované programovanie (ďalej len AOP) je paradigma určená k
+zvýšeniu modularity kódu bez narúšania prirodzeného behu aplikácie. Ide o 
+pridanie novej funkcionality k už existujúcemu kódu, bez nutnosti modifikácie
+pôvodného zdroja. Namiesto toho je osobitne definovaný takzvaný prístupový bod,
+ktorý pridá požadovanú funkcionalitu na vopered určené miesto.
+
+V implementačnej časti je AOP, konkrétne knižnica \textit{AspectJ}, použitá pre
+injektovanie jednotlivých prístupových metód hostiteľskej aplikácie a následné
+odchytávanie informácií z ich HTTP requestov. Je tak možné vytvoriť prístupové
+body pre ľubovoľný z používaných frameworkov a prístupov. Momentálne, na
+testovacie účely, implementácia obsahuje prístupový bod pre metódy so
+\textit{Springovou} anotáciou \textit{@RestController}. Nie je však problém
+rozhranie rozšíriť o akýkoľvek existujúci či vlastný prístupový bod. Ďalšou z 
+výhod tohto prístupu je asynchrónnosť celého výpočtu. Po zachytení informácií
+z HTTP requestu je proces ich spracovanie vykonávaný v novom vlákne. Logika
+hostiteľskej aplikácie tak nie je ničím zdržovaná a môže pokračovať štandardným
+spôsobom.
+
+\subsubsection{Sieťová analýza}
+Pri štarte hostiteľskej aplikácie, je štandardne jedným z modulov v samostatnom
+vlákne spustený monitoring, analýza a parsovanie TCP paketov. Pre prístup k
+týmto informáciám je využívaná knižnica \textit{libpcap} a program
+\textit{tcpdump}. Samozrejme tieto možnosti je nutné vopred povoliť na
+hostiteľskom servery, preto existuje možnosť aplikáciu používat aj bez
+monitorovania sieťovej aktivity. Výpočty vzdialeností identifikátorov, ktoré
+tieto informácie obsahujú sú však presnejšie a produkujú menej falošne
+pozitívnych detekcií.
+
+\subsubsection{IP Geolokácia}
+Ako bolo popísané vyššie, jedným z atribútov, ktoré sú posudzované pri
+vyhodnotení podobnosti identifikátorov je geolokácia klienta. Konkrétne ide o
+krajinu, prípadne mesto určené na základe jeho IP adresy. Zdrojom týchto
+informácií je databáza poskytnutá službou \textit{MaxMind GeoIP}.
+
+Okrem tejto databázy systém používa aj statický zoznam menej bezpečných zón.
+Ide o konkrétne krajiny, ktoré sú najčastejším pôvodcom DoS a DDoS útokov. Ich
+detekcia môže mať za následok napríklad zníženie prahu pre upozornenie
+hostiteľskej aplikácie pri prekročení väčšieho množstva podobných odtlačkov.
+
+\subsection{Funkcionalita a štruktúra kódu}
+Celá akcia spracovania requestu začína v triede \textit{Injector}. Táto trieda
+obsahuje prístupové body AOP pre jednotlivé metódy hostiteľskej aplikácie.
+Zároveň slúži na správu závislostí a inicializáciu \textit{singleton} vlákna
+triedy \textit{PacketStream}. \textit{PacketStream} a ostatné pomocné triedy
+balíka\textit{endpoint.collector.tcp} zabezpečujú, ak je to možné, parsovanie a 
+správu prijatých TCP paketov. Tieto sú následne dostupné ako mapa posledných
+\textit{n} zachytených paketov v podobe triedy \textit{TCPFootprint} a ich IP
+adries.
+
+Z Injectora dáta pokračujú vždy v samostatnom vlákne na spracovanie triedou
+\textit{RequestHandler} a ostatnými triedami balíka
+\textit{endpoint.collector.http}. Ich účelom je extrahovať potrebné HTTP
+konfirmácie, ktoré sú následne reprezentované triedou \textit{HTTPFootprint}.
+Štruktúra tried \textit{HTTPFootprint} a \textit{TCPootprint} je dostupná v
+prílohe ??.
+
+Ďalej už z reprezentáciami \textit{HTTPFootprint} a \textit{TCPFootprint}
+pracuje trieda \textit{UFooProcessor}. Táto trieda obsluhuje hlavnú logiku
+analýzy podobnosti aktuálne spracovávaného requestu s ostatnými identifikátormi
+v databáze. Najskôr pomocou triedy  \textit{Serializer} spracuje informácie do
+konečnej podoby - \textit{UFooEntity}, ktorá je reprezentáciou samotného
+unikátneho identifikátoru. \textit{UFooEntity} obsahuje všetky extrahované
+statické a relačné dáta.
+
+Najdôležitejšou časťou celého procesu je však analýza triedou
+\textit{FootprintSimilairtyService}, ktorá implementuje algoritmus hľadania
+najbližšieho suseda formálne popísaný v predchádzajúcich častiach práce. Jej
+metódy  \textit{getNearestNeighbour},  \textit{computeDistance} a
+\textit{jaccardIndex} teda spočítajú konečný výsledok v podobe vzdialenosti a
+najbližšieho podobného identifikátora z databázy.
+
+Na základe tohto výsledku sa následne \textit{UFooProcessor} rozhodne, či ide o
+aktivitu neznámeho užívateľa a vytvorí pre aktuálny odtlačok nový záznam v
+databázy, alebo ide o opakujúcu sa reláciu, čím zvýši jeho frekvenciu, prípadne
+upozorní hostiteľskú aplikáciu na možné prekročenie jej limitu.
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=.99\textwidth]{images/footprint-distance-cal.png}
+  \caption{Diagram znázorňujúci priebeh spracovania a analýzy podobnosti
+   reqestu, zdroj: vlastné spracovanie}
+  \label{fig:footprint-distance-cal}
+\end{figure}
+
+Spracovanie a analýza dát z jednotlivých requestov prebieha asynchrónne,
+aplikácia teda nemusí čakať na dokončenie a jej výsledok. V prípade hrozby je
+samozrejme upozornená. 
+
+Pre účely testovania a kalibrácia parametrov algoritmu obsahuje repozitár okrem
+knižnice samotnej aj príklad hostiteľskej aplikácie, v ktorej je knižnica
+použitá. Tento server takisto poskytuje možnosť zobrazenia jednoduchých
+štatistík z analýzy podobnosti.
 
 \chapter{Test s reálnymi dátami}
 \label{ch:data}

@@ -13,7 +13,7 @@ public class ActionRunner {
     private ExecutorService executor;
 
     public ActionRunner() {
-        executor = Executors.newFixedThreadPool(2);
+        executor = Executors.newFixedThreadPool(1);
     }
 
     public void start(RequestAsync requestAsync, int times) {
@@ -27,7 +27,7 @@ public class ActionRunner {
                 }
             };
             try {
-                TimeUnit.MILLISECONDS.sleep(500);
+                TimeUnit.MILLISECONDS.sleep(1000);
             } catch (InterruptedException ex) {
                 System.err.println("Execution failure");
             }

@@ -6,6 +6,7 @@ import org.apache.http.HttpHeaders;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * @author Matej Majdis
@@ -71,17 +72,34 @@ public class HeaderGenerator {
         headers.put(COOKIE, MockNeat.threadLocal().strings().val());
         headers.put(HttpHeaders.CONTENT_TYPE, randomMimes());
         headers.put(HttpHeaders.USER_AGENT, MockNeat.threadLocal().strings().val());
-        headers.putAll(getUnknownHeaders());
+        headers.putAll(getUnknownHeaders(false));
 
         return headers;
     }
 
-    private Map<String,String> getUnknownHeaders() {
+    public Map<String, String> getPoolHeaders() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put(HttpHeaders.ACCEPT, randomMimes());
+        headers.put(HttpHeaders.AUTHORIZATION, MockNeat.threadLocal().strings().val());
+        headers.put(HttpHeaders.CACHE_CONTROL, cacheControlValues[Math.abs(new Random().nextInt()) % cacheControlValues.length]);
+        headers.put(COOKIE, MockNeat.threadLocal().strings().val());
+        headers.put(HttpHeaders.CONTENT_TYPE, randomMimes());
+        headers.put(HttpHeaders.USER_AGENT, MockNeat.threadLocal().strings().val());
+        headers.putAll(getUnknownHeaders(true));
+
+        return headers;
+    }
+
+    private Map<String,String> getUnknownHeaders(boolean usePool) {
         Random random = new Random();
-        int count = Math.abs(random.nextInt()) % 10 + 5;
+        int count = Math.abs(random.nextInt()) % 15 + 1;
         Map<String, String> unknownHeaders = new HashMap<>();
         for(int i = 0; i < count; i++) {
-            unknownHeaders.put("random-header-" + Math.abs(random.nextInt()), MockNeat.threadLocal().strings().val());
+            if(usePool) {
+                unknownHeaders.put("random-header-" + Math.abs(random.nextInt()), MockNeat.threadLocal().strings().val());
+            } else {
+                unknownHeaders.put("random-header-" + Math.abs(random.nextInt()), UUID.randomUUID().toString());
+            }
         }
 
         return unknownHeaders;

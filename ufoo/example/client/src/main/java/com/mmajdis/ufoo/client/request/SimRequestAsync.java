@@ -29,7 +29,7 @@ public class SimRequestAsync implements RequestAsync {
 
     public SimRequestAsync() {
         initHeaders();
-        this.IPList = MockNeat.threadLocal().ipv4s().types(CLASS_A, CLASS_B, CLASS_C).list(IP_COUNT).val();
+        this.IPList = MockNeat.threadLocal().ipv4s().types(CLASS_A, CLASS_B).list(IP_COUNT).val();
     }
 
     private static void initHeaders() {
@@ -55,10 +55,10 @@ public class SimRequestAsync implements RequestAsync {
     public Future<HttpResponse<String>> compose() {
         int actual = Math.abs(new Random().nextInt()) % HEADERS_GROUPS.size();
         Map<String, String> actualHeaders = HEADERS_GROUPS.get(actual);
-        String classAorBorCIP = IPList.get(Math.abs(new Random().nextInt()) % IP_COUNT);
+        String classAorBIP = IPList.get(Math.abs(new Random().nextInt()) % IP_COUNT);
         return Unirest.post("http://192.168.56.2:8060/test/sim")
                 .headers(actualHeaders)
-                .header("X-FORWARDED-FOR", classAorBorCIP)
+                .header("X-FORWARDED-FOR", classAorBIP)
                 .asStringAsync(new Callback<String>() {
 
                     @Override

@@ -9,6 +9,7 @@ import com.mmajdis.ufoo.client.util.HeaderGenerator;
 import net.andreinc.mockneat.MockNeat;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.Future;
@@ -22,24 +23,31 @@ import static net.andreinc.mockneat.types.enums.IPv4Type.CLASS_C;
  */
 public class StandardRequestAsync implements RequestAsync {
 
-    private static final int IP_COUNT = Constants.STANDARD_COUNT / 5;
+    private static final int IP_COUNT = Constants.STANDARD_COUNT / 4;
 
     private List<String> IPList;
     private HeaderGenerator headerGenerator;
 
     public StandardRequestAsync() {
         this.headerGenerator = new HeaderGenerator();
-        this.IPList = MockNeat.threadLocal().ipv4s().types(CLASS_A, CLASS_B, CLASS_C).list(IP_COUNT).val();
+        this.IPList = MockNeat.threadLocal().ipv4s().types(CLASS_A, CLASS_B).list(IP_COUNT).val();
     }
 
     public Future<HttpResponse<String>> compose() {
         final String resource = getRandomResource();
         //TODO repeat values
-        String classAorBorCIP = IPList.get(Math.abs(new Random().nextInt()) % IP_COUNT);
+        int random = Math.abs(new Random().nextInt());
+        String classAorBIP = IPList.get(random % IP_COUNT);
+        Map<String, String> headers;
+        if(random%3==0) {
+            headers = headerGenerator.getRandomHeaders();
+        } else {
+            headers = headerGenerator.getPoolHeaders();
+        }
         Future<HttpResponse<String>> future = Unirest.post("http://192.168.56.2:8060" + resource)
-                .headers(headerGenerator.getRandomHeaders())
-                .header("X-FORWARDED-FOR", classAorBorCIP)
-                .body(MockNeat.threadLocal().strings().val())
+                .headers(headers)
+                .header("X-FORWARDED-FOR", classAorBIP)
+                .body(UUID.randomUUID().toString())
                 .asStringAsync(new Callback<String>() {
 
                     @Override
