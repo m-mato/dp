@@ -27,7 +27,7 @@ public class ActionRunner {
                 }
             };
             try {
-                TimeUnit.MILLISECONDS.sleep(1000);
+                TimeUnit.MILLISECONDS.sleep(200);
             } catch (InterruptedException ex) {
                 System.err.println("Execution failure");
             }

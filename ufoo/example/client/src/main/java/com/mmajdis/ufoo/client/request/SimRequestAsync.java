@@ -56,7 +56,7 @@ public class SimRequestAsync implements RequestAsync {
         int actual = Math.abs(new Random().nextInt()) % HEADERS_GROUPS.size();
         Map<String, String> actualHeaders = HEADERS_GROUPS.get(actual);
         String classAorBIP = IPList.get(Math.abs(new Random().nextInt()) % IP_COUNT);
-        return Unirest.post("http://192.168.56.2:8060/test/sim")
+        return Unirest.post("http://127.0.0.1:8080/test/sim")
                 .headers(actualHeaders)
                 .header("X-FORWARDED-FOR", classAorBIP)
                 .asStringAsync(new Callback<String>() {

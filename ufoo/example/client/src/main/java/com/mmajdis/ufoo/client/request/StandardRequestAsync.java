@@ -44,7 +44,7 @@ public class StandardRequestAsync implements RequestAsync {
         } else {
             headers = headerGenerator.getPoolHeaders();
         }
-        Future<HttpResponse<String>> future = Unirest.post("http://192.168.56.2:8060" + resource)
+        Future<HttpResponse<String>> future = Unirest.post("http://127.0.0.1:8080" + resource)
                 .headers(headers)
                 .header("X-FORWARDED-FOR", classAorBIP)
                 .body(UUID.randomUUID().toString())
