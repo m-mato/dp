@@ -86,13 +86,13 @@
 \usepackage{listings}
 \usepackage{color}
  
-\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codeblue}{rgb}{0,0,0.6}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 
 \lstdefinestyle{mystyle}{  
     commentstyle=\color{codegray},
-    keywordstyle=\color{codegreen},
+    keywordstyle=\color{codeblue},
     numberstyle=\tiny\color{codepurple},
     stringstyle=\color{codepurple},
     basicstyle=\footnotesize
@@ -1219,7 +1219,7 @@ Z Injectora dáta pokračujú vždy v samostatnom vlákne na spracovanie triedou
 \textit{endpoint.collector.http}. Ich účelom je extrahovať potrebné HTTP
 informácie, ktoré sú následne reprezentované triedou \textit{HTTPFootprint}.
 \footnote{Štruktúra tried \textit{HTTPFootprint} a \textit{TCPootprint} je dostupná v
-prílohe ??.}
+prílohe \ref{fig:appendix-structure}.}
 
 Ďalej už z reprezentáciami \textit{HTTPFootprint} a \textit{TCPFootprint}
 pracuje trieda \textit{UFooProcessor}. Táto trieda obsluhuje hlavnú logiku
@@ -1346,13 +1346,37 @@ Z výsledkov simulácie, najmä z výsledkov zobrazených v histograme
 \ref{fig:data-histogram} je možné vidieť, že aktivitu requestov D-DoS útoku je
 možné odlíšiť od aktivity reálnych používateľov meraním vzdialenosti
 jednotlivých requestov. Zatiaľ čo vzdialenosti simulácie aktivity reálnych
-užívateľov sa pohybujú v intevaloch \textit{<0.1,0.15>} a \textit{<0.6,0.8>},
+užívateľov sa pohybujú v intervaloch \textit{<0.1,0.15>} a \textit{<0.6,0.8>},
 vzdialenosti simulácie aktivity D-DoS útoku sa pohybujú v intervale
 \textit{<0.2,0.4>}. Podľa týchto údajov je teda možné kalibrovať aj prah pre
 upozornenie hostiteľskej aplikácie na možnú hrozbu. 
 
 \chapter{Záver}
-TODO
+Výsledky testov s reálnymi dátami dokázali funkčnosť algoritmu a jeho schopnosť
+identifikácie užívateľov aj počas trvania simulácie prebiehajúceho DoS útoku.
+
+Tieto výsledky sú však do istej miery aj pomerne prekvapivé. Pôvodná myšlienka
+odhalenia requestov DoS útoku totiž počítala s veľkým počtom nízkych výsledných
+vzdialeností u útočníka a vysokých vzdialeností u bežnej záťaže. 
+
+Reálne však, ako je možné vidieť na histograme \ref{fig:data-histogram},
+simulácia requestov reálnych užívateľov vykazovala maximá u okrajových hodnôt
+vzdialeností a simulácia requestov DoS útoku u stredných hodnôt vzdialeností. 
+
+Dôvodom tohto rozloženia je zrejme práve spôsob akým útočník na rozdiel od
+bežných užívateľov so serverom komunikoval. Bežný užívatelia totiž zasielali
+navzájom pomerne rozdielne requesty, pričom requesty jedného užívateľa v jeho
+relácií na seba podobali. To spôsobilo ich rozloženie do okrajových hodnôt
+vzdialeností. Útočník ale celý čas používal jeden druh requestu, ktorý však
+neustále obmieňal. Preto je rozloženie jeho vzdialeností v stredných hodnotách
+škály. 
+
+Na základe týchto výsledkov je teda možné nastaviť prahy pre určenie útoku
+práve v intervale stredných vzdialeností útočníka, podľa výsledkov simulácie.
+
+Tvorba tejto práce ma veľmi bavila, preto ju určite budem ďalej rozvíjať,
+zdokonaľovať a dopĺňať o ďalšiu zaujímavú funkcionalitu od možnosti zdieľania
+databázy odtlačkov až po zlepšenie sledovania a použitia TCP informácií.
 
 \makeatletter\thesis@blocks@clear\makeatother
 \phantomsection %% Print the index and insert it into the
@@ -1360,7 +1384,26 @@ TODO
 \printindex
 
 \appendix %% Start the appendices.
-\chapter{Príloha}
-Appendices of thesis.
+\chapter{Triedy \textit{HTTPFootprint} a \textit{TCPootprint}}
+\label{fig:appendix-structure}
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=\textwidth]{images/appendix-structure.png}
+\end{figure}
+
+%TODO printed
+%\chapter{Obsah CD}
+%Priložené CD obsahuje nasledujúce adresáre:
+%\begin{itemize}
+%\item \texttt{dp/thesis} -- obsahuje text bakalárskej práce vo formáte PDF a
+%zdrojové soubory vo formáte \LaTeX
+%\item \texttt{dp/ufoo} -- obsahuje zdrojový kód implementačnej časti práce,
+%teda knižnicu implementujúcu algoritmus identifikácie užívateľa v jazyku Java
+%\item \texttt{dp/exampleServer} -- obsahuje spustiteľný JAR súbor aplikácie, v
+%ktorej je použitá knižnica implementačnej časti práce, spolu s inštrukciami pre
+%jej testovanie
+%\end{itemize}
+%Aktuálna verzia diplomovej práce, implementácie a jednotlivých príkladov je
+%takisto k dispozícií v repozitári \url{https://github.com/m-mato/dp.git}.
 
 \end{document}
