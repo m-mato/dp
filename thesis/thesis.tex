@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[
-  printed, %% This option enables the default options for the
+  digital, %% This option enables the default options for the
            %% printed version of a document. Replace with `digital`
            %% to enable the default options for the digital version
            %% of a document.
@@ -17,6 +17,7 @@
            %% hide the List of Figures.
   nolot,   %% Prints the List of Tables. Replace with `nolot` to
            %% hide the List of Tables.
+  nocover
   %% More options are listed in the user guide at
   %% <http://mirrors.ctan.org/macros/latex/contrib/fithesis/guide/mu/fi.pdf>.
 ]{fithesis3}
@@ -45,16 +46,17 @@
     TeXtitle      = {Rozpoznanie užívateľa na základe informácií o HTTP komunikácií},
     keywords      = {keyword1, keyword2, ...},
     TeXkeywords   = {keyword1, keyword2, \ldots},
+    assignment  = {} %TODO - prnted - Kopie zadání a Kopie prohlášení autora školního díla
 }
 
 \thesislong{abstract}{
 	TODO
-
 }
 
-\thesislong{thanks}{
-	TODO
-}
+%TODO - printed - poďakovanie
+%\thesislong{thanks}{ 
+%	TODO
+%}
 
 %% The following section sets up the bibliography.
 \usepackage{csquotes}
@@ -468,105 +470,101 @@ teda vrstva sieťového rozhrania uvedené len pre úplnosť.
 
 \chapter{Útoky typu \textit{Denial of Service}}
 \label{ch:dos}
-Jedným z hlavných dôvodov identifikácie užívateľov je prevencia proti útokom. Medzi
-najznámejšie z útokov patrí tzv. \textit{Denial of Service}, ďalej len \textit{DoS}.
+Jedným z hlavných dôvodov a motivácií identifikácie užívateľov je prevencia
+proti útokom. Medzi najznámejšie z útokov, proti ktorým je možné brániť sa
+práve týmto spôsobom patrí takzvaný útok typu \textit{Denial of Service}
+(ďalej len \textit{DoS}).
 
-Vo všeobecnosti je za \textit{DoS} útok považovaná snaha útočníka zabrániť oprávneným
-užívateľom v prístupe k informáciám, prípadne službám poskytovateľa. Snahou útočníka
-je znefunkčniť pripojenie neustálym narúšaním služby serveru, prípadne sieťovej
-infraštruktúry, v dôsledku čoho môže dôjsť k čiastočnej, či úplnej strate
-internetového pripojenia hostiteľa. 
+Vo všeobecnosti je za \textit{DoS} útok považovaná snaha útočníka zabrániť
+oprávneným užívateľom v prístupe k informáciám, prípadne službám poskytovateľa.
+Snahou útočníka je znefunkčniť pripojenie neustálym narúšaním služby serveru,
+prípadne sieťovej infraštruktúry, v dôsledku čoho môže dôjsť k čiastočnej, či
+úplnej strate pripojenia hostiteľa. 
 
 \begin{figure}[h]
   \centering
     \includegraphics[width=\textwidth]{images/dos.png}
   \caption{Schéma DoS útoku, zdroj: vlastné spracovanie}
-  \label{fig:cs-basic}
+  \label{fig:dos}
 \end{figure}
 
-U distribuovaného \textit{DoS} útoku môže útočník použiť k útoku na server
-počítače klientov. Nad týmito zariadeniami je možné prevziať kontrolu využitím
-bezpečnostných chýb alebo nedostatkov. Takto je následne možné donútiť počítač
-posielať obrovské množstvo dát na webové servery, prípadne odosielanie nevyžiadanej
-pošty na konkrétne e-mailové adresy. Útok sa nazýva "distribuovaný", pretože útočník
-používa viac zariadení na začatie útoku \textit{denial-of-service}.
-
-\textit{DoS} útok je podobný veľkej skupine ľudí, ktorá sa zhromažďuje pri vstupe do
-obchodu a bráni vo vstupe skutočným zákazníkom, ktorých záujmom sú reálne služby.
-Útočníci vykonávajúci tieto útoky sa často zameriavajú na webové služby a servery,
-ktoré sú poskytované vysoko profitujúcimi inštitúciami, ako sú napríklad banky,
-prípadne platobné brány.
-
 \section{Základne typy a techniky}
-Nasledujúce odseky popisujú najpoužívanejšie typy a techniky vykonávania \textit{DoS}
-útokov a identifikujú prostriedky, ktorými je im možné zabrániť.
+Existuje mnoho rôznych typov a techník vykonávania \textit{DoS} útokov.
+Nasledujúce odseky preto popisujú najpoužívanejšie z nich a identifikujú
+prostriedky, pomocou ktorých je možné sa im brániť.
 
 \subsection{Distribuované DoS útoky}
 O distribuovaných \textit{DoS} útokoch hovoríme v prípade, že viaceré zariadenia zaplavia
 celú šírku pásma prípadne zdrojov cieľového systému, ktorým je zvyčajne jeden, alebo viacero
 serverov. Takýto útok je často dôsledkom použitia rôznych systémov a zariadení (napríklad
-\textit{botnetu}), ktoré sa snažia vyťažiť cieľový systém. \textit{Botnet} je rozsiahla
+takzvaného \textit{botnetu}), ktoré sa snažia vyťažiť cieľový systém. \textit{Botnet} je rozsiahla
 virtuálna sieť umelých (\textit{zombie}) počítačov, ktorých cieľom je prijímať príkazy bez
-vedomia majiteľa. Keď cieľový systém spotrebuje všetky voľné spojenia, ďalšie (nové) už nie
-je možné nadviazať. Hlavné výhody útočníka pri využití Distribuovaného \textit{DoS} útoku
+vedomia majiteľa. Keď cieľový systém spotrebuje všetky voľné spojenia, ďalšie už nie
+je možné nadviazať. 
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=\textwidth]{images/ddos.png}
+  \caption{Schéma rozloženia DDoS útoku, zdroj: vlastné spracovanie}
+  \label{fig:ddos}
+\end{figure}
+
+Hlavné výhody útočníka pri využití Distribuovaného \textit{DoS} útoku
 spočívajú v skutočnostiach, že viaceré zariadenia dokážu generovať väčšiu záťaž ako jedno,
-pričom použitie množstva systémov zabezpečuje omnoho ťažšiu detekciu útočníka a správanie
-sa každého z týchto zariadení je menej pozorovateľné čo sťažuje obranu voči útočníkovi.
+pričom použitie množstva systémov zabezpečuje omnoho ťažšiu detekciu jeho identity a správanie
+sa každého z týchto zariadení je menej pozorovateľné, čo sťažuje obranu voči samotnému útoku.
+
 Tieto výhody taktiež spôsobujú vývoj obranných mechanizmov. Na strane cieľového serveru už
 nebude stačiť jednoduché zvýšenie šírky pásma nad hranicu momentálnej veľkosti útoku, pretože
 útočník môže napríklad zvýšiť počet zapojených zariadení čím by taktiež spôsobil zaťaženie a
 výpadok systému.
 
-\begin{figure}[H]
-  \centering
-    \includegraphics[width=\textwidth]{images/ddos.png}
-  \caption{Schéma rozloženia DDoS útoku, zdroj: vlastné spracovanie}
-  \label{fig:cs-basic}
-\end{figure}
-
 \subsection{Sémantické DoS útoky}
 Sémantické útoky využívajú špecifickú funkcionalitu, alebo implementačnú chybu aplikácie,
 prípadne protokolu zariadenia obete na zneužitie určitého množstva jeho zdrojov. Napríklad
 v prípade \textit{TCP SYN} útoku je touto zneužitou funkcionalitou alokácia značného množstva
-priestoru v zozname pripojení ihneď po potvrdení \textit{ TCP SYN requestu}. Útočník otvorí
+priestoru čakajúcich pripojení ihneď po potvrdení \textit{ TCP SYN requestu}. Útočník otvorí
 viaceré spojenia, ktoré nikdy neuzavrie, čím zahlcuje server. 
 
-Pri \textit{CGI} útoku je cieľom útočníka takýmto spôsobom zahltiť procesor viacerými
+Pri \textit{CGI} útoku je zasa cieľom útočníka takýmto spôsobom zahltiť procesor viacerými
 \textit{CGI requestami}.
 
 Jedným z obzvlášť nebezpečných útokov je \textit{NAPTHA} útok, ktorý sa zameriava na
 \textit{TCP} protokol. Inicializuje mnoho \textit{TCP} spojení, ktoré zaplnia zdroje serveru.
 
-\subsection{Brute-force útoky}
-TODO 
+\subsection{Reflexia a amplifikácia}
+U reflexie (\textit{DRDoS}) je za reflektujúce zariadenie považovaná akákoľvek hostiteľská IP adresa, 
+ktorá v prípade odoslania
+paketu, tento paket spätne aj vráti.
+Skupiny útočníkov cielene organizujú nimi kontrolované hostiteľské servery, tak aby sa zasielali 
+falošné dáta, simulujúce napadnutý uzol, až ku reflektujúcemu serveru. Vo výsledku sú teda obete 
+napadnuté z výrazne väčšieho počtu zdrojových bodov, obsiahlo rozptýlených v sieti, čím útočníci účelne 
+odrezávajú ich spojenie zo zvyškom internetu.
 
-Source ref: https://www.eecis.udel.edu/~sunshine/publications/ccr.pdf
-
-\subsection{Reflexia a zosilnenie}
-TODO
-% A reflector is any IP host that will return a packet if sent a packet. Attackers
-% orchestrate the hosts under their control to send the spoofed traffic purportedly
-% coming from the victim to reflectors. The result is that the flood at the
-% victim arrives from a significantly higher number of sources, an exceedingly diffuse
-% flood likely clogging every single path to the victim from the rest of the internet.
+Amplifikačný útok je typ reflektujúceho útoku, kde reflektujúci server odosiela mnohonásobne väčší 
+objem odpovedí než prijíma. Týmto spôsobom teda znásobuje aj vyťaženie spojenia medzi obeťou a 
+zdrojovým uzlom.
 
 \begin{figure}[h]
   \centering
     \includegraphics[width=\textwidth]{images/drdos.png}
   \caption{Schéma rozloženia DRDoS útoku, zdroj: vlastné spracovanie}
-  \label{fig:cs-basic}
+  \label{fig:drdos}
 \end{figure}
 
-% Amplification: An amplification attack is a type of the reflection attack in which
-% reflectors’ responses are larger than queries. Therefore the volume of the attack
-% traffic from the source to the victim is multiplied .
+%\subsection{HTTP POST DoS útoky}
+%Výskyt kompletného HTTP POST útoku s legitímnou hlavičkou, v ktorej je obsiahnutá ’Content-Length’ položka,  špecifikujúca veľkosť tela sprievodnej správy, sa prvý raz objavil v roku 2009. Útočník však realizuje zaslanie skutočného tela správy extrémne pomalou rýchlosťou, ako napríklad 1 byte za 110 sekúnd. So zámerom uchovať celú správu korektnú a kompletnú, cieľový server sa bude pokúšať riadiť podľa ’Content-Length’ pola v hlavičke a čakať, kým nie je celé telo správy prenesené, čo može trvať skutočne dlho. Útočník zriadi stovky, či dokonca tisíce takýchto pripojení, pričom sú všetky vstupné body prichádzajúcich pripojení (obetí)  využité na znemožnenie vytvárania ďaľších (včetne legitímnych) pripojení, pokým sa neodošlú všetky dáta.
 
-\subsection{HTTP POST DoS útoky}
-TODO
-% First discovered in 2009, the HTTP POST attack sends a complete, legitimate HTTP POST header, which includes a 'Content-Length' field to specify the size of the message body to follow. However, the attacker then proceeds to send the actual message body at an extremely slow rate (e.g. 1 byte/110 seconds). Due to the entire message being correct and complete, the target server will attempt to obey the 'Content-Length' field in the header, and wait for the entire body of the message to be transmitted, which can take a very long time. The attacker establishes hundreds or even thousands of such connections, until all resources for incoming connections on the server (the victim) are used up, hence making any further (including legitimate) connections impossible until all data has been sent. It is notable that unlike many other (D)DoS attacks, which try to subdue the server by overloading its network or CPU, a HTTP POST attack targets the logical resources of the victim, which means the victim would still have enough network bandwidth and processing power to operate. Further combined with the fact that Apache will, by default, accept requests up to 2GB in size, this attack can be particularly powerful. HTTP POST attacks are difficult to differentiate from legitimate connections, and are therefore able to bypass some protection systems. OWASP, an open source web application security project, has released a testing tool to test the security of servers against this type of attacks.
+% First discovered in 2009, the HTTP POST attack sends a complete, legitimate HTTP POST header, which includes a 'Content-Length' field to specify the size of the message body to follow. However, the attacker then proceeds to send the actual message body at an extremely slow rate (e.g. 1 byte/110 seconds). Due to the entire message being correct and complete, the target server will attempt to obey the 'Content-Length' field in the header, and wait for the entire body of the message to be transmitted, which can take a very long time. The attacker establishes hundreds or even thousands of such connections, until all resources for incoming connections on the server (the victim) are used up, hence making any further (including legitimate) connections impossible until all data has been sent. 
+
+%Je pozoruhodné, že na rozdiel od množstva iných (D)DoS útokov, ktoré sa pokúšali pokoriť server preťažením svojej siete alebo CPU, HTTP POST útok je zameraný na logické možnosti svojich obetí.V praxi to znamená, že zasiahnutým prvkom ostane dostatok network bandwidth priepustnosti vrámci siete a výkonu procesoru na nenarušenú prevádzku. V neposlednom rade, ak zvážime, že softvérový webový server Apache implicitne akceptuje požiadavky o veľkosti 2 GB, môže byť tento typ útoku obzvlášť silný. Je veľmi ťažké ich odlíšiť od neškodných legitímnych pripojení, preto sú schopné obísť aj bezpečnostné systémy. 
+%OWASP (open source web application security project) poskytla verejnosti testovací prostriedok pre overovanie bezpečnosti serverov voči takémuto druhu nástrahy.
+
+%It is notable that unlike many other (D)DoS attacks, which try to subdue the server by overloading its network or CPU, a HTTP POST attack targets the logical resources of the victim, which means the victim would still have enough network bandwidth and processing power to operate. Further combined with the fact that Apache will, by default, accept requests up to 2GB in size, this attack can be particularly powerful. HTTP POST attacks are difficult to differentiate from legitimate connections, and are therefore able to bypass some protection systems. OWASP, an open source web application security project, has released a testing tool to test the security of servers against this type of attacks.
 
 \section{DoS nástroje a DoS as a Service}
-Typickou metódou prenosu mechanizmov \textit{DDoS} útokov je malvér. Jedným z príkladov bol
+Typickou metódou prenosu mechanizmov \textit{DoS} a \textit{DDoS} útokov je malvér. Jedným z príkladov 
+bol
 takzvaný \textit{MyDoom}. Ide o \textit{DoS} mechanizmus, ktorý sa spúšťal vo predom naplánovanom čase.
 Tento útok zahŕňal nastavenie hodnoty \textit{IP} adresy cieľového systému pre nasadenie malvéru,
 pričom pre spustenie útoku nebola potrebná žiadna interakcia s používateľom.
@@ -578,9 +576,11 @@ programoch počúvajúcich vzdialené pripojenia. Tento scenár zasahuje primár
 ako webové servery. Typickým príkladom \textit{DDoS} nástroja z tejto oblasti je takzvaný
 \textit{Stacheldraht}. \textit{Stacheldraht} využíva vrstevnatú štruktúru, v ktorej útočník používa
 program klienta na pripojenie sa k \textit{handlerom}, ktoré sú zneužívané na prenos príkazov
-k \textit{zombie} agentom. Agenti následne vykonávajú samotný \textit{DDoS} útok. Agenti sú cez handleri
+k \textit{zombie} agentom. Agenti následne vykonávajú samotný \textit{DDoS} útok. Agenti sú cez 
+handleri
 zneužívané útočníkom za pomoci použitia automatizovaných algoritmov na vyhľadávanie zraniteľností v
-programoch, ktoré prijímajú vzdialené pripojenia. Každý \textit{handler} je schopný kontrolovať až tisíc
+programoch, ktoré prijímajú vzdialené pripojenia. Každý \textit{handler} je schopný kontrolovať až 
+tisíc
 agentov. 
 
 DDoS nástroje ako \textit{Stacheldraht} stále používajú klasické \textit{DoS} metódy zamerané na
@@ -596,9 +596,15 @@ V niektorých prípadoch sa však môže zariadenie stať časťou \textit{DDoS}
 majiteľa. Príkladom je distribuovaný útok \textit{Operation Payback} organizovaný skupinu
 \textit{Anonymous}.
 
----
+%---
 
-TODO DoSaaS
+%%TODO DoSaaS
+
+%Typicky sa pre tieto účely používa LOIC. Spolu s HOIC je dnes k dispozícii široká škála nástrojov DDoS, vrátene platených, ale aj ich neplatených verzií, s rôznymi funkcionalitami.
+%Všetko je dostupné vrámmci rozvinutého čierneho trhu - na fórach, ktoré sú s oblubou navštevované hekermi, alebo na rôznorodých IRC kanáloch.
+%Britská GCHQ vyvinula nástroje pre  DDoS, pomenované PREDATORS FACE a ROLLING THUNDER.
+%Niektorí predajcovia poskytujú takzvané "booterör "stresser" služby, ktoré majú jednoduché webové rozhranie, prostredníctvom ktorého umožňujú akceptovať platby cez web. Tieto trhom nesmierne propagované nástoje možu byť zneužité na vykonanie neautorizovaného útoku, pod maskou odmietnutia služby. Poskytnú tak útočníkovi technicky bezproblémový prístup pre sofitikovaný útok bez potreby najskôr porozumieť načo je príslušná služba využívaná.
+
 % The LOIC has typically been used in this way. Along with HOIC a wide variety of DDoS tools are available today, including paid and free versions, with different features available. There is an underground market for these in hacker related forums and IRC channels.
 
 % UK's GCHQ has tools built for DDoS, named PREDATORS FACE and ROLLING THUNDER.
@@ -606,17 +612,16 @@ TODO DoSaaS
 % Some vendors provide so-called "booter" or "stresser" services, which have simple web-based front ends, and accept payment over the web. Marketed and promoted as stress-testing tools, they can be used to perform unauthorized denial-of-service attacks, and allow technically unsophisticated attackers access to sophisticated attack tools without the need for the attacker to understand their use.
 
 \section{DoS - Zhrnutie}
-TODO
-% Simple attacks such as SYN floods may appear with a wide range of source IP addresses, giving the appearance of a well distributed DoS. These flood attacks do not require completion of the TCP three way handshake and attempt to exhaust the destination SYN queue or the server bandwidth. Because the source IP addresses can be trivially spoofed, an attack could come from a limited set of sources, or may even originate from a single host. Stack enhancements such as syn cookies may be effective mitigation against SYN queue flooding, however complete bandwidth exhaustion may require involvement.
-
-% If an attacker mounts an attack from a single host it would be classified as a DoS attack. In fact, any attack against availability would be classed as a denial-of-service attack. On the other hand, if an attacker uses many systems to simultaneously launch attacks against a remote host, this would be classified as a DDoS attack.
-
-% It has been reported that there are new attacks from internet of things which have been involved in denial of service attacks. In one noted attack that was made peaked at around 20,000 requests per second which came from around 900 CCTV cameras.
-
+Ako je možné vidieť z predchádzajúcich odsekov, existuje naozaj veľké množstvo
+variácií \textit{DoS} a \textit{DDoS} útokov. Zároveň ich počet postupom času
+narastá a preto je nutné vyvíjať nové nástroje pre obranu voči nim. Najťažšou časťou
+je však takýto útok a najmä jeho pôvodcu odhaliť a identifikovať. Jedným z využití
+algoritmu popísaného v kapitole \ref{ch:footprint} a implementačnej časti je preto
+práve táto funkcionalita.
 
 \chapter{Existujúce prístupy k identifikácií}
 \label{ch:existing}
-Jednou z dôležitých častí tejto práce je popis existujúcich prístupov ktoré
+Dôležitou súčasťou tejto práce je popis existujúcich prístupov ktoré
 sú aktuálne využívané na účely identifikácie užívateľa. Práve ich porovnaniu
 a hodnoteniu sa venuje nasledujúca kapitola.
 Ide najmä o techniky využívajúce protokoly sieťovej vrstvy (najmä IP adresy),
