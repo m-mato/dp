@@ -105,15 +105,15 @@
 \chapter{Úvod}
 Problematika jednoznačnej identifikácie používateľa je dnes veľmi
 dôležitou a riešenou témou. Jedným z hlavných dôvodov je fakt, že väčšina
-dnešných existujúcich, prípadne novo vznikajúcich systémov a aplikácií je
+dnešných existujúcich, prípadne novo vznikajúcich systémov a aplikácií, je
 nejakým spôsobom zapojená do Internetu. 
 
-Z tohto vyplýva potreba rozoznania a identifikácie používateľov, ktorý s
+Z tohto vyplýva potreba rozoznania a identifikácie používateľov, ktorí s
 danou aplikáciou interagujú. Existuje niekoľko rôznych prístupov k 
-identifikácií, od mapovania IP adries sieťovej vrstvy až po aplikačnú správu
+identifikácii, od mapovania IP adries sieťovej vrstvy až po aplikačnú správu
 užívateľských účtov. Každý z nich má však svoje výhody aj nevýhody. Podrobne sa nimi zaoberá kapitola \ref{ch:existing}.
 
-Cieľom tejto práce je vytvoriť unikátny identifikátor na základe informácií
+Cieľom práce je vytvoriť unikátny identifikátor na základe informácií
 dostupných najmä z \textit{HTTP}, prípadne \textit{TCP} protokolu. Pred zostavením samotného algoritmu je
 však dôležité popísať niektoré kľúčové oblasti a postupy.
 Nasledujúce odseky úvodu práce sa preto budú stručne zaoberať fungovaním aplikácií typu
@@ -123,11 +123,11 @@ klient-server a architekrúrou domény práce.
 S pokračujúcim vývojom nových technológií sa Internet a Web stávajú čoraz väčšou
 súčasťou našich životov. Web ako taký už dávno nie je limitovaný prehliadaním na
 počítačoch. Musí sa prispôsobovať rôznym technológiám, ako sú napríklad
-mobilné, či iné multimediálne zriadenia.
+mobilné, či iné multimediálne zariadenia.
 
 Najčastejšie používaným modelom sieťovej komunikácie pre
 architektúru aplikácií je takzvaný klient-server model. Základnou
-myšlienkou tohto modelu je zaslanie požiadavku (\textit{requestu}) klientom na
+myšlienkou tohto modelu je zaslanie požiadavky (\textit{requestu}) klientom na
 server, ktorý vystupuje ako poskytovateľ služby.
 
 \subsection{Klient-Server model}
@@ -171,7 +171,7 @@ Zároveň existujú dva základné typy architektúr podľa miery zapojenia zari
 \textit{2-tier} architektúra zahŕňa len zariadenie klienta a databázový server.
 U tohoto typu architektúry je aplikácia spustená na zariadení klienta, ktoré sa
 následne pripája priamo na server. Zariadenie tak obsluhuje zároveň
-\textit{business} logiku aj zobrazovanie aplikácie. Inak tento typ architektúry
+\textit{business} logiku aj zobrazovanie aplikácie. Tento typ architektúry
 nazývame aj tučný klient (\textit{thick client}).
 
 \begin{figure}[H]
@@ -183,32 +183,32 @@ nazývame aj tučný klient (\textit{thick client}).
 \end{figure}
 
 \textit{3-tier} architektúra, ktorej aplikácie sú predmetom tejto práce, sa od
-\textit{2-tier} líši najmä tým, že okrem zariadenia klienta a databázového serveru
+\textit{2-tier} líši najmä tým, že okrem zariadenia klienta a databázového serveru,
 zahŕňa aj aplikačný server. Tento je následne používaný na obsluhu
 \textit{business} logiky aplikácie a komunikáciu s databázou, pričom zariadenie
 klienta slúži len na zobrazovanie. Iný názov pre takýto typ architektúry je tenký
 klient (\textit{thin client}).
 
 \section{Štruktúra práce}
-Práce je ďalej rozdelená na dve časti pozostávajúce z piatich kapitol, z ktorých každá sa zaoberá iným aspektom
+Práca je ďalej rozdelená na dve časti, pozostávajúce z piatich kapitol, z ktorých každá sa zaoberá iným aspektom
 jej charakteristiky:
 \begin{itemize}
 \item Prvá časť práce sa zameriava na
-definíciu dôležitých pojmov, popis použitých technológií a porovnanie existujúcich prístupov k identifikácií.
-\item Druhá časť sa venuje návrhu samotnému návrhu algoritmu identifikátoru, jeho implementácií a testovaniu jeho funkcionality.
+definíciu dôležitých pojmov, popis použitých technológií a porovnanie existujúcich prístupov k identifikácii.
+\item Druhá časť sa venuje samotnému návrhu algoritmu identifikátora, jeho implementácií a testovaniu jeho funkcionality.
 \end{itemize}
 
 Najskôr teda kapitola
 \ref{ch:net-layers} popisuje jednotlivé sieťové vrstvy a protokoly, ktorých
-informácie bude možné následne použiť k tvorbe identifikátoru. 
+informácie bude možné následne použiť k tvorbe identifikátora. 
 Nasleduje kapitola \ref{ch:dos} popisujúca hlavnú z motivácií 
 celej práce, ktorou sú útoky typu DOS a prevencia voči nim.
-Poslednou kapitolou prvej časti práce je zhrnutie
-existujúcich prístupov k rozoznaniu užívateľov v kapitole \ref{ch:existing}.
+Posledná kapitola prvej časti práce je zhrnutím
+existujúcich prístupov k rozpoznaniu užívateľov v kapitole \ref{ch:existing}.
 
 Najdôležitejšou časťou sú však
 samozrejme kapitoly \ref{ch:footprint} a \ref{ch:data}, ktoré popisujú návrh samotného 
-algoritmu identifikátoru, jeho implementáciu a následné testovanie s reálnymi dátami.
+algoritmu identifikátora, jeho implementáciu a následné testovanie s reálnymi dátami.
 
 \chapter{Sieťové vrstvy}
 \label{ch:net-layers}
@@ -216,7 +216,7 @@ Pre lepšie uchopenie problematiky identifikácie používateľa je nutné najsk
 popísať jednotlivé sieťové vrstvy TCP/IP modelu a
 ich protokoly. Nasledujúci text sa preto zameriava najmä na štruktúry, ktorých pochopenie je
 dôležité pre ďalšie moduly teoretickej a praktickej časti práce. Ide teda o
-konkrétne informácie jednotlivých protokolov, z ktorých niektoré boli naśledne použité v implementácií
+konkrétne informácie jednotlivých protokolov, z ktorých niektoré boli následne použité v implementácií
 identifikačného algoritmu.
 
 \begin{figure}[h]
@@ -230,13 +230,13 @@ identifikačného algoritmu.
 \section{Aplikačná vrstva}
 Na vrchole hierarchie je Aplikačná vrstva abstrakciou, ktorá špecifikuje
 konkrétne protokoly a metódy používané hostiteľskými uzlami v sieti. Táto
-vrstva je definovaná jednak v TCP/IP ale aj OSI
+vrstva je definovaná jednak v TCP/IP, ale aj OSI
 \textit{(Open Systems Interconnection)} modele sieťovej komunikácie.
 
 Táto práca narába s modelom TCP/IP, v ktorom aplikačná vrstva definuje práve
 protokoly a metódy rozhraní pre komunikáciu medzi jednotlivými procesmi
 spájaných strán v sieti. Samotná aplikačná vrstva však len štandardizuje formu
-komunikácie, pri čom ustálenie uceleného dátového spojenia a správu prenosu dát
+komunikácie, pričom ustálenie uceleného dátového spojenia a správu prenosu dát
 u aplikácií typu klient-server a \textit{peer-to-peer} ponecháva na protokoloch
 nasledujúcej - transportnej vrstvy. Keďže aplikačná vrstva nijakým spôsobom
 nepopisuje a nešpecifikuje konkrétne pravidlá pre formu prenášaných dát,
@@ -257,14 +257,14 @@ rodiny HTTP, konkrétne teda hlavičkám a atribútom HTTP a HTTPS.
 \subsection{HTTP}
 HTTP \textit{(Hypertext Transfer Protocol)} je distribuovaný protokol určený
 na spoluprácu a prenos informácií medzi jednotlivými systémami pre
-prácu s hyper-médiami. Tento protokol je bez-stavový a vo všeobecnosti
+prácu s hypermédiami. Tento protokol je bezstavový a vo všeobecnosti
 použiteľný nielen pre prenos hypertextu, ale aj správu DNS serverov, prípadne
 zložitejších objektov a systémov, v ktorých uplatní rozsiahlu škálu svojich
 hlavičiek a chybových hlášok. Jedným z jeho charakteristických znakov je aj
 možnosť voľby reprezentácie dát, čo dáva systémom veľkú nezávislosť na
 prenášanom formáte.
 
-HTTP funguje na princípe požiadavku a odpovede \textit{(request - response)}
+HTTP funguje na princípe požiadavky a odpovede \textit{(request - response)},
 založenom na fungovaní samotného klient-server modelu. Klientom môže byť
 napríklad webový prehliadač, serverom zasa aplikácia spustená na zariadení
 hostiteľského uzlu. V tomto prípade teda webový prehliadač zašle správu vo
@@ -272,29 +272,29 @@ forme HTTP požiadavku na server. V ideálnom prípade server tento požiadavok
 \textit{(request)} spracuje a vygeneruje odpoveď (napríklad HTML stránku),
 ktorú vráti klientovi ako správu vo formáte HTTP odpovede \textit{(response)}.
 Odpoveď pre klienta vždy obsahuje takzvaný \textit{(status)}, ktorý informuje o
-dokončení požiadavku a prípadné telo so správou odpovede.
+dokončení požiadavky a prípadné telo so správou odpovede.
 
 Celá relácia HTTP spojenia medzi dvoma uzlami je teda sekvenciou niekoľkých
 takýchto \textit{(request - respone)} transakcií. Samotný prenos dát však nie
 je realizovaný na úrovni HTTP protokolu, ale prostredníctvom protokolu TCP
 na úrovni transportnej vrstvy. HTTP klient iniciuje ustálenie TCP spojenia pre
-špecifický port serveru (typickými portmi sú 80, 443 alebo 8080). HTTP server
-počúva na danom porte a čaká na správu požiadavku klienta. Po prijatí správy ju
+špecifický port serveru (typickými portami sú 80, 443 alebo 8080). HTTP server
+počúva na danom porte a čaká na správu požiadavky klienta. Po prijatí správy ju
 už server štandardne spracuje a vráti odpoveď. 
 
 Klient a server komunikujú prostredníctvom zasielania textových správ.
-Požiadavok pozostáva z nasledujúcich informácií: 
+Požiadavka pozostáva z nasledujúcich informácií: 
 \begin{itemize}
-	\item Definícia požiadavku
+	\item Definícia požiadavky
 	\item HTTP hlavičky (napríklad: \textit{Accept-Language: en})
 	\item Prázdny riadok
 	\item Prípadné telo správy
 \end{itemize}
 
-Takisto správa odpovede má definovaný formát podobný formátu požiadavku, ktorý
+Takisto správa odpovede má definovaný formát podobný formátu požiadavky, ktorý
 sa skladá z nasledujúcich položiek:
 \begin{itemize}
-	\item Status spracovania požiadavku a dôvod
+	\item Status spracovania požiadavky a dôvod
 	\item HTTP hlavičky odpovede (napríklad: \textit{Content-Type: text/html})
 	\item Prázdny riadok
 	\item Prípadné telo správy odpovede
@@ -306,18 +306,18 @@ Prvý riadok definície a každá z hlavičiek musia byť zakončené znakmi
 Prázdny riadok musí zároveň pozostávať výlučne zo znakov \textit{<CR><LF>}.
 Z pohľadu identifikácie budú neskôr veľmi dôležité práve HTTP hlavičky. U HTTP
 verzie 1.1 je jedinou povinnou hlavičkou \textit{Host} definujúci server, na
-ktorý bol požiadavok odoslaný.
+ktorý bola požiadavka odoslaný.
 
 \begin{figure}[h]
   \centering
     \includegraphics[width=.97\textwidth]{images/net-http.png}
-  \caption{Príklad štruktúry HTTP požiadavku s telom, zdroj: vlastné spracovanie}
+  \caption{Príklad štruktúry HTTP požiadavky s telom, zdroj: vlastné spracovanie}
   \label{fig:net-http}
 \end{figure}
 
 \section{Transportná vrstva}
 V kontexte TCP/IP modelu sieťovej komunikácie sa transportná vrstva nachádza
-ako druhá v poradí medzi aplikačnou a sieťovou vrstvou. Ide o súbor protokolov
+ako druhá v poradí, medzi aplikačnou a sieťovou vrstvou. Ide o súbor protokolov
 a metód, ktoré poskytujú takzvanú \textit{host-to-host} komunikáciu
 jednotlivých sieťových uzlov protokolom vyššie popísanej aplikačnej vrstvy.
 Konkrétne implementuje funkcionalitu samotného prenosu dát v dátovom toku,
@@ -326,7 +326,7 @@ zabezpečuje jeho spoľahlivosť, riadenie a multiplexovanie.
 Medzi najznámejšie protokoly tejto vrstvy patrí napríklad TCP
 \textit{(Transmission Control Protocol)}, ktorého názov nesie aj samotný
 sieťový model. Tento protokol je orientovaný na prenos zložitejších spojení,
-naproti čomu druhý z protokolov - UDP \textit{(User Datagram Protocol )} je
+naproti čomu druhý z protokolov - UDP \textit{(User Datagram Protocol )}, je
 vhodný a používaný skôr pre jednoduchšie správy a spojenia. Protokol TCP je
 komplexnejší najmä kvôli svojmu návrhu, ktorý uchováva stav jednotlivých
 transakcií a zabezpečuje spoľahlivosť doručenia všetkých dátových správ. 
@@ -339,7 +339,7 @@ sa zaoberá prenosom telefónnej signalizácie.
 
 \subsection{Protokol TCP}
 TCP je jeden z najdôležitejších a najpoužívanejších protokolov celého sieťového
-modelu. Pracuje s ním množstvo ďalších protokolov aplikačnej vrstvy ako
+modelu. Pracuje s ním množstvo ďalších protokolov aplikačnej vrstvy, ako
 napríklad: HTTP, FTP alebo POP3. Jeho najdôležitejšou charakteristikou je
 pravdepodobne garancia kompletného doručenia všetkých paketov v správnom
 poradí. K samotným dátam aplikačnej vrstvy preto TCP pripája ku každému paketu
@@ -348,7 +348,7 @@ potrebné pre dosiahnutie tejto funkcionality.
 
 \begin{figure}[h]
   \centering
-    \includegraphics[width=.80\textwidth]{images/net-tcp-head.png}
+    \includegraphics[width=.95\textwidth]{images/net-tcp-head.png}
   \caption{Schéma popisujúca štruktúru TCP hlavičky a informácií, ktoré sú v
   nej uložené, zdroj: vlastné spracovanie}
   \label{fig:net-tcp-head}
@@ -356,7 +356,7 @@ potrebné pre dosiahnutie tejto funkcionality.
 
 Niektoré informácie z týchto hlavičiek sú pomerne často využívané u existujúcich
 nástrojov na identifikáciu užívateľov, ktorým sa podrobne venuje kapitola
-\ref{ch:existing}. Ich vyžitie v algoritme identifikátoru tejto práce následne
+\ref{ch:existing}. Ich využitie v algoritme identifikátora tejto práce následne
 popisuje kapitola \ref{ch:footprint}.
 
 Aby mohlo dôjsť k samotnému odoslaniu požadovaných dát, musí byť medzi klientom
@@ -366,7 +366,7 @@ popisuje diagram \ref{fig:net-tcp-flow}.
 
 \begin{figure}[h]
   \centering
-    \includegraphics[width=.80\textwidth]{images/net-tcp-flow.png}
+    \includegraphics[width=.95\textwidth]{images/net-tcp-flow.png}
   \caption{\textit{Three-way handshake} v TCP, zdroj: vlastné spracovanie}
   \label{fig:net-tcp-flow}
 \end{figure}
@@ -374,7 +374,7 @@ popisuje diagram \ref{fig:net-tcp-flow}.
 \subsection{Protokol UDP}
 UDP je na rozdiel od TCP protokolom, ktorý poskytuje takzvaný nespoľahlivý
 prenos dát medzi uzlami. Táto nespoľahlivosť spočíva v stratovosti jednotlivých
-paketov počas prenosu dát bez možnosti automatického preposielania
+paketov počas prenosu dát, bez možnosti automatického preposielania
 informácií. UDP zároveň negarantuje žiadne poradie ich doručenia.
 
 Vďaka týmto
@@ -385,10 +385,10 @@ veľké množstvo malých paketov viacerým príjemcom. Ide napríklad o: DNS se
 IPTV médiá, online hry a podobne.
 
 Hlavička UDP protokolu je veľmi jednoduchá a pozostáva len z nevyhnutných
-informácií ako číslo portu odosielateľa, dĺžka paketu a špecifikácia portu
+informácií, ako číslo portu odosielateľa, dĺžka paketu a špecifikácia portu
 príjemcu. Preto je aj samotný UDP paket znateľne menší ako paket TCP, čo
 taktiež napomáha rýchlosti jeho prenosu a spracovania. Keďže však UDP poskytuje
-len minimálne množstvo informácií jeho využitie pri identifikácií je minimálne.
+len minimálne množstvo informácií, jeho využitie pri identifikácii je minimálne.
 
 Napriek tomu, že tieto dva protokoly sú pomerne odlišné a slúžia na rôzne
 účely, ich spoločnou funkcionalitou je použitie portov pre identifikáciu
@@ -405,8 +405,8 @@ UDP kontexte.
 
 \section{Sieťová vrstva}
 Sieťová vrstva je skupina internetových definícií, protokolov a špecifikácií, ktorá
-v sieťovom modely TCP/IP slúži (transportnej vrstve) na prenos datagramov
-(paketov) od odosielateľa, cez jednotlivé sieťové rozhrania až k príjemcovi.
+v sieťovom modele TCP/IP slúži (transportnej vrstve) na prenos datagramov
+(paketov) od odosielateľa, cez jednotlivé sieťové rozhrania, až k príjemcovi.
 Každý z uzlov v sieti je na sieťovej vrstve identifikovaný takzvanou IP
 \textit{(Internte Protocol)} adresou. Táto vrstva teda odvodzuje svoj názov od
 svojej hlavnej funkcionality, ktorou je formovanie a tvorba pripojenia k
@@ -414,8 +414,8 @@ internetovej sieti prostredníctvom navzájom prepojených uzlov.
 
 Protokoly sieťovej vrstvy pracujú s paketmi založenými na IP adresách
 jednotlivých zariadení. Jednoznačne najznámejším protokolom tejto vrstvy je už
-spomínaný IP \textit{(Internte Protocol)}, sieťová vrstva však definuje aj iné
-dôležite protokoly ako napríklad: ICMP
+spomínaný IP \textit{(Internte Protocol)}. Sieťová vrstva však definuje aj iné
+dôležité protokoly ako napríklad: ICMP
 \textit{(Internet Control Message Protocol)}, ktorý slúži na odosielanie
 chybových správ operačnými systémami, alebo IGMP
 \textit{(Internet Group Management Protocol)} pre podporu multicastu smerovačov.
@@ -423,7 +423,7 @@ Neobsahuje však žiadne protokoly, ktoré definujú komunikáciu na
 úrovni lokálnej podsiete a fyzických spojení.
 
 \subsection{Protokol IP}
-IP protokol sieťovej vrstvy je zodpovedný za adresáciu hostiteľského uzlu a
+IP protokol sieťovej vrstvy je zodpovedný za adresáciu hostiteľského uzla a
 prenos datagramu (paketu) od odosielateľa k príjemcovi cez jednu, alebo viacero
 IP sietí. Pre tento účel definuje IP vlastný formát hlavičky paketov, čím
 poskytuje logiku jednoznačnej identifikácie v rámci siete. Štruktúru hlavičky
@@ -431,15 +431,15 @@ IP paketu znázorňuje nasledujúci diagram.
 
 \begin{figure}[h]
   \centering
-    \includegraphics[width=.80\textwidth]{images/net-ip-head.png}
+    \includegraphics[width=.95\textwidth]{images/net-ip-head.png}
   \caption{Schéma popisujúca štruktúru hlavičky IP protokolu}
   \label{fig:net-ip-head}
 \end{figure}
 
-V skutočnosti existujú dve verzie IP protokolu: IP verzie 4 a IP verzie 6.
+V skutočnosti existujú dve verzie IP protokolu: IP verzia 4 a IP verzia 6.
 Každá z týchto verzií definuje štruktúru IP adries rozdielne. IP adresy v IPv4
 sú 32 bitové, čo obmedzuje ich počet na približne 4,2 miliardy adries. Z tohto
-počtu sú niektoré konkrétne adresy rezervované na špeciálne účely ako napríklad
+počtu sú niektoré konkrétne adresy rezervované na špeciálne účely, ako napríklad
 privátne siete (~18 miliónov adries), alebo adresy určené pre multicast
 (~270 miliónov). Rapídny pokles počtu voľných IPv4 adries preto vyústil do
 rozšírenia protokolu o IPv6. IPv6 definuje 128 bitové adresy, z čoho vyplýva,
@@ -448,7 +448,7 @@ dostačujúci.
 
 Zrejme najzaujímavejšou informáciu z hľadiska identifikácie bude samotná IP
 adresa, ktorá okrem identifikácie zariadenia poskytuje aj informáciu o
-približnej polohe uzlu ktorému bola priradené. Podrobne sa problematike
+približnej polohe uzla, ktorému bola priradená. Podrobne sa problematike
 identifikácie pomocou IP adries venuje kapitola \ref{ch:existing}. 
 
 \section{Vrstva sieťového rozhrania}
@@ -464,14 +464,14 @@ NDP \textit{(Neighbor Discovery Protocol)}, OSPF
 \textit{(Open Shortest Path First)} a iné.
 
 Informácie týchto protokolov však operujú na príliš nízkej úrovni sieťovej
-infraštruktúry, preto ich nebude možné využiť pri identifikácií. V prehľade je 
+infraštruktúry, preto ich nebude možné využiť pri identifikácii. V prehľade je 
 teda vrstva sieťového rozhrania uvedené len pre úplnosť.
 
 \chapter{Útoky typu \textit{Denial of Service}}
 \label{ch:dos}
 Jedným z hlavných dôvodov a motivácií identifikácie užívateľov je prevencia
 proti útokom. Medzi najznámejšie z útokov, proti ktorým je možné brániť sa
-práve týmto spôsobom patrí takzvaný útok typu \textit{Denial of Service}
+práve týmto spôsobom, patrí takzvaný útok typu \textit{Denial of Service}
 (ďalej len \textit{DoS}).
 
 Vo všeobecnosti je za \textit{DoS} útok považovaná snaha útočníka zabrániť
@@ -494,7 +494,7 @@ prostriedky, pomocou ktorých je možné sa im brániť.
 
 \subsection{Distribuované DoS útoky}
 O distribuovaných \textit{DoS} útokoch hovoríme v prípade, že viaceré zariadenia zaplavia
-celú šírku pásma prípadne zdrojov cieľového systému, ktorým je zvyčajne jeden, alebo viacero
+celú šírku pásma, prípadne zdrojov cieľového systému, ktorým je zvyčajne jeden, alebo viacero
 serverov. Takýto útok je často dôsledkom použitia rôznych systémov a zariadení (napríklad
 takzvaného \textit{botnetu}), ktoré sa snažia vyťažiť cieľový systém. \textit{Botnet} je rozsiahla
 virtuálna sieť umelých (\textit{zombie}) počítačov, ktorých cieľom je prijímať príkazy bez
@@ -510,12 +510,12 @@ je možné nadviazať.
 
 Hlavné výhody útočníka pri využití Distribuovaného \textit{DoS} útoku
 spočívajú v skutočnostiach, že viaceré zariadenia dokážu generovať väčšiu záťaž ako jedno,
-pričom použitie množstva systémov zabezpečuje omnoho ťažšiu detekciu jeho identity a správanie
-sa každého z týchto zariadení je menej pozorovateľné, čo sťažuje obranu voči samotnému útoku.
+pričom použitie množstva systémov zabezpečuje omnoho ťažšiu detekciu jeho identity. Správanie
+sa každého z týchto zariadení je zároveň horšie pozorovateľné, čo sťažuje obranu voči samotnému útoku.
 
 Tieto výhody taktiež spôsobujú vývoj obranných mechanizmov. Na strane cieľového serveru už
 nebude stačiť jednoduché zvýšenie šírky pásma nad hranicu momentálnej veľkosti útoku, pretože
-útočník môže napríklad zvýšiť počet zapojených zariadení čím by taktiež spôsobil zaťaženie a
+útočník môže napríklad zvýšiť počet zapojených zariadení, čím by taktiež spôsobil zaťaženie a
 výpadok systému.
 
 \subsection{Sémantické DoS útoky}
@@ -535,13 +535,13 @@ Jedným z obzvlášť nebezpečných útokov je \textit{NAPTHA} útok, ktorý sa
 U reflexie (\textit{DRDoS}) je za reflektujúce zariadenie považovaná akákoľvek hostiteľská IP adresa, 
 ktorá v prípade odoslania
 paketu, tento paket spätne aj vráti.
-Skupiny útočníkov cielene organizujú nimi kontrolované hostiteľské servery, tak aby sa zasielali 
+Skupiny útočníkov cielene organizujú nimi kontrolované hostiteľské servery tak, aby sa zasielali 
 falošné dáta, simulujúce napadnutý uzol, až ku reflektujúcemu serveru. Vo výsledku sú teda obete 
 napadnuté z výrazne väčšieho počtu zdrojových bodov, obsiahlo rozptýlených v sieti, čím útočníci účelne 
 odrezávajú ich spojenie zo zvyškom internetu.
 
 Amplifikačný útok je typ reflektujúceho útoku, kde reflektujúci server odosiela mnohonásobne väčší 
-objem odpovedí než prijíma. Týmto spôsobom teda znásobuje aj vyťaženie spojenia medzi obeťou a 
+objem odpovedí, než prijíma. Týmto spôsobom teda znásobuje aj vyťaženie spojenia medzi obeťou a 
 zdrojovým uzlom.
 
 \begin{figure}[h]
@@ -564,7 +564,7 @@ zdrojovým uzlom.
 \section{DoS nástroje a DoS as a Service}
 Typickou metódou prenosu mechanizmov \textit{DoS} a \textit{DDoS} útokov je malvér. Jedným z príkladov 
 bol
-takzvaný \textit{MyDoom}. Ide o \textit{DoS} mechanizmus, ktorý sa spúšťal vo predom naplánovanom čase.
+takzvaný \textit{MyDoom}. Ide o \textit{DoS} mechanizmus, ktorý sa spúšťal vo vopred naplánovanom čase.
 Tento útok zahŕňal nastavenie hodnoty \textit{IP} adresy cieľového systému pre nasadenie malvéru,
 pričom pre spustenie útoku nebola potrebná žiadna interakcia s používateľom.
 
@@ -577,13 +577,13 @@ ako webové servery. Typickým príkladom \textit{DDoS} nástroja z tejto oblast
 program klienta na pripojenie sa k \textit{handlerom}, ktoré sú zneužívané na prenos príkazov
 k \textit{zombie} agentom. Agenti následne vykonávajú samotný \textit{DDoS} útok. Agenti sú cez 
 handleri
-zneužívané útočníkom za pomoci použitia automatizovaných algoritmov na vyhľadávanie zraniteľností v
+zneužívaní útočníkom za pomoci použitia automatizovaných algoritmov na vyhľadávanie zraniteľností v
 programoch, ktoré prijímajú vzdialené pripojenia. Každý \textit{handler} je schopný kontrolovať až 
 tisíc
 agentov. 
 
 DDoS nástroje ako \textit{Stacheldraht} stále používajú klasické \textit{DoS} metódy zamerané na
-zosilnenie a podvrhovanie IP adries ako napríklad útok vyťaženia šírky pásma. Ďalšou z možností je
+zosilnenie a podvrhovanie IP adries, ako napríklad útok vyťaženia šírky pásma. Ďalšou z možností je
 zahltenie zdrojov - \textit{SYN Flood} útok. Novšie nástroje používajú na \textit{DoS} útoky taktiež
 \textit{DNS} servery.
 
@@ -592,7 +592,7 @@ používajú k znemožneniu dostupnosti populárnych a známych webových server
 útočníci používajú tieto nástroje na vydieranie, napríklad voči svojim obchodným protivníkom.
 
 V niektorých prípadoch sa však môže zariadenie stať časťou \textit{DDoS} útoku zámerne - so súhlasom
-majiteľa. Príkladom je distribuovaný útok \textit{Operation Payback} organizovaný skupinu
+majiteľa. Príkladom je distribuovaný útok \textit{Operation Payback} organizovaný skupinou
 \textit{Anonymous}.
 
 %---
@@ -614,20 +614,20 @@ majiteľa. Príkladom je distribuovaný útok \textit{Operation Payback} organiz
 Ako je možné vidieť z predchádzajúcich odsekov, existuje naozaj veľké množstvo
 variácií \textit{DoS} a \textit{DDoS} útokov. Zároveň ich počet postupom času
 narastá a preto je nutné vyvíjať nové nástroje pre obranu voči nim. Najťažšou časťou
-je však takýto útok a najmä jeho pôvodcu odhaliť a identifikovať. Jedným z využití
+je však takýto útok, najmä jeho pôvodcu, odhaliť a identifikovať. Jedným z využití
 algoritmu popísaného v kapitole \ref{ch:footprint} a implementačnej časti je preto
 práve táto funkcionalita.
 
 \chapter{Existujúce prístupy k identifikácií}
 \label{ch:existing}
-Dôležitou súčasťou tejto práce je popis existujúcich prístupov ktoré
+Dôležitou súčasťou tejto práce je popis existujúcich prístupov, ktoré
 sú aktuálne využívané na účely identifikácie užívateľa. Práve ich porovnaniu
 a hodnoteniu sa venuje nasledujúca kapitola.
 Ide najmä o techniky využívajúce protokoly sieťovej vrstvy (najmä IP adresy),
 monitorovanie TCP komunikácie a vlastné aplikačné identifikátory.
 
 \section{Využitie sieťovej vrstvy}
-Jedným z najtypickejších spôsobov identifikácie užívateľa a jeho zriadenia je
+Jedným z najtypickejších spôsobov identifikácie užívateľa a jeho zariadenia je
 použitie informácií sieťovej vrstvy, predovšetkým jej IP protokolu.
 Táto technika je veľmi rozšírená napríklad pre účely blokovania prístupu na
 server, či u systémových \textit{firewallov}.
@@ -654,7 +654,7 @@ Preklad (\textit{Network Address Translation}) IP adries však identifikáciu
 prakticky znemožňuje. Vo všeobecnosti ide o techniku prekladu jednej podmnožiny
 IP adries na inú pomocou zmeny informácie o sieťovej adrese v datagrame IP
 protokolu. Pôvodne sa táto technika používala pre zjednodušenie presmerovania
-komunikácie bez nutnosti opätovnej adresácie každého uzlu. 
+komunikácie bez nutnosti opätovnej adresácie každého uzla. 
 
 V pokročilých
 implementáciách však dnes \textit{NAT} predstavuje veľmi populárnu možnosť
@@ -667,7 +667,7 @@ synonymom ich maskovania.
 
 Paket odoslaný zo zariadenia, ktoré je prekryté
 \textit{NAT} smerovačom bude teda ako zdrojovú adresu niesť namiesto IP adresy
-zariadenia z ktorého pochádza hodnotu verejnej IP adresy smerovača.
+zariadenia, z ktorého pochádza, hodnotu verejnej IP adresy smerovača.
 Identifikácia na základe IP adresy preto v tomto prípade stráca význam.
 
 \begin{figure}[H]
@@ -706,7 +706,7 @@ stratovosť dát.
 Aplikácie typicky zasielajú na TCP vrstvu \textit{stream} dát
 pomocou takzvaných \textit{stream socketov}, čím sú dáta \textit{streamu}
 rozdelené na primerane veľké segmenty. K segmentom je zároveň spočítaný
-kontrolný súčet- \textit{TCP checksum}, pomocou ktorého je možné určiť či
+kontrolný súčet- \textit{TCP checksum}, pomocou ktorého je možné určiť, či
 dáta neobsahujú poškodené pakety. Kontrolné súčty však nie sú v žiadnom ohľade
 kryptograficky zabezpečené.\footnote{Podrobnému popisu štruktúry TCP paketu sa
 taktiež venuje kapitola \ref{ch:net-layers}.}
@@ -730,11 +730,11 @@ Všetky podobné implementačne-závislé informácie bývajú používané na t
 zaznamenávanie \textit{TCP/IP zásobníka}. Cieľom tejto techniky je odhadnúť,
 aký \textit{zásobník} a operačný systém beží na vzdialenom počítači.
 
-Zaznamenávanie TCP/IP (ako aj mnoho jeho ďalších spôsobov) môžu byť vykonané
+Zaznamenávanie TCP/IP (ako aj mnoho jeho ďalších spôsobov) môže byť vykonané
 aktívne alebo pasívne, pozorovaním alebo upravovaním. Pasívne pozorovanie je
 založené na monitorovaní sieťových odkazov a pokusoch odhadnúť daný TCP/IP
 zásobník z odpočúvaných dátových paketov. Aktívny pozorovací pokus však dátové
-pakety aj zasiela. Útočník úmyselne vyberá také pakety aby získal čo najviac
+pakety aj zasiela. Útočník úmyselne vyberá také pakety, aby získal čo najviac
 informácií od vzdialeného hostiteľa. Avšak, keďže ide o pozorovací útok,
 útočník zvyčajne prispôsobí svoje správanie v závislosti od protokolu. Pravidlá
 protokolu by mohol samozrejme aj porušiť, čo by mu dalo väčšiu šancu uhádnuť
@@ -742,7 +742,7 @@ TCP/IP zásobník, avšak, týmto by sa jeho útok stal nápadnejším a zreteľ
  
 \subsection{Vyhody a nevyhody TCP}
 Jednou z pomerne často používaných vlastností TCP je, možnosť odhadu informácií
-o komunikujúcej aplikácií z portov tejto vrstvy bez nutnosti prístupu k samotným
+o komunikujúcej aplikácii z portov tejto vrstvy bez nutnosti prístupu k samotným
 dátam. Je to možné vďaka skutočnosti, že na internete sú používané štandardné
 porty, ako napr. port 25 pre požiadavky FTP alebo port 80 pre požiadavky HTTP.
 
@@ -755,7 +755,7 @@ Na aplikačnej úrovni je identifikácia užívateľa oveľa komplexnejším a d
 miery aj abstraktnejším procesom. Z pohľadu systému sú jeho používateľmi
 typicky ľudia, prípadne procesy iných služieb, ktoré existujú mimo neho.
 Identifikátorom (ďalej len ID) konkrétneho užívateľa je teda projekcia aktuálneho
-jednotlivca, prípadne procesu do počítačového systému.
+jednotlivca, prípadne procesu, do počítačového systému.
 
 Systém používa typicky
 abstraktný objekt - účet užívateľa, ktorý obsahuje množinu atribútov pre
@@ -768,7 +768,7 @@ reťazec), ktorým sa odkazuje na abstraktný objekt reprezentujúci aktuálnu
 entitu. 
 
 Tvorba unikátneho abstraktného objektu vo forme užívateľského účtu
-pre každého jednotlivca, alebo proces komunikujúci so systémom je na aplikačnej
+pre každého jednotlivca, alebo proces komunikujúci so systémom, je na aplikačnej
 úrovni veľmi dôležitá. Tento objekt je následne používaný na identifikáciu
 užívateľa v rámci celého systému. Zároveň tento objekt slúži ako odkaz pre
 jednotlivé akcie systému umožňujúce prístup k údajom komunikujúcej entity.
@@ -784,20 +784,20 @@ vráti objekt vyhovujúci privilégiám a atribútom entity s ktorou aktuálne
 komunikuje. Po úspešnom dokončení tohto procesu je užívateľ jednoznačne
 identifikovaný.
 
-Po úspešnej identifikácií typicky nasleduje krok validácie získanej identity,
+Po úspešnej identifikácii typicky nasleduje krok validácie získanej identity,
 vo všeobecnosti nazývaný autentizácia používateľa. Fakt, že užívateľ tvrdí,
-že je reprezentovaný špecifickým abstraktným objektom nemusí totiž nutne
+že je reprezentovaný špecifickým abstraktným objektom, nemusí totiž nutne
 znamenať, že je to pravda. Pre potvrdenie, že aktuálny používateľ môže byť
 skutočne mapovaný na konkrétny abstraktný objekt, čim mu budú udelené jeho
-práva a privilégiá musí komunikujúci preukázať svoju identitu systému.
+práva a privilégiá, musí komunikujúci preukázať svoju identitu systému.
 Autentizácia je teda procesom validácie danej poskytnutej identity. Informácie,
-ktoré predkladá komunikujúca entita sa nazývajú poverenia
+ktoré predkladá komunikujúca entita, sa nazývajú poverenia
 (\textit{credentials}). Tieto poverenia sa môžu v rôznych systémoch líšiť, 
 prípadne môžu niektoré systémy vyžadovať ich väčšie množstvo. Najčastejšími
 formami týchto údajov sú: meno, heslo, pin, token, prípadne certifikáty, a iné.
 
-Akonáhle prebehne úspešná autentizácia môže používateľ vykonať akcie, na ktoré
-ma oprávnenia. Všetky akcie ktoré vykoná sú zviazané s jeho identitou a je ich
+Akonáhle prebehne úspešná autentizácia, môže používateľ vykonať akcie, na ktoré
+ma oprávnenia. Všetky akcie, ktoré vykoná, sú zviazané s jeho identitou a je ich
 preto možné dodatočne trasovať.
 
 \begin{figure}[h]
@@ -813,22 +813,22 @@ Identifikátory na aplikačnej úrovni sú veľmi jednoznačné a presné z hľa
 priradenia účtu užívateľovi. Je pomocou nich preto následne možné presne
 sledovať jeho akcie a manipulovať s privilégiami.
 
-Tieto identifikátory sa však v abstrakcií komunikácie nachádzajú príliš vysoko,
+Tieto identifikátory sa však v abstrakcii komunikácie nachádzajú príliš vysoko,
 preto nie je pomocou nich možné ovplyvniť napríklad DoS útoky popísané v
 kapitole \ref{ch:dos}.
 
 \section{Zhrnutie}
-Na identifikáciu užívateľa, prípadne jeho zariadenia sú v súčasnosti
-používané rôzne techniky na rôznych vrstvách sieťovej infraštruktúry. Od IP
-adries sieťovej vrstvy cez atribúty TCP protokolu až po komplexné aplikačné
+Na identifikáciu užívateľa, prípadne jeho zariadenia, sú v súčasnosti
+používané rôzne techniky na rôznych vrstvách sieťovej infraštruktúry, od IP
+adries sieťovej vrstvy, cez atribúty TCP protokolu, až po komplexné aplikačné
 identifikátory. 
 
 V praktickej časti tejto práce, ktorá sa zaoberá návrhom a implementáciou
-unikátneho identifikátoru, je použitá kombinácia informácií zo všetkých
+unikátneho identifikátora, je použitá kombinácia informácií zo všetkých
 spomínaných vrstiev (IP adresy, informácie z HTTP a TCP protokolu, ...) tak,
 aby vznikol čo najpresnejší možný odtlačok aktivity jedného užívateľa.
 
-\chapter{Tvorba unikátneho identifikátoru}
+\chapter{Tvorba unikátneho identifikátora}
 \label{ch:footprint}
 Hlavným cieľom a výstupom tejto práce je algoritmus definujúci jednoznačný
 identifikátor užívateľa. Nasledujúca kapitola sa zaoberá práve popisom jeho
@@ -838,7 +838,7 @@ kapitolách \ref{ch:net-layers} a \ref{ch:existing}. Vďaka nim je algoritmus
 schopný rozpoznať a priradiť aktivitu každému z používateľov hostiteľského
 systému.
 
-Princípom fungovanie algoritmu je spúšťacia akcia, ktorou je prijatie HTTP requestu
+Princípom fungovania algoritmu je spúšťacia akcia, ktorou je prijatie HTTP requestu
 hostiteľským serverom.\footnote{Hostiteľským serverom je typicky backendová
 aplikácia, ktorá obsahuje implementáciu algoritmu ako nezávislý modul.} Na
 základe každého takéhoto requestu je následne spustená jeho analýza a
@@ -858,14 +858,14 @@ Vo všeobecnosti pozostáva celý algoritmus z piatich hlavných, po sebe nasled
   \end{itemize}
   \item Spracovanie a serializácia informácií do podoby objektu unikátneho odtlačku
   aktuálneho requestu.
-  \item Analýza a nájdenie najbližšieho podobného identifikátoru v databázy pomocou funkcie na
+  \item Analýza a nájdenie najbližšieho podobného identifikátora v databáze pomocou funkcie na
   hľadanie najmenšej vzdialenosti.
   \item Spracovanie výsledku v podobe vzdialenosti odtlačkov a následná reakcia.
   \begin{itemize}
-    \item Ak ide o novú reláciu, pre identifikátor je vytvorený nový záznam v databázy s frekvenciou 1.
+    \item Ak ide o novú reláciu, pre identifikátor je vytvorený nový záznam v databáze s frekvenciou 1.
     \item V prípade, že miera podobnosti prekročila stanovený prah, nevytvára
-    sa nový záznam. Frekvencia daného odtlačku v databázy je však zvýšená.
-    \item Ak je frekvencia výskytu konkrétneho odtlačku veľmi vysoká existuje
+    sa nový záznam. Frekvencia daného odtlačku v databáze je však zvýšená.
+    \item Ak je frekvencia výskytu konkrétneho odtlačku veľmi vysoká, existuje
     možnosť upozornenia hostiteľskej aplikácie.
   \end{itemize}
 \end{enumerate}
@@ -878,7 +878,7 @@ Vo všeobecnosti pozostáva celý algoritmus z piatich hlavných, po sebe nasled
   \label{fig:footprint-hl}
 \end{figure}
 
-Ako je podrobne znázornené na diagrame \ref{fig:footprint-hl} analýzu spúšťa každý nový
+Ako je podrobne znázornené na diagrame \ref{fig:footprint-hl}, analýzu spúšťa každý nový
 HTTP request, na ktorý ďalej nadväzujú akcie tvorby a porovnávania
 identifikátorov. Zároveň je pri štarte aplikácie spustené vlákno vykonávajúce
 sieťovú analýzu transportnej vrstvy, ktorá uchováva informácie z niekoľkých
@@ -887,7 +887,7 @@ zostavený unikátny odtlačok - identifikátor \textit{(Unique Footprint - UFoo
 Aktuálny identifikátor je následne porovnávaný s každým odtlačkom v databáze.
 Algoritmus na hľadanie najbližšieho suseda k nemu následne pomocou porovnávacej
 funkcie nájde najbližší identifikátor. Podľa miery podobnosti ďalej
-algoritmus určí či ide o requesty jedného užívateľa, čo spôsobí zvýšenie jeho
+algoritmus určí, či ide o requesty jedného užívateľa, čo spôsobí zvýšenie jeho
 frekvencie, alebo ide o nový odtlačok, pre ktorý vytvorí nový záznam.
 Ako bolo popísané vyššie, jednou z dodatočných funkcionalít je aj upozornenie hostiteľskej aplikácie pri
 prekročení limitu frekvencie requestov od jedného užívateľa, čo by mohlo
@@ -897,7 +897,7 @@ indikovať napríklad DoS, prípadne DDoS útok.
 \label{s:footprint-structure}
 Odtlačok aktivity užívateľa je teda kombináciou špecificky vybraných HTTP a TCP informácií.
 Objekt sa skladá z dvoch častí - statických a relačných dát. Dôležitejšou z
-nich sú takzvané statické dáta, ktoré slúžia porovnávacej funkcií na samotné
+nich sú takzvané statické dáta, ktoré slúžia porovnávacej funkcii na samotné
 určenie vzdialenosti dvoch identifikátorov. Vzdialenosť vypočítaná touto
 funkciou môže byť ďalej ovplyvňovaná vzťahmi relačných dát, ktoré riešia
 špecifické aspekty vybraných informácií, ako napríklad určenie menej bezpečných
@@ -908,11 +908,11 @@ Statická časť identifikátora obsahuje väčšie množstvo dát, preto je
 ukladaná a reprezentovaná v podobe reťazca. Skladá sa z nasledujúcich troch podčastí dát pre porovnávanie:
 \begin{itemize}
     \item Statické hlavičky \textit{(Static headers)} - špecifické vopred
-    vybrané a zoradené hodnoty HTTP hlavičiek ako napríklad: \textit{authorization, cookie, content-length}, alebo
+    vybrané a zoradené hodnoty HTTP hlavičiek, ako napríklad: \textit{authorization, cookie, content-length}, alebo
     \textit{user-agent}.
     \item Neznáme hlavičky \textit{(Unknown headers)} - ostatné hlavičky daného
     HTTP requestu, ktoré neboli použité ako statické.
-    \item Atribúty - konkrétne informácie z HTTP a TCP protokolu ako napríklad
+    \item Atribúty - konkrétne informácie z HTTP a TCP protokolu, ako napríklad
     \textit{IP adresa, geo-lokácia}, alebo pre \textit{veľkosť TCP okna}.
 \end{itemize}
 
@@ -921,40 +921,40 @@ Súhrnne znázorňuje všetky použité informácie jednotlivých kategórií st
 
 \begin{figure}[h]
   \centering
-    \includegraphics[width=.99\textwidth]{images/footprint-data-static.png}
-  \caption{Detailný pohľad na štruktúru statických dát identifikátoru, zdroj:
+    \includegraphics[width=.95\textwidth]{images/footprint-data-static.png}
+  \caption{Detailný pohľad na štruktúru statických dát identifikátora, zdroj:
   vlastné spracovanie}
   \label{fig:footprint-data-static}
 \end{figure}
 
-Každá z týchto informácii má pri použití v porovnávacej funkcií svoj účel a
+Každá z týchto informácii má pri použití v porovnávacej funkcii svoj účel a
 konkrétnu váhu, ktorá určuje jej dôležitosť. Veľmi podstatný je napríklad obsah statických hlavičiek. Naopak
-váha hodnôt TCP okna je porovnaní z IP adresou a geolokáciu menšia, môže však
+váha hodnôt TCP okna je v porovnaní s IP adresou a geolokáciu menšia, môže však
 hrať rolu u veľkého množstva requestov. Podrobnejšie sa porovnávacej funkcií a
 spôsobu výpočtu podobnosti jednotlivých parametrov venuje podkapitola \ref{ss:distance-function}.
 
 \subsection{Relačné dáta}
 Relačné dáta neslúžia na porovnávanie a hľadanie podobných hodnôt. Ich účelom
-je ošetriť špeciálne prípady u informácií ktoré si to vyžadujú. Takýchto
+je ošetriť špeciálne prípady u informácií, ktoré si to vyžadujú. Takýchto
 informácií nie je mnoho, preto nie je nutné ich komprimovať a serializovať do podoby reťazca ako
 dáta statické.
 Ide teda o objekt obsahujúci nasledujúce položky:
 \begin{itemize}
     \item Timestamp - presný čas nadviazania spojenia aktuálnej relácie.
     \item Geolokáciu - krajina pôvodu určená na základe IP adresy klienta.
-    \item Relačné hlavičky - HTTP hlavičky ako napríklad
+    \item Relačné hlavičky - HTTP hlavičky, ako napríklad
     \textit{forwarded}, alebo \textit{x-csrf-token}. 
 \end{itemize}
 
 Jednotlivé položky sú vyhodnocované samostatne a ich výsledky sú aplikované na
 vzdialenosť vrátenú algoritmom pre nájdenie podobnosti. Napríklad pri veľmi
-malom časovom rozdieli porovnávaných requestov, je ich vzdialenosť dodatočne
+malom časovom rozdiele porovnávaných requestov, je ich vzdialenosť dodatočne
 znížená. U geolokácie môže byť zmena parametra výpočtu dosiahnutá po vyhodnotení requestu
-klienta z krajiny s najčastejším pôvodom DoS útokov akými sú napríklad: Čína,
+klienta z krajiny s najčastejším pôvodom DoS útokov, akými sú napríklad: Čína,
 Kórea, alebo Rusko.
 
 \subsection{Variabilita štruktúry dát}
-Štruktúra statických a relačných dát odtlačku je v aplikácií kalibrovaná
+Štruktúra statických a relačných dát odtlačku je v aplikácii kalibrovaná
 pre čo najpresnejšie určenie podobnosti requestov od jedného používateľa.
 Samozrejme je však možné ju v budúcnosti obmieňať, prípadne pridávať do nej
 nové informácie.
@@ -963,13 +963,13 @@ nové informácie.
 \label{s:similarity-search}
 Ako bolo spomínané v predchádzajúcich odsekoch, hlavnou funkcionalitou procesu identifikácie je
 algoritmus na určenie podobnosti a hľadanie najbližšieho suseda aktuálne
-spracovávaného identifikátoru. 
+spracovávaného identifikátora. 
 
 Vstupom pre algoritmus je teda tento odtlačok
 spolu s množinou obsahujúcou odtlačky doteraz analyzovaných requestov.
 
 Po
-inicializácií a načítaní vstupných parametrov je na každú dvojicu odtlačkov
+inicializácii a načítaní vstupných parametrov je na každú dvojicu odtlačkov
 aplikovaná funkcia pre výpočet ich vzdialenosti, ktorá vráti hodnotu v rozmedzí
 od nula do jedna. Pre totožné odtlačky je vzdialenosť nulová, naopak u
 odtlačkov, ktoré sa líšia v mnohých parametroch sa hodnota blíži k jednej.
@@ -982,7 +982,7 @@ výsledkov algoritmus nájde najbližší identifikátor, ktorý spolu s jeho
 vzdialenosťou vráti ako výstup na ďalšie spracovanie a prípadnú úpravu
 relačnými dátami.
 
-Nasledujúci pseudo-kód teda teda formálne popisuje tento algoritmus a jeho prácu s
+Nasledujúci pseudo-kód teda formálne popisuje tento algoritmus a jeho prácu s
 výsledkami funkcie na výpočet vzdialeností:
 \begin{lstlisting}[basicstyle=\footnotesize, language=Ruby, mathescape]
 algorithm get-nearest-neigbour is
@@ -1012,12 +1012,12 @@ algorithm get-nearest-neigbour is
 \subsection{Použité postupy}
 Pred samotným popisom funkcie pre výpočet vzdialeností odtlačkov je nutné
 vysvetliť techniky a pojmy, s ktorými tento algoritmus pracuje. Konkrétne ide
-okrem porovnávania komprimovaných reťazcov pre jednoduché atribúty najmä o 
+okrem porovnávania komprimovaných reťazcov pre jednoduché atribúty, najmä o 
 určenie miery podobnosti množín pomocou výpočtu takzvaného
 \textit{Jaccardovho} indexu.
 
 \subsubsection{Jaccardov index}
-Výpočet Jaccardovho koeficientu, taktiež známi ako podiel prieniku a 
+Výpočet Jaccardovho koeficientu, taktiež známy ako podiel prieniku a 
 zjednotenia, je funkcia pôvodne popísaná Paulom Jaccardom, ktorá slúži na
 porovnanie podobnosti a rozdielov testovaných množín. Jaccardov koeficient teda
 meria mieru podobnosti medzi dvoma konečnými množinami. Matematicky je
@@ -1028,10 +1028,10 @@ definovaný ako podiel veľkostí zjednotenia a prieniku týchto množín:
 \end{equation}
 
 V prípade, že sú obe množiny prázdne \textit{J(A,B) = 1}.
-Jaccardova vzdialenosť, ktorá naopak určuje rozdielnosť dvoch množín je
+Jaccardova vzdialenosť, ktorá naopak určuje rozdielnosť dvoch množín, je
 doplnkom k Jaccardovmu koeficientu. Počíta sa teda odrátaním jeho hodnoty od
-jednotky, prípadne ako podiel, ktorého čitateľom je rozdiel zjednotenia a
-prieniku a menovateľom je zjednotenie týchto množín:
+jednotky, prípadne ako podiel, ktorého čitateľom je rozdiel zjednotenia s
+prienikom a menovateľom je zjednotenie týchto množín:
 
 \begin{equation}
  d_J(A,B) = 1 - J(A,B) = { { |A \cup B| - |A \cap B| } \over |A \cup B| }
@@ -1050,8 +1050,8 @@ prieniku a menovateľom je zjednotenie týchto množín:
 \end{figure}
 
 \subsubsection{Porovnávanie atribútov}
-Pri porovnávaní konkrétnych reťazcov u HTTP hlavičiek, alebo atribútov ako
-napríklad \textit{servletPath}, alebo \textit{locales} sú tieto hodnoty pred
+Pri porovnávaní konkrétnych reťazcov u HTTP hlavičiek, alebo atribútov, ako
+napríklad \textit{servletPath}, alebo \textit{locales}, sú tieto hodnoty pred
 porovnaním komprimované. Konkrétne ide o odstránenie nadbytočných bielych
 znakov a symbolov, ktoré by mohli pri porovnaní spôsobovať nepresnosti. Rovnaké
 pravidlá sú použité aj pri porovnávaní položiek pri výpočte Jaccardovho indexu.
@@ -1076,7 +1076,7 @@ váh jednotlivých položiek znázorňuje schéma \ref{fig:footprint-distance-ca
 
 \begin{figure}[H]
   \centering
-    \includegraphics[width=.99\textwidth]{images/footprint-distance-cal.png}
+    \includegraphics[width=.93\textwidth]{images/footprint-distance-cal.png}
   \caption{Príklad kalibrácie váh jednotlivých parametrov statickej časti
   odtlačku pre výpočet vzdialenosti, zdroj: vlastné spracovanie}
   \label{fig:footprint-distance-cal}
@@ -1097,16 +1097,14 @@ algorithm get-distance is
         return 0
     end if
 
-    # Compute Jaccard and consider weight (strength) for 
-    # static headers
+    # Compute weighted Jaccard for static headers
     jaccardStaticHeaders 
     	$\leftarrow$ jaccardIndex(actualData.staticHeaders, 
     	                stockEntityData.staticHeaders);
     jaccardStaticHeaders 
     	$\leftarrow$ jaccardStaticHeaders * SH_WEIGHT;
 
-    # Compute Jaccard and consider weight (strength) for 
-    # unknown headers
+    # Compute weighted Jaccard for unknown headers
     jaccardUnknownHeaders 
     	$\leftarrow$ jaccardIndex(actualData.unknownHeaders,
     	                stockEntityData.unknownHeaders);
@@ -1153,15 +1151,15 @@ funkcie je vzdialenosť, ktorá je doplnkom k tomuto koeficientu.
 Súčasťou tejto práce je okrem návrhu algoritmu aj jeho implementácia v jazyku
 Java. Ide o presnú implementáciu funkcionality popísanej v predchádzajúcich
 podkapitolách. Knižnica samotná je čo najuniverzálnejšia a nezávislá na
-konkrétnom \textit{frameworku}, či technológií. Po vložení jej závislosti do
+konkrétnom \textit{frameworku}, či technológii. Po vložení jej závislosti do
 hostiteľského projektu sama detekuje prístupové metódy a zachytáva jednotlivé
 HTTP requesty pre ďalšie spracovanie. Zároveň pri spustení, ak je to možné,
 začne monitorovať sieť pre doplnenie informácií z TCP protokolu.
 
 \subsection{Použité technológie}
 Pre korektnú implementáciu funkcionality celého algoritmu bolo nutné použitie
-mnohých špecifických technológií od knižnice pre monitoring TCP paketov až po
-geolokáciu IP adreis. Nasledujúce odseky popisujú najdôležitejšie z nich.
+mnohých špecifických technológií, od knižnice pre monitoring TCP paketov, až po
+geolokáciu IP adries. Nasledujúce odseky popisujú najdôležitejšie z nich.
 
 \subsubsection{Aspektovo-orientované programovanie}
 Aspektovo-orientované programovanie (ďalej len AOP) je paradigma určená k
@@ -1173,10 +1171,10 @@ ktorý pridá požadovanú funkcionalitu na vopered určené miesto.
 V implementačnej časti je AOP, konkrétne knižnica \textit{AspectJ}, použitá pre
 injektovanie jednotlivých prístupových metód hostiteľskej aplikácie a následné
 odchytávanie informácií z ich HTTP requestov. Je tak možné vytvoriť prístupové
-body pre ľubovoľný z používaných \textit{frameworkov} či prístupov. Momentálne, na
+body pre ľubovoľný z používaných \textit{frameworkov}, či prístupov. Momentálne, na
 testovacie účely, implementácia obsahuje prístupový bod pre metódy so
 \textit{Springovou} anotáciou \textit{@RestController}. Nie je však problém
-rozhranie rozšíriť o akýkoľvek existujúci či vlastný prístupový bod. Ďalšou z 
+rozhranie rozšíriť o akýkoľvek existujúci, či vlastný prístupový bod. Ďalšou z 
 výhod tohto prístupu je asynchrónnosť celého výpočtu. Po zachytení informácií
 z HTTP requestu je proces ich spracovania vykonávaný v novom vlákne. Logika
 hostiteľskej aplikácie tak nie je ničím zdržovaná a môže pokračovať štandardným
@@ -1187,7 +1185,7 @@ Pri štarte hostiteľskej aplikácie, je štandardne jedným z modulov v samosta
 vlákne spustený monitoring, analýza a parsovanie TCP paketov. Pre prístup k
 týmto informáciám je využívaná knižnica \textit{libpcap} a program
 \textit{tcpdump}. Samozrejme tieto možnosti je nutné vopred povoliť na
-hostiteľskom servery, preto existuje možnosť aplikáciu používat aj bez
+hostiteľskom servere, preto existuje možnosť aplikáciu používat aj bez
 monitorovania sieťovej aktivity. Výpočty vzdialeností identifikátorov, ktoré
 tieto informácie obsahujú sú však presnejšie a produkujú menej falošne
 pozitívnych detekcií.
@@ -1195,7 +1193,7 @@ pozitívnych detekcií.
 \subsubsection{IP Geolokácia}
 Ako bolo popísané v sekcii \ref{s:footprint-structure}, jedným z atribútov, ktoré sú posudzované pri
 vyhodnotení podobnosti identifikátorov je geolokácia klienta. Konkrétne ide o
-krajinu, prípadne mesto určené na základe jeho IP adresy. Zdrojom týchto
+krajinu, prípadne mesto, určené na základe jeho IP adresy. Zdrojom týchto
 informácií je databáza poskytnutá službou \textit{MaxMind GeoIP}.
 
 Okrem tejto databázy systém používa aj statický zoznam menej bezpečných zón.
@@ -1208,24 +1206,24 @@ Celá akcia spracovania requestu začína v triede \textit{Injector}. Táto trie
 obsahuje prístupové body AOP pre jednotlivé metódy hostiteľskej aplikácie.
 Zároveň slúži na správu závislostí a inicializáciu \textit{singleton} vlákna
 triedy \textit{PacketStream}. \textit{PacketStream} a ostatné pomocné triedy
-balíku \textit{endpoint.collector.tcp} zabezpečujú, ak je to možné, parsovanie a 
+balíka \textit{endpoint.collector.tcp} zabezpečujú, ak je to možné, parsovanie a 
 správu prijatých TCP paketov. Tieto sú následne dostupné ako mapa posledných
 \textit{n} zachytených paketov v podobe množiny objektov triedy \textit{TCPFootprint} a ich IP
 adries.
 
 Z Injectora dáta pokračujú vždy v samostatnom vlákne na spracovanie triedou
-\textit{RequestHandler} a ostatnými triedami balíku
+\textit{RequestHandler} a ostatnými triedami balíka
 \textit{endpoint.collector.http}. Ich účelom je extrahovať potrebné HTTP
 informácie, ktoré sú následne reprezentované triedou \textit{HTTPFootprint}.
 \footnote{Štruktúra tried \textit{HTTPFootprint} a \textit{TCPootprint} je dostupná v
 prílohe \ref{fig:appendix-structure}.}
 
-Ďalej už z reprezentáciami \textit{HTTPFootprint} a \textit{TCPFootprint}
+Ďalej už s reprezentáciami \textit{HTTPFootprint} a \textit{TCPFootprint}
 pracuje trieda \textit{UFooProcessor}. Táto trieda obsluhuje hlavnú logiku
 analýzy podobnosti aktuálne spracovávaného requestu s ostatnými identifikátormi
 v databáze. \textit{UFooProcessor} pomocou metód triedy \textit{Serializer} spracuje informácie do
 konečnej podoby objektu \textit{UFooEntity}, ktorý je reprezentáciou samotného
-unikátneho identifikátoru. \textit{UFooEntity} obsahuje všetky extrahované
+unikátneho identifikátora. \textit{UFooEntity} obsahuje všetky extrahované
 statické a relačné dáta.
 
 Najdôležitejšou časťou celého procesu je však analýza podobnosti vykonávaná triedou
@@ -1237,7 +1235,7 @@ najbližšieho podobného identifikátora z databázy.
 
 Na základe tohto výsledku sa následne \textit{UFooProcessor} rozhodne, či ide o
 aktivitu neznámeho užívateľa a vytvorí pre aktuálny odtlačok nový záznam v
-databázy, alebo ide o opakujúcu sa reláciu, čím zvýši jeho frekvenciu, prípadne
+databáze, alebo ide o opakujúcu sa reláciu, čím zvýši jeho frekvenciu, prípadne
 upozorní hostiteľskú aplikáciu na možné prekročenie jej limitu.
 
 \begin{figure}[h]
@@ -1266,7 +1264,7 @@ zneužitiu.} Nasledujúce odseky popisujú jednak priebeh tohto
 útoku, ako aj priebeh a výsledky jeho simulácie. 
 
 \section{Parametre útoku}
-Útok, na ktorom je následná simulácia založená bol pomerne rozsiahli a dobre
+Útok, na ktorom je následná simulácia založená, bol pomerne rozsiahly a dobre
 organizovaný. Celkovo trval 56 minút a zúčastnili sa ho klienti zo 136 rôznych
 IP adries. V priebehu týchto 56 minút server prijal dohromady 1 345 446 requestov, pričom
 všetky smerovali na rovnakú URL a jednu konkrétnu akciu. Jeho ďalším znakom je
@@ -1295,7 +1293,7 @@ HTTP hlavičiek, s rôznymi obmenami, čo pomohlo k jeho lepšej identifikácií
 
 \section{Parametre simulácie}
 Simulácia vyššie popísaného útoku sa ho snažila čo najvernejšie napodobniť.
-Samozrejme však nebolo možné uskutočniť ho v plno rozsahu. Na testovací server
+Samozrejme však nebolo možné uskutočniť ho v plnom rozsahu. Na testovací server
 bola preto vytvorená štandardná záťaž v podobe 25 000 requestov. Tieto requesty
 sa snažili svojim obsahom čo najvernejšie napodobniť reálnych používateľov a
 ich aktivitu. Paralelne bol na server  v priebehu niekoľkých desiatok minút
@@ -1362,10 +1360,10 @@ Reálne však, ako je možné vidieť na histograme \ref{fig:data-histogram},
 simulácia requestov reálnych užívateľov vykazovala maximá u okrajových hodnôt
 vzdialeností a simulácia requestov DoS útoku u stredných hodnôt vzdialeností. 
 
-Dôvodom tohto rozloženia je zrejme práve spôsob akým útočník na rozdiel od
-bežných užívateľov so serverom komunikoval. Bežný užívatelia totiž zasielali
+Dôvodom tohto rozloženia je zrejme práve spôsob, akým útočník na rozdiel od
+bežných užívateľov so serverom komunikoval. Bežní užívatelia totiž zasielali
 navzájom pomerne rozdielne requesty, pričom requesty jedného užívateľa v jeho
-relácií na seba podobali. To spôsobilo ich rozloženie do okrajových hodnôt
+relácii sa na seba podobali. To spôsobilo ich rozloženie do okrajových hodnôt
 vzdialeností. Útočník ale celý čas používal jeden druh requestu, ktorý však
 neustále obmieňal. Preto je rozloženie jeho vzdialeností v stredných hodnotách
 škály. 
@@ -1373,9 +1371,9 @@ neustále obmieňal. Preto je rozloženie jeho vzdialeností v stredných hodnot
 Na základe týchto výsledkov je teda možné nastaviť prahy pre určenie útoku
 práve v intervale stredných vzdialeností útočníka, podľa výsledkov simulácie.
 
-Tvorba tejto práce ma veľmi bavila, preto ju určite budem ďalej rozvíjať,
+Táto problematika ma veľmi zaujala, preto prácu plánujem ďalej rozvíjať,
 zdokonaľovať a dopĺňať o ďalšiu zaujímavú funkcionalitu od možnosti zdieľania
-databázy odtlačkov až po zlepšenie sledovania a použitia TCP informácií.
+databázy odtlačkov, až po zlepšenie sledovania a použitia TCP informácií.
 
 \makeatletter\thesis@blocks@clear\makeatother
 \phantomsection %% Print the index and insert it into the
