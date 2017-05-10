@@ -1238,13 +1238,8 @@ aktivitu neznámeho užívateľa a vytvorí pre aktuálny odtlačok nový zázna
 databáze, alebo ide o opakujúcu sa reláciu, čím zvýši jeho frekvenciu, prípadne
 upozorní hostiteľskú aplikáciu na možné prekročenie jej limitu.
 
-\begin{figure}[h]
-  \centering
-    \includegraphics[width=.99\textwidth]{images/footprint-impl-flow.png}
-  \caption{Diagram znázorňujúci priebeh spracovania a analýzy podobnosti
-   reqestu, zdroj: vlastné spracovanie}
-  \label{fig:footprint-impl-flow}
-\end{figure}
+Celý priebeh spracovania a analýzy podobnosti reqestu je zároveň znázornený
+sekvenčným diagramom v prílohe \ref{fig:appendix-impl-flow}.
 
 Spracovanie a analýza dát z jednotlivých requestov prebieha asynchrónne,
 aplikácia teda nemusí čakať na dokončenie a jej výsledok. V prípade hrozby je
@@ -1381,6 +1376,18 @@ databázy odtlačkov, až po zlepšenie sledovania a použitia TCP informácií.
 \printindex
 
 \appendix %% Start the appendices.
+
+\chapter{Sekvenčný diagram znázorňujúci priebeh spracovania reqestu}
+\label{fig:appendix-impl-flow}
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=1\textwidth]{images/footprint-impl-flow-1.png}
+\end{figure}
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=1.1\textwidth]{images/footprint-impl-flow-2.png}
+\end{figure}
+
 \chapter{Triedy \textit{HTTPFootprint} a \textit{TCPootprint}}
 \label{fig:appendix-structure}
 \begin{figure}[h]
