@@ -14,7 +14,7 @@ import java.util.Set;
 /**
  * @author Matej Majdis
  */
-public class PacketStream implements Runnable{
+public class PacketStream implements Runnable {
 
     private RuntimeProcessor runtimeProcessor;
 
@@ -36,7 +36,7 @@ public class PacketStream implements Runnable{
     public void start() {
 
         InputStreamReader inputStreamReader = new InputStreamReader(runtimeProcessor.startTCPInputStream());
-        try(BufferedReader input = new BufferedReader(inputStreamReader)) {
+        try (BufferedReader input = new BufferedReader(inputStreamReader)) {
 
             processInput(input);
 

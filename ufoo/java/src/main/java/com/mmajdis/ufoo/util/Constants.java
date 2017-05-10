@@ -35,10 +35,13 @@ public class Constants {
     public static final int ATTR_WINDOW_WEIGHT = 2;
     public static final int ATTR_LENGTH_WEIGHT = 2;
 
-    private static final String[] UNTRUSTED_COUNTRIES_ARRAY = new String[] {"A1", "KP", "KR", "RU", "CN", "UA", "VN",  "TH", "CO"};
+    private static final String[] UNTRUSTED_COUNTRIES_ARRAY = new String[]{"A1", "KP", "KR", "RU", "CN", "UA", "VN", "TH", "CO"};
     public static final Set<String> UNTRUSTED_COUNTRIES = new HashSet<>(Arrays.asList(UNTRUSTED_COUNTRIES_ARRAY));
 
     public static final double DISTANCE_THRESHOLD = 0.35;
+    public static final double DOS_DISTANCE_LOW = 0.2;
+    public static final double DOS_DISTANCE_HIGH = 0.5;
+    public static final long DOS_THRESHOLD = 1500L;
 
     public static final boolean TESTING_MODE = true;
 }

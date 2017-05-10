@@ -13,7 +13,6 @@ import static com.mmajdis.ufoo.util.Constants.*;
 
 /**
  * @author Matej Majdis
- *         <p>
  *         Main class for matching actually collected footprint with footprints (markers) in stock
  */
 public class FootprintSimilarityService {

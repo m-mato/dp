@@ -1,0 +1,13 @@
+.logo {
+    display: inline-block;
+    margin-top: 100px;
+    margin-left: 90px;
+    margin-right: 90px;
+}
+.text {
+    margin-top: 30px;
+    text-align:center;
+}
+#images{
+    text-align:center;
+}

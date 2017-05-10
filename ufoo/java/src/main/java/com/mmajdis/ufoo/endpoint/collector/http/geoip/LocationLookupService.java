@@ -9,12 +9,10 @@ import com.maxmind.geoip2.record.Country;
 import com.mmajdis.ufoo.exception.DBInitException;
 import com.mmajdis.ufoo.util.Constants;
 
-import java.io.File;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 /**
  * @author Matej Majdis
@@ -44,7 +42,6 @@ public class LocationLookupService {
             CityResponse cityResponse = databaseReader.city(inetAddress);
             city = cityResponse.getCity();
         } catch (GeoIp2Exception ex) {
-            // TODO exceptions
             // if the IP address is not in our database
             // AddressNotFoundException extends GeoIp2Exception
             return null;

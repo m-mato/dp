@@ -30,7 +30,7 @@ class Parser {
         if (IP == null) {
             return null;
         }
-        if(IP.matches(".*\\..*\\..*\\..*\\..*")) {
+        if (IP.matches(".*\\..*\\..*\\..*\\..*")) {
             int lastDot = IP.lastIndexOf(".");
             IP = IP.substring(0, lastDot);
         }

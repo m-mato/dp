@@ -32,7 +32,7 @@ public class RequestHandler {
 
         HTTPFootprint httpFootprint = mapFromRequest(request);
 
-        if(httpFootprint.getRequestInfo().getClientIp() == null) {
+        if (httpFootprint.getRequestInfo().getClientIp() == null) {
             return false;
         }
 

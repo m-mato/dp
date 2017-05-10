@@ -13,7 +13,6 @@ import static com.mmajdis.ufoo.util.Constants.UNDEFINED;
 
 /**
  * @author Matej Majdis
- *         <p>
  *         Serialize collected information to Sketches of Markers
  */
 public class Serializer {
@@ -29,21 +28,7 @@ public class Serializer {
         uFooEntity.setStaticData(buildStaticData(httpFootprint, tcpFootprints));
         uFooEntity.setRelationData(buildRelationData(httpFootprint, tcpFootprints));
 
-        //TODO implement
         return uFooEntity;
-    }
-
-
-    public HTTPFootprint deserializeHTTP(UFooEntity uFooEntity) {
-
-        //TODO implement
-        return null;
-    }
-
-    public TCPFootprint deserializeTCP(UFooEntity uFooEntity) {
-
-        //TODO implement
-        return null;
     }
 
     private String buildStaticData(HTTPFootprint httpFootprint, Set<TCPFootprint> tcpFootprints) {

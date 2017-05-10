@@ -25,7 +25,7 @@ class RuntimeProcessor {
             if (SystemUtils.IS_OS_WINDOWS) {
                 pb = Runtime.getRuntime().exec(cmdWindows);
             } else {
-                if(!Constants.TESTING_MODE) {
+                if (!Constants.TESTING_MODE) {
                     pb = Runtime.getRuntime().exec(cmdLinux);
                 } else {
                     pb = Runtime.getRuntime().exec(cmdLinuxTest);
