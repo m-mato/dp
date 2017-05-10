@@ -1338,10 +1338,21 @@ Z výsledkov simulácie, najmä z výsledkov zobrazených v histograme
 \ref{fig:data-histogram} je možné vidieť, že aktivitu requestov D-DoS útoku je
 možné odlíšiť od aktivity reálnych používateľov meraním vzdialenosti
 jednotlivých requestov. Zatiaľ čo vzdialenosti simulácie aktivity reálnych
-užívateľov sa pohybujú v intervaloch \textit{<0.1,0.15>} a \textit{<0.6,0.8>},
-vzdialenosti simulácie aktivity D-DoS útoku sa pohybujú v intervale
-\textit{<0.2,0.4>}. Podľa týchto údajov je teda možné kalibrovať aj prah pre
+užívateľov sa pohybujú vo väčšine prípadov v intervaloch \textit{<0.1,0.15>} a \textit{<0.6,0.8>},
+väčšina vzdialeností simulácie aktivity D-DoS útoku sa pohybuje v intervale
+\textit{<0.2,0.4>}. Zároveň existuje interval \textit{<0.4,0.6>} v ktorom sa v menšom
+množstve oba typy prelínajú. Pre lepšie znázornenie stredného intervalu používa
+histogram \ref{fig:data-histogram-log} logaritmickú os \textit{y}.
+Podľa týchto údajov je teda možné kalibrovať aj prah pre
 upozornenie hostiteľskej aplikácie na možnú hrozbu. 
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=\textwidth]{images/data-histogram-log.png}
+  \caption{Histogram počtu vzdialeností requestov simulácie s použitím logaritmickej
+  osi \textit{y}, zdroj: implementačná časť práce}
+  \label{fig:data-histogram-log}
+\end{figure}
 
 \chapter{Záver}
 Výsledky testov s reálnymi dátami dokázali funkčnosť algoritmu a jeho schopnosť
