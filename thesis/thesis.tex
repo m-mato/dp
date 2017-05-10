@@ -1333,6 +1333,14 @@ pre requesty D-DoS útoku od vzdialeností reálnych užívateľov.
   \label{fig:data-histogram}
 \end{figure}
 
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=\textwidth]{images/data-histogram-log.png}
+  \caption{Histogram počtu vzdialeností requestov simulácie s použitím logaritmickej
+  osi \textit{y}, zdroj: implementačná časť práce}
+  \label{fig:data-histogram-log}
+\end{figure}
+
 \section{Zhrnutie}
 Z výsledkov simulácie, najmä z výsledkov zobrazených v histograme
 \ref{fig:data-histogram} je možné vidieť, že aktivitu requestov D-DoS útoku je
@@ -1345,14 +1353,6 @@ množstve oba typy prelínajú. Pre lepšie znázornenie stredného intervalu po
 histogram \ref{fig:data-histogram-log} logaritmickú os \textit{y}.
 Podľa týchto údajov je teda možné kalibrovať aj prah pre
 upozornenie hostiteľskej aplikácie na možnú hrozbu. 
-
-\begin{figure}[h]
-  \centering
-    \includegraphics[width=\textwidth]{images/data-histogram-log.png}
-  \caption{Histogram počtu vzdialeností requestov simulácie s použitím logaritmickej
-  osi \textit{y}, zdroj: implementačná časť práce}
-  \label{fig:data-histogram-log}
-\end{figure}
 
 \chapter{Záver}
 Výsledky testov s reálnymi dátami dokázali funkčnosť algoritmu a jeho schopnosť
