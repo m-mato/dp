@@ -108,7 +108,7 @@ dôležitou a riešenou témou. Jedným z hlavných dôvodov je fakt, že väč�
 dnešných existujúcich, prípadne novo vznikajúcich systémov a aplikácií, je
 nejakým spôsobom zapojená do Internetu. 
 
-Z tohto vyplýva potreba rozoznania a identifikácie používateľov, ktorí s
+Z toho vyplýva potreba rozoznania a identifikácie používateľov, ktorí s
 danou aplikáciou interagujú. Existuje niekoľko rôznych prístupov k 
 identifikácii, od mapovania IP adries sieťovej vrstvy až po aplikačnú správu
 užívateľských účtov. Každý z nich má však svoje výhody aj nevýhody. Podrobne sa nimi zaoberá kapitola \ref{ch:existing}.
@@ -117,7 +117,7 @@ Cieľom práce je vytvoriť unikátny identifikátor na základe informácií
 dostupných najmä z \textit{HTTP}, prípadne \textit{TCP} protokolu. Pred zostavením samotného algoritmu je
 však dôležité popísať niektoré kľúčové oblasti a postupy.
 Nasledujúce odseky úvodu práce sa preto budú stručne zaoberať fungovaním aplikácií typu
-klient-server a architekrúrou domény práce. 
+klient-server a architektúrou domény práce. 
 
 \section{Aplikácie typu Klient-Server}
 S pokračujúcim vývojom nových technológií sa Internet a Web stávajú čoraz väčšou
@@ -131,7 +131,7 @@ myšlienkou tohto modelu je zaslanie požiadavky (\textit{requestu}) klientom na
 server, ktorý vystupuje ako poskytovateľ služby.
 
 \subsection{Klient-Server model}
-Pretože Klient-Server model je používaný rôznymi typmi aplikácií bolo nutné
+Pretože Klient-Server model je používaný rôznymi typmi aplikácií, bolo nutné
 použiť štandardizované protokoly, na základe ktorých bude možné komunikovať.
 Niektorými z najpoužívanejších protokolov sú: \textit{FTP (File Transfer Protocol)},
 \textit{Simple Mail Transfer Protocol (SMTP)} a \textit{Hypertext Transfer
@@ -231,7 +231,7 @@ identifikačného algoritmu.
 Na vrchole hierarchie je Aplikačná vrstva abstrakciou, ktorá špecifikuje
 konkrétne protokoly a metódy používané hostiteľskými uzlami v sieti. Táto
 vrstva je definovaná jednak v TCP/IP, ale aj OSI
-\textit{(Open Systems Interconnection)} modele sieťovej komunikácie.
+\textit{(Open Systems Interconnection)} modeli sieťovej komunikácie.
 
 Táto práca narába s modelom TCP/IP, v ktorom aplikačná vrstva definuje práve
 protokoly a metódy rozhraní pre komunikáciu medzi jednotlivými procesmi
@@ -249,9 +249,9 @@ Aplikačná vrstva definuje veľké množstvo používaných protokolov, ako nap
 	\item TLS/SSL poskytujúci zabezpečenú vzdialenú komunikáciu po sieti
 	\item FTP využívaný na prenos súborov
 	\item SMTP určený pre emailovú komunikáciu
-	\item DNS realizujúci systém hierarchie doménovým mien, a iné...
+	\item DNS realizujúci systém hierarchie doménových mien, a iné...
 \end{itemize}
-Pri tvorbe identifikátoru sa však budeme venovať najmä informáciám z protokolov
+Pri tvorbe identifikátora sa však budeme venovať najmä informáciám z protokolov
 rodiny HTTP, konkrétne teda hlavičkám a atribútom HTTP a HTTPS.
 
 \subsection{HTTP}
@@ -265,10 +265,10 @@ možnosť voľby reprezentácie dát, čo dáva systémom veľkú nezávislosť 
 prenášanom formáte.
 
 HTTP funguje na princípe požiadavky a odpovede \textit{(request - response)},
-založenom na fungovaní samotného klient-server modelu. Klientom môže byť
+založenom na fungovaní samotného klient - server modelu. Klientom môže byť
 napríklad webový prehliadač, serverom zasa aplikácia spustená na zariadení
 hostiteľského uzlu. V tomto prípade teda webový prehliadač zašle správu vo
-forme HTTP požiadavku na server. V ideálnom prípade server tento požiadavok
+forme HTTP požiadavky na server. V ideálnom prípade server požiadavku
 \textit{(request)} spracuje a vygeneruje odpoveď (napríklad HTML stránku),
 ktorú vráti klientovi ako správu vo formáte HTTP odpovede \textit{(response)}.
 Odpoveď pre klienta vždy obsahuje takzvaný \textit{(status)}, ktorý informuje o
@@ -306,7 +306,7 @@ Prvý riadok definície a každá z hlavičiek musia byť zakončené znakmi
 Prázdny riadok musí zároveň pozostávať výlučne zo znakov \textit{<CR><LF>}.
 Z pohľadu identifikácie budú neskôr veľmi dôležité práve HTTP hlavičky. U HTTP
 verzie 1.1 je jedinou povinnou hlavičkou \textit{Host} definujúci server, na
-ktorý bola požiadavka odoslaný.
+ktorý bola požiadavka odoslaná.
 
 \begin{figure}[h]
   \centering
@@ -326,7 +326,7 @@ zabezpečuje jeho spoľahlivosť, riadenie a multiplexovanie.
 Medzi najznámejšie protokoly tejto vrstvy patrí napríklad TCP
 \textit{(Transmission Control Protocol)}, ktorého názov nesie aj samotný
 sieťový model. Tento protokol je orientovaný na prenos zložitejších spojení,
-naproti čomu druhý z protokolov - UDP \textit{(User Datagram Protocol )}, je
+oproti čomu druhý z protokolov - UDP \textit{(User Datagram Protocol )}, je
 vhodný a používaný skôr pre jednoduchšie správy a spojenia. Protokol TCP je
 komplexnejší najmä kvôli svojmu návrhu, ktorý uchováva stav jednotlivých
 transakcií a zabezpečuje spoľahlivosť doručenia všetkých dátových správ. 
@@ -386,7 +386,7 @@ IPTV médiá, online hry a podobne.
 
 Hlavička UDP protokolu je veľmi jednoduchá a pozostáva len z nevyhnutných
 informácií, ako číslo portu odosielateľa, dĺžka paketu a špecifikácia portu
-príjemcu. Preto je aj samotný UDP paket znateľne menší ako paket TCP, čo
+príjemcu. Preto je aj samotný UDP paket viditeľne menší ako paket TCP, čo
 taktiež napomáha rýchlosti jeho prenosu a spracovania. Keďže však UDP poskytuje
 len minimálne množstvo informácií, jeho využitie pri identifikácii je minimálne.
 
@@ -405,7 +405,7 @@ UDP kontexte.
 
 \section{Sieťová vrstva}
 Sieťová vrstva je skupina internetových definícií, protokolov a špecifikácií, ktorá
-v sieťovom modele TCP/IP slúži (transportnej vrstve) na prenos datagramov
+v sieťovom modeli TCP/IP slúži (transportnej vrstve) na prenos datagramov
 (paketov) od odosielateľa, cez jednotlivé sieťové rozhrania, až k príjemcovi.
 Každý z uzlov v sieti je na sieťovej vrstve identifikovaný takzvanou IP
 \textit{(Internte Protocol)} adresou. Táto vrstva teda odvodzuje svoj názov od
@@ -465,7 +465,7 @@ NDP \textit{(Neighbor Discovery Protocol)}, OSPF
 
 Informácie týchto protokolov však operujú na príliš nízkej úrovni sieťovej
 infraštruktúry, preto ich nebude možné využiť pri identifikácii. V prehľade je 
-teda vrstva sieťového rozhrania uvedené len pre úplnosť.
+teda vrstva sieťového rozhrania uvedená len pre úplnosť.
 
 \chapter{Útoky typu \textit{Denial of Service}}
 \label{ch:dos}
@@ -519,7 +519,7 @@ nebude stačiť jednoduché zvýšenie šírky pásma nad hranicu momentálnej v
 výpadok systému.
 
 \subsection{Sémantické DoS útoky}
-Sémantické útoky využívajú špecifickú funkcionalitu, alebo implementačnú chybu aplikácie,
+Sémantické útoky využívajú špecifickú funkcionalitu alebo implementačnú chybu aplikácie,
 prípadne protokolu zariadenia obete na zneužitie určitého množstva jeho zdrojov. Napríklad
 v prípade \textit{TCP SYN} útoku je touto zneužitou funkcionalitou alokácia značného množstva
 priestoru čakajúcich pripojení ihneď po potvrdení \textit{ TCP SYN requestu}. Útočník otvorí
@@ -538,7 +538,7 @@ paketu, tento paket spätne aj vráti.
 Skupiny útočníkov cielene organizujú nimi kontrolované hostiteľské servery tak, aby sa zasielali 
 falošné dáta, simulujúce napadnutý uzol, až ku reflektujúcemu serveru. Vo výsledku sú teda obete 
 napadnuté z výrazne väčšieho počtu zdrojových bodov, obsiahlo rozptýlených v sieti, čím útočníci účelne 
-odrezávajú ich spojenie zo zvyškom internetu.
+odrezávajú ich spojenie zo zvyškom Internetu.
 
 Amplifikačný útok je typ reflektujúceho útoku, kde reflektujúci server odosiela mnohonásobne väčší 
 objem odpovedí, než prijíma. Týmto spôsobom teda znásobuje aj vyťaženie spojenia medzi obeťou a 
@@ -613,7 +613,7 @@ majiteľa. Príkladom je distribuovaný útok \textit{Operation Payback} organiz
 \section{DoS - Zhrnutie}
 Ako je možné vidieť z predchádzajúcich odsekov, existuje naozaj veľké množstvo
 variácií \textit{DoS} a \textit{DDoS} útokov. Zároveň ich počet postupom času
-narastá a preto je nutné vyvíjať nové nástroje pre obranu voči nim. Najťažšou časťou
+narastá a preto je nutné vyvíjať nové nástroje na obranu voči nim. Najťažšou časťou
 je však takýto útok, najmä jeho pôvodcu, odhaliť a identifikovať. Jedným z využití
 algoritmu popísaného v kapitole \ref{ch:footprint} a implementačnej časti je preto
 práve táto funkcionalita.
@@ -691,7 +691,7 @@ užívateľom, u ktorých to nie je potrebné, ale stoja za rovnakou IP adresou.
 Vo všeobecnosti je teda identifikácia zariadení používateľa na základe IP
 adresy možná. V prípade, že sa však zariadenie skrýva za proxy serverom,
 prípadne sú adresy prekryté \textit{NATom} bude táto technika viesť takisto k
-nechcenému prekrytiu jednotlivých užívateľov v rámci podsiete.
+nechcenému prekrytiu jednotlivých užívateľov vrámci podsiete.
 
 \section{Monitoring TCP}
 Ako popisuje kapitola \ref{ch:net-layers}, TCP
@@ -726,7 +726,7 @@ okna (\textit{TCP Window}) používaného na ovládanie preťaženia. Nakoľko
 riadenie preťaženia má kľúčový vplyv na celkový výkon TCP, veľa pokusov o
 optimalizáciu je vykonávaných už výrobcom operačného systému.
  
-Všetky podobné implementačne-závislé informácie bývajú používané na takzvané
+Všetky podobné implementačne závislé informácie bývajú používané na takzvané
 zaznamenávanie \textit{TCP/IP zásobníka}. Cieľom tejto techniky je odhadnúť,
 aký \textit{zásobník} a operačný systém beží na vzdialenom počítači.
 
@@ -740,14 +740,14 @@ informácií od vzdialeného hostiteľa. Avšak, keďže ide o pozorovací útok
 protokolu by mohol samozrejme aj porušiť, čo by mu dalo väčšiu šancu uhádnuť
 TCP/IP zásobník, avšak, týmto by sa jeho útok stal nápadnejším a zreteľnejším.
  
-\subsection{Vyhody a nevyhody TCP}
-Jednou z pomerne často používaných vlastností TCP je, možnosť odhadu informácií
+\subsection{Výhody a nevýhody TCP}
+Jednou z pomerne často používaných vlastností TCP je možnosť odhadu informácií
 o komunikujúcej aplikácii z portov tejto vrstvy bez nutnosti prístupu k samotným
 dátam. Je to možné vďaka skutočnosti, že na internete sú používané štandardné
-porty, ako napr. port 25 pre požiadavky FTP alebo port 80 pre požiadavky HTTP.
+porty, ako napríklad port 25 pre požiadavky FTP alebo port 80 pre požiadavky HTTP.
 
-Pokiaľ ide o ostatné TCP atribúty, ich využitie v úplnej identifikácií
-užívateľa je minimálne, avšak v kombinácií z dátami ostatných protokolov budú
+Pokiaľ ide o ostatné TCP atribúty, ich využitie v úplnej identifikácii
+užívateľa je minimálne, avšak v kombinácií s dátami ostatných protokolov budú
 pomerne nápomocné.
 
 \section{Aplikačné identifikátory}
@@ -768,7 +768,7 @@ reťazec), ktorým sa odkazuje na abstraktný objekt reprezentujúci aktuálnu
 entitu. 
 
 Tvorba unikátneho abstraktného objektu vo forme užívateľského účtu
-pre každého jednotlivca, alebo proces komunikujúci so systémom, je na aplikačnej
+pre každého jednotlivca alebo proces komunikujúci so systémom je na aplikačnej
 úrovni veľmi dôležitá. Tento objekt je následne používaný na identifikáciu
 užívateľa v rámci celého systému. Zároveň tento objekt slúži ako odkaz pre
 jednotlivé akcie systému umožňujúce prístup k údajom komunikujúcej entity.
@@ -784,7 +784,7 @@ vráti objekt vyhovujúci privilégiám a atribútom entity s ktorou aktuálne
 komunikuje. Po úspešnom dokončení tohto procesu je užívateľ jednoznačne
 identifikovaný.
 
-Po úspešnej identifikácii typicky nasleduje krok validácie získanej identity,
+Po identifikácii typicky nasleduje krok validácie získanej identity,
 vo všeobecnosti nazývaný autentizácia používateľa. Fakt, že užívateľ tvrdí,
 že je reprezentovaný špecifickým abstraktným objektom, nemusí totiž nutne
 znamenať, že je to pravda. Pre potvrdenie, že aktuálny používateľ môže byť
@@ -865,7 +865,7 @@ Vo všeobecnosti pozostáva celý algoritmus z piatich hlavných, po sebe nasled
     \item Ak ide o novú reláciu, pre identifikátor je vytvorený nový záznam v databáze s frekvenciou 1.
     \item V prípade, že miera podobnosti prekročila stanovený prah, nevytvára
     sa nový záznam. Frekvencia daného odtlačku v databáze je však zvýšená.
-    \item Ak je frekvencia výskytu konkrétneho odtlačku veľmi vysoká, existuje
+    \item Ak je frekvencia výskytu konkrétneho odtlačku veľmi vysoká existuje
     možnosť upozornenia hostiteľskej aplikácie.
   \end{itemize}
 \end{enumerate}
@@ -893,7 +893,7 @@ Ako bolo popísané vyššie, jednou z dodatočných funkcionalít je aj upozorn
 prekročení limitu frekvencie requestov od jedného užívateľa, čo by mohlo
 indikovať napríklad DoS, prípadne DDoS útok.
 
-\section{Štruktúra identifikátoru}
+\section{Štruktúra identifikátora}
 \label{s:footprint-structure}
 Odtlačok aktivity užívateľa je teda kombináciou špecificky vybraných HTTP a TCP informácií.
 Objekt sa skladá z dvoch častí - statických a relačných dát. Dôležitejšou z
@@ -969,7 +969,7 @@ Vstupom pre algoritmus je teda tento odtlačok
 spolu s množinou obsahujúcou odtlačky doteraz analyzovaných requestov.
 
 Po
-inicializácii a načítaní vstupných parametrov je na každú dvojicu odtlačkov
+inicializácii a načítaní vstupných parametrov je na každú dvoji-cu odtlačkov
 aplikovaná funkcia pre výpočet ich vzdialenosti, ktorá vráti hodnotu v rozmedzí
 od nula do jedna. Pre totožné odtlačky je vzdialenosť nulová, naopak u
 odtlačkov, ktoré sa líšia v mnohých parametroch sa hodnota blíži k jednej.
@@ -1166,7 +1166,7 @@ Aspektovo-orientované programovanie (ďalej len AOP) je paradigma určená k
 zvýšeniu modularity kódu bez narúšania prirodzeného behu aplikácie. Ide o 
 pridanie novej funkcionality k už existujúcemu kódu, bez nutnosti modifikácie
 pôvodného zdroja. Namiesto toho je osobitne definovaný takzvaný prístupový bod,
-ktorý pridá požadovanú funkcionalitu na vopered určené miesto.
+ktorý pridá požadovanú funkcionalitu na vopred určené miesto.
 
 V implementačnej časti je AOP, konkrétne knižnica \textit{AspectJ}, použitá pre
 injektovanie jednotlivých prístupových metód hostiteľskej aplikácie a následné
@@ -1185,7 +1185,7 @@ Pri štarte hostiteľskej aplikácie, je štandardne jedným z modulov v samosta
 vlákne spustený monitoring, analýza a parsovanie TCP paketov. Pre prístup k
 týmto informáciám je využívaná knižnica \textit{libpcap} a program
 \textit{tcpdump}. Samozrejme tieto možnosti je nutné vopred povoliť na
-hostiteľskom servere, preto existuje možnosť aplikáciu používat aj bez
+hostiteľskom serveri, preto existuje možnosť aplikáciu používať aj bez
 monitorovania sieťovej aktivity. Výpočty vzdialeností identifikátorov, ktoré
 tieto informácie obsahujú sú však presnejšie a produkujú menej falošne
 pozitívnych detekcií.
@@ -1241,7 +1241,7 @@ upozorní hostiteľskú aplikáciu na možné prekročenie jej limitu.
 Celý priebeh spracovania a analýzy podobnosti reqestu je zároveň znázornený
 sekvenčným diagramom v prílohe \ref{fig:appendix-impl-flow}.
 
-Spracovanie a analýza dát z jednotlivých requestov prebieha asynchrónne,
+Spracovanie a analýza dát z jednotlivých requestov prebieha asyn-chrónne,
 aplikácia teda nemusí čakať na dokončenie a jej výsledok. V prípade hrozby je
 samozrejme upozornená. 
 
@@ -1368,8 +1368,8 @@ vzdialeností a simulácia requestov DoS útoku u stredných hodnôt vzdialenost
 
 Dôvodom tohto rozloženia je zrejme práve spôsob, akým útočník na rozdiel od
 bežných užívateľov so serverom komunikoval. Bežní užívatelia totiž zasielali
-navzájom pomerne rozdielne requesty, pričom requesty jedného užívateľa v jeho
-relácii sa na seba podobali. To spôsobilo ich rozloženie do okrajových hodnôt
+navzájom pomerne rozdielne requesty, pričom requesty jedného užívateľa sa v jeho
+relácii na seba podobali. To spôsobilo ich rozloženie do okrajových hodnôt
 vzdialeností. Útočník ale celý čas používal jeden druh requestu, ktorý však
 neustále obmieňal. Preto je rozloženie jeho vzdialeností v stredných hodnotách
 škály. 
@@ -1378,7 +1378,7 @@ Na základe týchto výsledkov je teda možné nastaviť prahy pre určenie úto
 práve v intervale stredných vzdialeností útočníka, podľa výsledkov simulácie.
 
 Táto problematika ma veľmi zaujala, preto prácu plánujem ďalej rozvíjať,
-zdokonaľovať a dopĺňať o ďalšiu zaujímavú funkcionalitu od možnosti zdieľania
+a dopĺňať o ďalšiu zaujímavú funkcionalitu od možnosti zdieľania
 databázy odtlačkov, až po zlepšenie sledovania a použitia TCP informácií.
 
 \makeatletter\thesis@blocks@clear\makeatother
