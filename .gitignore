@@ -8,6 +8,9 @@ thesis/*.out
 thesis/*.run.xml
 thesis/*.synctex.gz
 thesis/*.toc
+thesis/*.bib
+thesis/*.bbl
+thesis/*.blg
 thesis/sources.txt
 
 thesis-example/*.aux
