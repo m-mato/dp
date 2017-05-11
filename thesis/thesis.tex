@@ -61,15 +61,14 @@
 %% The following section sets up the bibliography.
 \usepackage{csquotes}
 \usepackage[              %% When typesetting the bibliography, the
-  backend=biber,          %% `numeric` style will be used for the
+  backend=bibtex,          %% `numeric` style will be used for the
   style=numeric,          %% entries and the `numeric-comp` style
   citestyle=numeric-comp, %% for the references to the entries. The
   sorting=none,           %% entries will be sorted in cite order.
   sortlocale=auto         %% For more unformation about the available
 ]{biblatex}               %% `style`s and `citestyles`, see:
 %% <http://mirrors.ctan.org/macros/latex/contrib/biblatex/doc/biblatex.pdf>.
-\addbibresource{example.bib} %% The bibliograpic database within
-                          %% the file `example.bib` will be used.
+\addbibresource{thesis.bib}   %% The bibliograpic database
                           
 \usepackage{makeidx}      %% The `makeidx` package contains
 \makeindex                %% helper commands for index typesetting.
@@ -106,7 +105,7 @@
 Problematika jednoznačnej identifikácie používateľa je dnes veľmi
 dôležitou a riešenou témou. Jedným z hlavných dôvodov je fakt, že väčšina
 dnešných existujúcich, prípadne novo vznikajúcich systémov a aplikácií, je
-nejakým spôsobom zapojená do Internetu. 
+nejakým spôsobom zapojená do Internetu. \nocite{article-minimal}
 
 Z toho vyplýva potreba rozoznania a identifikácie používateľov, ktorí s
 danou aplikáciou interagujú. Existuje niekoľko rôznych prístupov k 
@@ -1381,14 +1380,16 @@ Táto problematika ma veľmi zaujala, preto prácu plánujem ďalej rozvíjať,
 a dopĺňať o ďalšiu zaujímavú funkcionalitu od možnosti zdieľania
 databázy odtlačkov, až po zlepšenie sledovania a použitia TCP informácií.
 
+\printbibliography
+\addcontentsline{toc}{chapter}{Bibliografia} 
+
 \makeatletter\thesis@blocks@clear\makeatother
 \phantomsection %% Print the index and insert it into the
-\addcontentsline{toc}{chapter}{\indexname} %% table of contents.
+%\addcontentsline{toc}{chapter}{\indexname} %% table of contents.
 \printindex
 
 \appendix %% Start the appendices.
-
-\chapter{Sekvenčný diagram znázorňujúci priebeh spracovania reqestu}
+\chapter{Priebeh spracovania reqestu}
 \label{fig:appendix-impl-flow}
 \begin{figure}[H]
   \centering
