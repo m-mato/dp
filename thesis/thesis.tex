@@ -835,7 +835,7 @@ aby vznikol čo najpresnejší možný odtlačok aktivity jedného užívateľa.
 Hlavným cieľom a výstupom tejto práce je algoritmus definujúci jednoznačný
 identifikátor užívateľa. Nasledujúca kapitola sa zaoberá práve popisom jeho
 fungovania, štruktúry, použitých technológií a následnou implementáciou. Na
-jeho tvorbu boli použité informácie HTTP a TCP protokolu popísané v
+jeho tvorbu boli použité informácie z~HTTP a TCP protokolu popísané v
 kapitolách \ref{ch:net-layers} a \ref{ch:existing}. Vďaka nim je algoritmus
 schopný rozpoznať a priradiť aktivitu každému z používateľov hostiteľského
 systému.
@@ -849,25 +849,25 @@ requestu v podobe jeho vzdialenosti od najbližšieho podobného requestu
 z databázy. Doplnkovou funkcionalitou je aj možnosť upozornenia hostiteľskej
 aplikácie pri prekročení veľkého množstva podobných requestov od jedného používateľa.
 
-\section{Popis Algoritmu}
+\section{Algoritmus}
 Vo všeobecnosti pozostáva celý algoritmus z piatich hlavných, po sebe nasledujúcich krokov:
 \begin{enumerate}
-  \item Zachytenie prebiehajúceho requestu pred samotným spracovaním logikou hostiteľskej aplikácie.
-  \item Zhromaždenie HTTP a TCP informácií daného spojenia.
+  \item zachytenie prebiehajúceho requestu pred samotným spracovaním logikou hostiteľskej aplikácie,
+  \item zhromaždenie HTTP a TCP informácií spojenia, konkrétne:
   \begin{itemize}
-    \item HTTP dáta sú parsované zo zachyteného requestu.
-    \item TCP dáta poskytuje samostatný sieťový monitor.
+    \item HTTP dáta sú parsované zo zachyteného requestu,
+    \item TCP dáta poskytuje samostatný sieťový monitor,
   \end{itemize}
-  \item Spracovanie a serializácia informácií do podoby objektu unikátneho odtlačku
-  aktuálneho requestu.
-  \item Analýza a nájdenie najbližšieho podobného identifikátora v databáze pomocou funkcie na
-  hľadanie najmenšej vzdialenosti.
-  \item Spracovanie výsledku v podobe vzdialenosti odtlačkov a následná reakcia.
+  \item spracovanie a serializácia informácií do podoby objektu unikátneho odtlačku
+  aktuálneho requestu,
+  \item analýza a nájdenie najbližšieho podobného identifikátora v databáze pomocou funkcie na
+  hľadanie najbližšieho objektu,
+  \item spracovanie výsledku v podobe vzdialenosti odtlačkov a následná reakcia:
   \begin{itemize}
-    \item Ak ide o novú reláciu, pre identifikátor je vytvorený nový záznam v databáze s frekvenciou 1.
-    \item V prípade, že miera podobnosti prekročila stanovený prah, nevytvára
-    sa nový záznam. Frekvencia daného odtlačku v databáze je však zvýšená.
-    \item Ak je frekvencia výskytu konkrétneho odtlačku veľmi vysoká existuje
+    \item ak ide o novú reláciu, pre identifikátor je vytvorený nový záznam v databáze s frekvenciou jedna,
+    \item v prípade, že miera podobnosti prekročila stanovený prah, nevytvára
+    sa nový záznam; frekvencia daného odtlačku v databáze je však zvýšená,
+    \item ak je frekvencia výskytu konkrétneho odtlačku veľmi vysoká, existuje
     možnosť upozornenia hostiteľskej aplikácie.
   \end{itemize}
 \end{enumerate}
@@ -885,7 +885,7 @@ HTTP request, na ktorý ďalej nadväzujú akcie tvorby a porovnávania
 identifikátorov. Zároveň je pri štarte aplikácie spustené vlákno vykonávajúce
 sieťovú analýzu transportnej vrstvy, ktorá uchováva informácie z niekoľkých
 posledných spojení. Z týchto HTTP a TCP informácií je teda pre každý request
-zostavený unikátny odtlačok -- identifikátor \textit{(Unique Footprint -- UFoo)}.
+zostavený unikátny odtlačok~-- identifikátor \textit{(Unique Footprint -- UFoo)}.
 Aktuálny identifikátor je následne porovnávaný s každým odtlačkom v databáze.
 Algoritmus na hľadanie najbližšieho suseda k nemu následne pomocou porovnávacej
 funkcie nájde najbližší identifikátor. Podľa miery podobnosti ďalej
@@ -898,8 +898,8 @@ indikovať napríklad DoS, prípadne DDoS útok.
 \section{Štruktúra identifikátora}
 \label{s:footprint-structure}
 Odtlačok aktivity užívateľa je teda kombináciou špecificky vybraných HTTP a TCP informácií.
-Objekt sa skladá z dvoch častí -- statických a relačných dát. Dôležitejšou z
-nich sú takzvané statické dáta, ktoré slúžia porovnávacej funkcii na samotné
+Objekt sa skladá z dvoch častí -- statických a relačných dát. Statické
+dáta slúžia porovnávacej funkcii na samotné
 určenie vzdialenosti dvoch identifikátorov. Vzdialenosť vypočítaná touto
 funkciou môže byť ďalej ovplyvňovaná vzťahmi relačných dát, ktoré riešia
 špecifické aspekty vybraných informácií, ako napríklad určenie menej bezpečných
@@ -909,19 +909,19 @@ geo-zón geolokáciou IP adresy klienta.
 Statická časť identifikátora obsahuje väčšie množstvo dát, preto je
 ukladaná a reprezentovaná v podobe reťazca. Skladá sa z nasledujúcich troch podčastí dát pre porovnávanie:
 \begin{itemize}
-    \item Statické hlavičky \textit{(Static headers)} -- špecifické vopred
-    vybrané a zoradené hodnoty HTTP hlavičiek, ako napríklad: \textit{authorization, cookie, content-length}, alebo
-    \textit{user-agent}.
-    \item Neznáme hlavičky \textit{(Unknown headers)} -- ostatné hlavičky daného
-    HTTP requestu, ktoré neboli použité ako statické.
-    \item Atribúty -- konkrétne informácie z HTTP a TCP protokolu, ako napríklad
+    \item statické hlavičky \textit{(static headers)} -- špecifické vopred
+    vybrané a zoradené hodnoty HTTP hlavičiek, ako napríklad: \textit{Authorization, Cookie, Content-Length}, alebo
+    \textit{User-Agent},
+    \item neznáme hlavičky \textit{(unknown headers)} -- ostatné hlavičky daného
+    HTTP requestu, ktoré neboli použité ako statické,
+    \item atribúty -- konkrétne informácie z HTTP a TCP protokolu, ako napríklad
     \textit{IP adresa, geo-lokácia}, alebo pre \textit{veľkosť TCP okna}.
 \end{itemize}
 
 Súhrnne znázorňuje všetky použité informácie jednotlivých kategórií statických dát schéma
 \ref{fig:footprint-data-static}.
 
-\begin{figure}[h]
+\begin{figure}[t]
   \centering
     \includegraphics[width=.95\textwidth]{images/footprint-data-static.png}
   \caption{Detailný pohľad na štruktúru statických dát identifikátora, zdroj:
@@ -942,9 +942,9 @@ informácií nie je mnoho, preto nie je nutné ich komprimovať a serializovať 
 dáta statické.
 Ide teda o objekt obsahujúci nasledujúce položky:
 \begin{itemize}
-    \item Timestamp -- presný čas nadviazania spojenia aktuálnej relácie.
-    \item Geolokáciu -- krajina pôvodu určená na základe IP adresy klienta.
-    \item Relačné hlavičky -- HTTP hlavičky, ako napríklad
+    \item timestamp -- presný čas nadviazania spojenia aktuálnej relácie,
+    \item geolokáciu -- krajina pôvodu určená na základe IP adresy klienta,
+    \item relačné hlavičky -- HTTP hlavičky, ako napríklad
     \textit{forwarded}, alebo \textit{x-csrf-token}. 
 \end{itemize}
 
