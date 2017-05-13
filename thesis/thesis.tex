@@ -61,9 +61,9 @@
 %% The following section sets up the bibliography.
 \usepackage{csquotes}
 \usepackage[              %% When typesetting the bibliography, the
-  backend=bibtex,          %% `numeric` style will be used for the
-  style=numeric,          %% entries and the `numeric-comp` style
-  citestyle=numeric-comp, %% for the references to the entries. The
+  backend=bibtex,         %% `numeric` style will be used for the
+  style=alphabetic,          %% entries and the `numeric-comp` style
+  citestyle=alphabetic, %% for the references to the entries. The
   sorting=none,           %% entries will be sorted in cite order.
   sortlocale=auto         %% For more unformation about the available
 ]{biblatex}               %% `style`s and `citestyles`, see:
@@ -105,7 +105,7 @@
 Problematika jednoznačnej identifikácie používateľa je dnes veľmi
 dôležitou a riešenou témou. Jedným z hlavných dôvodov je fakt, že väčšina
 dnešných existujúcich, prípadne novo vznikajúcich systémov a aplikácií, je
-nejakým spôsobom zapojená do Internetu. \nocite{article-minimal}
+nejakým spôsobom zapojená do Internetu.
 
 Z toho vyplýva potreba rozoznania a identifikácie používateľov, ktorí s
 danou aplikáciou interagujú. Existuje niekoľko rôznych prístupov k 
@@ -171,7 +171,7 @@ Zároveň existujú dva základné typy architektúr podľa miery zapojenia zari
 U tohoto typu architektúry je aplikácia spustená na zariadení klienta, ktoré sa
 následne pripája priamo na server. Zariadenie tak obsluhuje zároveň
 \textit{business} logiku aj zobrazovanie aplikácie. Tento typ architektúry
-nazývame aj tučný klient (\textit{thick client}).
+nazývame aj tučný klient (\textit{thick client}). 
 
 \begin{figure}[H]
   \centering
@@ -186,7 +186,7 @@ nazývame aj tučný klient (\textit{thick client}).
 zahŕňa aj aplikačný server. Tento je následne používaný na obsluhu
 \textit{business} logiky aplikácie a komunikáciu s databázou, pričom zariadenie
 klienta slúži len na zobrazovanie. Iný názov pre takýto typ architektúry je tenký
-klient (\textit{thin client}).
+klient (\textit{thin client}). \cite{Oluwatosin:2014:CS}
 
 \section{Štruktúra práce}
 Práca je ďalej rozdelená na dve časti, pozostávajúce z piatich kapitol, z ktorých každá sa zaoberá iným aspektom
