@@ -105,7 +105,7 @@
 S pokračujúcim vývojom nových technológií sa Internet a Web stávajú čoraz väčšou
 súčasťou našich životov. Web ako taký už dávno nie je limitovaný prehliadaním na
 počítačoch. Musí sa prispôsobovať rôznym technológiám, ako sú napríklad
-mobilné, či iné multimediálne zariadenia.
+mobilné, či iné multimediálne zariadenia klientov.
 
 Problematika jednoznačnej identifikácie používateľa a jeho zariadenia v rámci Internetu je dnes veľmi
 dôležitou a riešenou témou. Dôvodmi sú najmä prevencia
@@ -146,7 +146,7 @@ kapitola \ref{ch:net-layers}.
 \end{figure}
 
 \subsection{Architektúra}
-Architektúra klient-server modelu sa vo všeobecnosti typicky skladá z troch 
+Architektúra klient-server sa vo všeobecnosti typicky skladá z troch 
 častí:
 \begin{itemize}
 	\item Aplikačný server
@@ -221,14 +221,14 @@ identifikačného algoritmu.
 
 \begin{figure}[h]
   \centering
-    \includegraphics[width=.99\textwidth]{images/net-layers.png}
+    \includegraphics[width=\textwidth]{images/net-layers.png}
   \caption{Vizualizácia vrstiev TCP/IP modelu, jeho najpoužívanejších protokolov
   a prenosových štruktúr, zdroj: vlastné spracovanie}
   \label{fig:net-layers}
 \end{figure}
 
 \section{Aplikačná vrstva}
-Na vrchole hierarchie je Aplikačná vrstva abstrakciou, ktorá špecifikuje
+Na vrchole hierarchie je \textit{aplikačná vrstva} abstrakciou, ktorá špecifikuje
 konkrétne protokoly a metódy používané hostiteľskými uzlami v sieti. Táto
 vrstva je definovaná jednak v TCP/IP, ale aj OSI
 \textit{(Open Systems Interconnection)} modeli sieťovej komunikácie.
@@ -236,46 +236,48 @@ vrstva je definovaná jednak v TCP/IP, ale aj OSI
 Táto práca narába s modelom TCP/IP, v ktorom aplikačná vrstva definuje práve
 protokoly a metódy rozhraní pre komunikáciu medzi jednotlivými procesmi
 spájaných strán v sieti. Samotná aplikačná vrstva však len štandardizuje formu
-komunikácie, pričom ustálenie uceleného dátového spojenia a správu prenosu dát
+komunikácie, pričom ustanovenie uceleného dátového spojenia a správu prenosu dát
 u aplikácií typu klient-server a \textit{peer-to-peer} ponecháva na protokoloch
-nasledujúcej - transportnej vrstvy. Keďže aplikačná vrstva nijakým spôsobom
+nasledujúcej -- \textit{transportnej vrstvy}. Keďže aplikačná vrstva nijakým spôsobom
 nepopisuje a nešpecifikuje konkrétne pravidlá pre formu prenášaných dát,
 aplikácie samotné musia obsahovať logiku, ktorá zabezpečí, že obe komunikujúce
 strany budú v tomto ohľade navzájom kompatibilné.
 
 Aplikačná vrstva definuje veľké množstvo používaných protokolov, ako napríklad:
 \begin{itemize}
-	\item HTTP/HTTPS
-	\item TLS/SSL poskytujúci zabezpečenú vzdialenú komunikáciu po sieti
-	\item FTP využívaný na prenos súborov
-	\item SMTP určený pre emailovú komunikáciu
-	\item DNS realizujúci systém hierarchie doménových mien, a iné...
+	\item HTTP/HTTPS -- pre prenos hypermédií 
+	\item TLS/SSL -- poskytujúci zabezpečenú vzdialenú komunikáciu daného spojenia v sieti
+	\item FTP -- využívaný na prenos súborov
+	\item SMTP -- určený pre emailovú komunikáciu
+	\item DNS -- realizujúci systém hierarchie doménových mien, a iné...
 \end{itemize}
 Pri tvorbe identifikátora sa však budeme venovať najmä informáciám z protokolov
-rodiny HTTP, konkrétne teda hlavičkám a atribútom HTTP a HTTPS.
+rodiny HTTP, konkrétne teda hlavičkám a atribútom HTTP a HTTPS \footnote{HTTPS 
+\textit{(HTTP Secure)} na rozdiel od klasického HTTP poskytuje zabezpečenú komunikáciu
+s využitím protokolu TLS, alebo SSL. Zaisťuje tak autentizáciu oboch strán a integritu prenášaných dát}.
 
 \subsection{HTTP}
-HTTP \textit{(Hypertext Transfer Protocol)} je distribuovaný protokol určený
+HTTP \textit{(Hypertext Transfer Protocol)} je protokol určený
 na spoluprácu a prenos informácií medzi jednotlivými systémami pre
 prácu s hypermédiami. Tento protokol je bezstavový a vo všeobecnosti
-použiteľný nielen pre prenos hypertextu, ale aj správu DNS serverov, prípadne
-zložitejších objektov a systémov, v ktorých uplatní rozsiahlu škálu svojich
+použiteľný nielen pre prenos hypertextu, ale aj komunikáciu s DNS servermi, prípadne
+správu zložitejších objektov, v ktorých uplatní rozsiahlu škálu svojich
 hlavičiek a chybových hlášok. Jedným z jeho charakteristických znakov je aj
 možnosť voľby reprezentácie dát, čo dáva systémom veľkú nezávislosť na
 prenášanom formáte.
 
-HTTP funguje na princípe požiadavky a odpovede \textit{(request - response)},
-založenom na fungovaní samotného klient - server modelu. Klientom môže byť
+HTTP funguje na princípe požiadavky a odpovede \textit{(request-response)},
+založenom na fungovaní samotného klient-server modelu sieťovej komunikácie. Klientom môže byť
 napríklad webový prehliadač, serverom zasa aplikácia spustená na zariadení
 hostiteľského uzlu. V tomto prípade teda webový prehliadač zašle správu vo
 forme HTTP požiadavky na server. V ideálnom prípade server požiadavku
 \textit{(request)} spracuje a vygeneruje odpoveď (napríklad HTML stránku),
 ktorú vráti klientovi ako správu vo formáte HTTP odpovede \textit{(response)}.
-Odpoveď pre klienta vždy obsahuje takzvaný \textit{(status)}, ktorý informuje o
-dokončení požiadavky a prípadné telo so správou odpovede.
+Odpoveď pre klienta vždy obsahuje takzvaný \textit{status}, ktorý informuje o
+dokončení požiadavky, alebo konkrétnej chybe a prípadné telo obsahujúce správu odpovede.
 
 Celá relácia HTTP spojenia medzi dvoma uzlami je teda sekvenciou niekoľkých
-takýchto \textit{(request - respone)} transakcií. Samotný prenos dát však nie
+takýchto \textit{(request-respone)} transakcií. Samotný prenos dát však nie
 je realizovaný na úrovni HTTP protokolu, ale prostredníctvom protokolu TCP
 na úrovni transportnej vrstvy. HTTP klient iniciuje ustálenie TCP spojenia pre
 špecifický port serveru (typickými portami sú 80, 443 alebo 8080). HTTP server
@@ -285,19 +287,19 @@ už server štandardne spracuje a vráti odpoveď.
 Klient a server komunikujú prostredníctvom zasielania textových správ.
 Požiadavka pozostáva z nasledujúcich informácií: 
 \begin{itemize}
-	\item Definícia požiadavky
-	\item HTTP hlavičky (napríklad: \textit{Accept-Language: en})
-	\item Prázdny riadok
-	\item Prípadné telo správy
+	\item definícia požiadavky,
+	\item HTTP hlavičky (napríklad: \textit{Accept-Language: en}),
+	\item prázdny riadok,
+	\item prípadné telo správy.
 \end{itemize}
 
 Takisto správa odpovede má definovaný formát podobný formátu požiadavky, ktorý
 sa skladá z nasledujúcich položiek:
 \begin{itemize}
-	\item Status spracovania požiadavky a dôvod
-	\item HTTP hlavičky odpovede (napríklad: \textit{Content-Type: text/html})
-	\item Prázdny riadok
-	\item Prípadné telo správy odpovede
+	\item status spracovania požiadavky a dôvod,
+	\item HTTP hlavičky odpovede (napríklad: \textit{Content-Type: text/html}),
+	\item prázdny riadok,
+	\item prípadné telo správy odpovede.
 \end{itemize}
 
 Prvý riadok definície a každá z hlavičiek musia byť zakončené znakmi
@@ -318,7 +320,7 @@ ktorý bola požiadavka odoslaná.
 \section{Transportná vrstva}
 V kontexte TCP/IP modelu sieťovej komunikácie sa transportná vrstva nachádza
 ako druhá v poradí, medzi aplikačnou a sieťovou vrstvou. Ide o súbor protokolov
-a metód, ktoré poskytujú takzvanú \textit{host-to-host} komunikáciu
+a metód, ktoré poskytujú takzvanú \textit{process-to-process} komunikáciu
 jednotlivých sieťových uzlov protokolom vyššie popísanej aplikačnej vrstvy.
 Konkrétne implementuje funkcionalitu samotného prenosu dát v dátovom toku,
 zabezpečuje jeho spoľahlivosť, riadenie a multiplexovanie. 
@@ -326,7 +328,7 @@ zabezpečuje jeho spoľahlivosť, riadenie a multiplexovanie.
 Medzi najznámejšie protokoly tejto vrstvy patrí napríklad TCP
 \textit{(Transmission Control Protocol)}, ktorého názov nesie aj samotný
 sieťový model. Tento protokol je orientovaný na prenos zložitejších spojení,
-oproti čomu druhý z protokolov - UDP \textit{(User Datagram Protocol )}, je
+oproti čomu druhý z protokolov -- UDP \textit{(User Datagram Protocol )}, je
 vhodný a používaný skôr pre jednoduchšie správy a spojenia. Protokol TCP je
 komplexnejší najmä kvôli svojmu návrhu, ktorý uchováva stav jednotlivých
 transakcií a zabezpečuje spoľahlivosť doručenia všetkých dátových správ. 
@@ -339,8 +341,7 @@ sa zaoberá prenosom telefónnej signalizácie.
 
 \subsection{Protokol TCP}
 TCP je jeden z najdôležitejších a najpoužívanejších protokolov celého sieťového
-modelu. Pracuje s ním množstvo ďalších protokolov aplikačnej vrstvy, ako
-napríklad: HTTP, FTP alebo POP3. Jeho najdôležitejšou charakteristikou je
+modelu. Jeho najdôležitejšou charakteristikou je
 pravdepodobne garancia kompletného doručenia všetkých paketov v správnom
 poradí. K samotným dátam aplikačnej vrstvy preto TCP pripája ku každému paketu
 aj takzvanú TCP hlavičku (\textit{TCP Header}), ktorá ho dopĺňa o informácie
@@ -349,7 +350,7 @@ potrebné pre dosiahnutie tejto funkcionality.
 \begin{figure}[h]
   \centering
     \includegraphics[width=.95\textwidth]{images/net-tcp-head.png}
-  \caption{Schéma popisujúca štruktúru TCP hlavičky a informácií, ktoré sú v
+  \caption{Schéma popisujúca štruktúru TCP hlavičky IPv4 a informácií, ktoré sú v
   nej uložené, zdroj: vlastné spracovanie}
   \label{fig:net-tcp-head}
 \end{figure}
@@ -366,15 +367,15 @@ popisuje diagram \ref{fig:net-tcp-flow}.
 
 \begin{figure}[h]
   \centering
-    \includegraphics[width=.95\textwidth]{images/net-tcp-flow.png}
+    \includegraphics[width=.85\textwidth]{images/net-tcp-flow.png}
   \caption{\textit{Three-way handshake} v TCP, zdroj: vlastné spracovanie}
   \label{fig:net-tcp-flow}
 \end{figure}
 
 \subsection{Protokol UDP}
 UDP je na rozdiel od TCP protokolom, ktorý poskytuje takzvaný nespoľahlivý
-prenos dát medzi uzlami. Táto nespoľahlivosť spočíva v stratovosti jednotlivých
-paketov počas prenosu dát, bez možnosti automatického preposielania
+prenos dát. Táto nespoľahlivosť spočíva v možnej stratovosti jednotlivých
+paketov počas prenosu dát, bez možnosti automatického preposielania chýbajúcich
 informácií. UDP zároveň negarantuje žiadne poradie ich doručenia.
 
 Vďaka týmto
@@ -384,11 +385,12 @@ je bezstavovosť, vďaka ktorej ho využívajú najmä systémy, ktoré odosiela
 veľké množstvo malých paketov viacerým príjemcom. Ide napríklad o: DNS servery,
 IPTV médiá, online hry a podobne.
 
-Hlavička UDP protokolu je veľmi jednoduchá a pozostáva len z nevyhnutných
+Hlavička UDP protokolu je pomerne jednoduchá a pozostáva len z nevyhnutných
 informácií, ako číslo portu odosielateľa, dĺžka paketu a špecifikácia portu
 príjemcu. Preto je aj samotný UDP paket viditeľne menší ako paket TCP, čo
-taktiež napomáha rýchlosti jeho prenosu a spracovania. Keďže však UDP poskytuje
-len minimálne množstvo informácií, jeho využitie pri identifikácii je minimálne.
+taktiež napomáha rýchlosti jeho prenosu a spracovania. Podrobnú štruktúru hlavičky
+znázorňuje obrázok \ref{fig:net-udp-head}. Keďže však UDP poskytuje
+malé množstvo informácií, jeho využitie pri identifikácii je minimálne.
 
 Napriek tomu, že tieto dva protokoly sú pomerne odlišné a slúžia na rôzne
 účely, ich spoločnou funkcionalitou je použitie portov pre identifikáciu
@@ -399,7 +401,7 @@ UDP kontexte.
 \begin{figure}[H]
   \centering
     \includegraphics[width=.80\textwidth]{images/net-udp-head.png}
-  \caption{Schéma popisujúca štruktúru UDP hlavičky a informácií}
+  \caption{Schéma popisujúca štruktúru UDP hlavičky IPv4 paketu}
   \label{fig:net-udp-head}
 \end{figure}
 
@@ -407,32 +409,33 @@ UDP kontexte.
 Sieťová vrstva je skupina internetových definícií, protokolov a špecifikácií, ktorá
 v sieťovom modeli TCP/IP slúži (transportnej vrstve) na prenos datagramov
 (paketov) od odosielateľa, cez jednotlivé sieťové rozhrania, až k príjemcovi.
+Realizuje teda takzvaný \textit{host-to-host} prenos dát.
 Každý z uzlov v sieti je na sieťovej vrstve identifikovaný takzvanou IP
-\textit{(Internte Protocol)} adresou. Táto vrstva teda odvodzuje svoj názov od
+\textit{(Internte Protocol)} adresou. Táto vrstva odvodzuje svoj názov od
 svojej hlavnej funkcionality, ktorou je formovanie a tvorba pripojenia k
 internetovej sieti prostredníctvom navzájom prepojených uzlov.
 
 Protokoly sieťovej vrstvy pracujú s paketmi založenými na IP adresách
 jednotlivých zariadení. Jednoznačne najznámejším protokolom tejto vrstvy je už
-spomínaný IP \textit{(Internte Protocol)}. Sieťová vrstva však definuje aj iné
-dôležité protokoly ako napríklad: ICMP
+spomínaný IP \textit{(Internt Protocol)}. Sieťová vrstva však definuje aj iné
+dôležité a používané protokoly ako napríklad: ICMP
 \textit{(Internet Control Message Protocol)}, ktorý slúži na odosielanie
 chybových správ operačnými systémami, alebo IGMP
 \textit{(Internet Group Management Protocol)} pre podporu multicastu smerovačov.
 Neobsahuje však žiadne protokoly, ktoré definujú komunikáciu na
-úrovni lokálnej podsiete a fyzických spojení.
+úrovni lokálnej siete a fyzických spojení.
 
 \subsection{Protokol IP}
 IP protokol sieťovej vrstvy je zodpovedný za adresáciu hostiteľského uzla a
 prenos datagramu (paketu) od odosielateľa k príjemcovi cez jednu, alebo viacero
-IP sietí. Pre tento účel definuje IP vlastný formát hlavičky paketov, čím
+IP sietí v Internete. Pre tento účel definuje IP vlastný formát hlavičky paketov, čím
 poskytuje logiku jednoznačnej identifikácie v rámci siete. Štruktúru hlavičky
 IP paketu znázorňuje nasledujúci diagram.
 
 \begin{figure}[h]
   \centering
     \includegraphics[width=.95\textwidth]{images/net-ip-head.png}
-  \caption{Schéma popisujúca štruktúru hlavičky IP protokolu}
+  \caption{Schéma popisujúca štruktúru hlavičky IPv4 protokolu}
   \label{fig:net-ip-head}
 \end{figure}
 
@@ -440,15 +443,15 @@ V skutočnosti existujú dve verzie IP protokolu: IP verzia 4 a IP verzia 6.
 Každá z týchto verzií definuje štruktúru IP adries rozdielne. IP adresy v IPv4
 sú 32 bitové, čo obmedzuje ich počet na približne 4,2 miliardy adries. Z tohto
 počtu sú niektoré konkrétne adresy rezervované na špeciálne účely, ako napríklad
-privátne siete (~18 miliónov adries), alebo adresy určené pre multicast
-(~270 miliónov). Rapídny pokles počtu voľných IPv4 adries preto vyústil do
+privátne siete (18 miliónov adries), alebo adresy určené pre multicast
+(270 miliónov). Rapídny pokles počtu voľných IPv4 adries preto vyústil do
 rozšírenia protokolu o IPv6. IPv6 definuje 128 bitové adresy, z čoho vyplýva,
 že poskytne 3.4x1038 adries. Tento počet by mal byť do budúcna viac ako
 dostačujúci.
 
-Zrejme najzaujímavejšou informáciu z hľadiska identifikácie bude samotná IP
-adresa, ktorá okrem identifikácie zariadenia poskytuje aj informáciu o
-približnej polohe uzla, ktorému bola priradená. Podrobne sa problematike
+Zrejme najzaujímavejšou informáciu z hľadiska identifikácie užívateľa bude samotná IP
+adresa klienta, ktorá okrem identifikácie zariadenia poskytuje aj možnosť určenia
+približnej polohy uzlu pomocou služieb geolokácie IP. Podrobne sa problematike
 identifikácie pomocou IP adries venuje kapitola \ref{ch:existing}. 
 
 \section{Vrstva sieťového rozhrania}
@@ -460,8 +463,7 @@ teda operujú na fyzickom spojení dvoch uzlov.
 Niektorými z jej dôležitých protokolov sú: ARP
 \textit{(Address Resolution Protocol)}, RARP
 \textit{(Reverse Address Resolution Protocol)},
-NDP \textit{(Neighbor Discovery Protocol)}, OSPF
-\textit{(Open Shortest Path First)} a iné.
+NDP \textit{(Neighbor Discovery Protocol)} a iné.
 
 Informácie týchto protokolov však operujú na príliš nízkej úrovni sieťovej
 infraštruktúry, preto ich nebude možné využiť pri identifikácii. V prehľade je 
@@ -584,14 +586,14 @@ agentov.
 
 DDoS nástroje ako \textit{Stacheldraht} stále používajú klasické \textit{DoS} metódy zamerané na
 zosilnenie a podvrhovanie IP adries, ako napríklad útok vyťaženia šírky pásma. Ďalšou z možností je
-zahltenie zdrojov - \textit{SYN Flood} útok. Novšie nástroje používajú na \textit{DoS} útoky taktiež
+zahltenie zdrojov -- \textit{SYN Flood} útok. Novšie nástroje používajú na \textit{DoS} útoky taktiež
 \textit{DNS} servery.
 
 Nástroje ako \textit{MyDoom} môžu byť použité voči ľubovoľnej IP adrese. Menej skúsení útočníci ich
 používajú k znemožneniu dostupnosti populárnych a známych webových serverov. Naopak sofistikovanejší
 útočníci používajú tieto nástroje na vydieranie, napríklad voči svojim obchodným protivníkom.
 
-V niektorých prípadoch sa však môže zariadenie stať časťou \textit{DDoS} útoku zámerne - so súhlasom
+V niektorých prípadoch sa však môže zariadenie stať časťou \textit{DDoS} útoku zámerne -- so súhlasom
 majiteľa. Príkladom je distribuovaný útok \textit{Operation Payback} organizovaný skupinou
 \textit{Anonymous}.
 
@@ -610,7 +612,7 @@ majiteľa. Príkladom je distribuovaný útok \textit{Operation Payback} organiz
 
 % Some vendors provide so-called "booter" or "stresser" services, which have simple web-based front ends, and accept payment over the web. Marketed and promoted as stress-testing tools, they can be used to perform unauthorized denial-of-service attacks, and allow technically unsophisticated attackers access to sophisticated attack tools without the need for the attacker to understand their use.
 
-\section{DoS - Zhrnutie}
+\section{DoS -- Zhrnutie}
 Ako je možné vidieť z predchádzajúcich odsekov, existuje naozaj veľké množstvo
 variácií \textit{DoS} a \textit{DDoS} útokov. Zároveň ich počet postupom času
 narastá a preto je nutné vyvíjať nové nástroje na obranu voči nim. Najťažšou časťou
@@ -634,14 +636,14 @@ server, či u systémových \textit{firewallov}.
 
 \subsection{Možnosti IP protokolu }
 Ako popisuje kapitola \ref{ch:net-layers}, \textit{Internet Protocol} slúži na
-prenos paketov medzi jednotlivými sieťovými uzlami - zariadeniami, ktoré sú
+prenos paketov medzi jednotlivými sieťovými uzlami -- zariadeniami, ktoré sú
 identifikované IP adresami. V ideálnom svete by bolo každé zariadenie v sieti
 identifikované jednou statickou IP adresou. Bolo by teda možné užívateľa
 rozpoznať len na základe množiny jeho adries. Bohužiaľ adresový priestor
 protokolu IPv4 je obmedzený na 3.7 miliardy verejne dostupných adries
 \footnote{
-  Uvedené množstvo zahŕňa všetky možné dostupné IPv4 adresy - približne 4.2
-  miliardy po odpočítaní rezervovaných adries - 588 miliónov.
+  Uvedené množstvo zahŕňa všetky možné dostupné IPv4 adresy -- približne 4.2
+  miliardy po odpočítaní rezervovaných adries -- 588 miliónov.
 }.
 Z toho vyplýva potreba metód ich dynamického prideľovania, proxy serverov a
 prekladu, čo identifikáciu značne komplikuje.
@@ -758,7 +760,7 @@ Identifikátorom (ďalej len ID) konkrétneho užívateľa je teda projekcia akt
 jednotlivca, prípadne procesu, do počítačového systému.
 
 Systém používa typicky
-abstraktný objekt - účet užívateľa, ktorý obsahuje množinu atribútov pre
+abstraktný objekt -- účet užívateľa, ktorý obsahuje množinu atribútov pre
 každého jednotlivca, alebo proces. Tento objekt má jednoznačné a unikátne
 ID, prípadne meno, ktorým je reprezentovaný v rámci systému. Ďalej môže objekt
 obsahovať dodatočné atribúty, ktoré ho popisujú. Atribúty môžu, ale nemusia
@@ -883,7 +885,7 @@ HTTP request, na ktorý ďalej nadväzujú akcie tvorby a porovnávania
 identifikátorov. Zároveň je pri štarte aplikácie spustené vlákno vykonávajúce
 sieťovú analýzu transportnej vrstvy, ktorá uchováva informácie z niekoľkých
 posledných spojení. Z týchto HTTP a TCP informácií je teda pre každý request
-zostavený unikátny odtlačok - identifikátor \textit{(Unique Footprint - UFoo)}.
+zostavený unikátny odtlačok -- identifikátor \textit{(Unique Footprint -- UFoo)}.
 Aktuálny identifikátor je následne porovnávaný s každým odtlačkom v databáze.
 Algoritmus na hľadanie najbližšieho suseda k nemu následne pomocou porovnávacej
 funkcie nájde najbližší identifikátor. Podľa miery podobnosti ďalej
@@ -896,7 +898,7 @@ indikovať napríklad DoS, prípadne DDoS útok.
 \section{Štruktúra identifikátora}
 \label{s:footprint-structure}
 Odtlačok aktivity užívateľa je teda kombináciou špecificky vybraných HTTP a TCP informácií.
-Objekt sa skladá z dvoch častí - statických a relačných dát. Dôležitejšou z
+Objekt sa skladá z dvoch častí -- statických a relačných dát. Dôležitejšou z
 nich sú takzvané statické dáta, ktoré slúžia porovnávacej funkcii na samotné
 určenie vzdialenosti dvoch identifikátorov. Vzdialenosť vypočítaná touto
 funkciou môže byť ďalej ovplyvňovaná vzťahmi relačných dát, ktoré riešia
@@ -907,12 +909,12 @@ geo-zón geolokáciou IP adresy klienta.
 Statická časť identifikátora obsahuje väčšie množstvo dát, preto je
 ukladaná a reprezentovaná v podobe reťazca. Skladá sa z nasledujúcich troch podčastí dát pre porovnávanie:
 \begin{itemize}
-    \item Statické hlavičky \textit{(Static headers)} - špecifické vopred
+    \item Statické hlavičky \textit{(Static headers)} -- špecifické vopred
     vybrané a zoradené hodnoty HTTP hlavičiek, ako napríklad: \textit{authorization, cookie, content-length}, alebo
     \textit{user-agent}.
-    \item Neznáme hlavičky \textit{(Unknown headers)} - ostatné hlavičky daného
+    \item Neznáme hlavičky \textit{(Unknown headers)} -- ostatné hlavičky daného
     HTTP requestu, ktoré neboli použité ako statické.
-    \item Atribúty - konkrétne informácie z HTTP a TCP protokolu, ako napríklad
+    \item Atribúty -- konkrétne informácie z HTTP a TCP protokolu, ako napríklad
     \textit{IP adresa, geo-lokácia}, alebo pre \textit{veľkosť TCP okna}.
 \end{itemize}
 
@@ -940,9 +942,9 @@ informácií nie je mnoho, preto nie je nutné ich komprimovať a serializovať 
 dáta statické.
 Ide teda o objekt obsahujúci nasledujúce položky:
 \begin{itemize}
-    \item Timestamp - presný čas nadviazania spojenia aktuálnej relácie.
-    \item Geolokáciu - krajina pôvodu určená na základe IP adresy klienta.
-    \item Relačné hlavičky - HTTP hlavičky, ako napríklad
+    \item Timestamp -- presný čas nadviazania spojenia aktuálnej relácie.
+    \item Geolokáciu -- krajina pôvodu určená na základe IP adresy klienta.
+    \item Relačné hlavičky -- HTTP hlavičky, ako napríklad
     \textit{forwarded}, alebo \textit{x-csrf-token}. 
 \end{itemize}
 
