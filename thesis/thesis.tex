@@ -130,7 +130,7 @@ myšlienkou tohto modelu je zaslanie požiadavky (\textit{requestu}) klientom na
 server, ktorý vystupuje ako poskytovateľ služby a vracia odpoveď späť klientovi. 
 
 \subsection{Klient-Server architektúra}
-Pretože Klient-Server model je používaný rôznymi typmi aplikácií, bolo nutné
+Pretože Klient-Server model (znázornený na obrázku \ref{fig:cs-basic}) je používaný rôznymi typmi aplikácií, bolo nutné
 použiť štandardizované protokoly, na základe ktorých bude možné komunikovať.
 Niektorými z najpoužívanejších protokolov sú: \textit{File Transfer Protocol (FTP)},
 \textit{Simple Mail Transfer Protocol (SMTP)} a \textit{Hypertext Transfer
@@ -478,6 +478,7 @@ práve týmto spôsobom, patrí takzvaný útok typu \textit{Denial of Service}
 
 Vo všeobecnosti je za \textit{DoS} útok považovaná snaha útočníka zabrániť
 oprávneným užívateľom v prístupe k informáciám, prípadne službám poskytovateľa.
+Graficky tento typ útoku znázorňuje obrázok \ref{fig:dos}.
 Snahou útočníka je znefunkčniť pripojenie neustálym narúšaním služby serveru,
 prípadne sieťovej infraštruktúry, v dôsledku čoho môže dôjsť k čiastočnej, či
 úplnej strate pripojenia hostiteľa. 
@@ -497,7 +498,7 @@ prostriedky, pomocou ktorých je možné sa im brániť.
 \subsection{Distribuované DoS útoky}
 O distribuovaných \textit{DoS} útokoch hovoríme v prípade, že viaceré zariadenia zaplavia
 celú šírku pásma, prípadne zdrojov cieľového systému, ktorým je zvyčajne jeden, alebo viacero
-serverov. Takýto útok je často dôsledkom použitia rôznych systémov a zariadení (napríklad
+serverov (obrázok \ref{fig:ddos}). Takýto útok je často dôsledkom použitia rôznych systémov a zariadení (napríklad
 takzvaného \textit{botnetu}), ktoré sa snažia vyťažiť cieľový systém. \textit{Botnet} je rozsiahla
 virtuálna sieť umelých (\textit{zombie}) počítačov, ktorých cieľom je prijímať príkazy bez
 vedomia majiteľa. Keď cieľový systém spotrebuje všetky voľné spojenia, ďalšie už nie
@@ -513,7 +514,7 @@ je možné nadviazať.
 Hlavné výhody útočníka pri využití Distribuovaného \textit{DoS} útoku
 spočívajú v skutočnostiach, že viaceré zariadenia dokážu generovať väčšiu záťaž ako jedno,
 pričom použitie množstva systémov zabezpečuje omnoho ťažšiu detekciu jeho identity. Správanie
-sa každého z týchto zariadení je zároveň horšie pozorovateľné, čo sťažuje obranu voči samotnému útoku.
+sa každého z~týchto zariadení je zároveň horšie pozorovateľné, čo sťažuje obranu voči samotnému útoku.
 
 Tieto výhody taktiež spôsobujú vývoj obranných mechanizmov. Na strane cieľového serveru už
 nebude stačiť jednoduché zvýšenie šírky pásma nad hranicu momentálnej veľkosti útoku, pretože
@@ -526,21 +527,20 @@ prípadne protokolu zariadenia obete na zneužitie určitého množstva jeho zdr
 v prípade \textit{TCP SYN} útoku je touto zneužitou funkcionalitou alokácia značného množstva
 priestoru čakajúcich pripojení ihneď po potvrdení \textit{ TCP SYN requestu}. Útočník otvorí
 viaceré spojenia, ktoré nikdy neuzavrie, čím zahlcuje server. 
-
 Pri \textit{CGI} útoku je zasa cieľom útočníka takýmto spôsobom zahltiť procesor viacerými
 \textit{CGI requestami}.
-
 Jedným z obzvlášť nebezpečných útokov je \textit{NAPTHA} útok, ktorý sa zameriava na
 \textit{TCP} protokol. Inicializuje mnoho \textit{TCP} spojení, ktoré zaplnia zdroje serveru.
 
 \subsection{Reflexia a amplifikácia}
-U reflexie (\textit{DRDoS}) je za reflektujúce zariadenie považovaná akákoľvek hostiteľská IP adresa, 
+U reflexie -- \textit{DRDoS} (\textit{Distributed Reflection Denial of Service})
+útoku je za reflektujúce zariadenie považovaná akákoľvek hostiteľská IP adresa, 
 ktorá v prípade odoslania
 paketu, tento paket spätne aj vráti.
 Skupiny útočníkov cielene organizujú nimi kontrolované hostiteľské servery tak, aby sa zasielali 
 falošné dáta, simulujúce napadnutý uzol, až ku reflektujúcemu serveru. Vo výsledku sú teda obete 
 napadnuté z výrazne väčšieho počtu zdrojových bodov, obsiahlo rozptýlených v sieti, čím útočníci účelne 
-odrezávajú ich spojenie zo zvyškom Internetu.
+odrezávajú ich spojenie zo zvyškom Internetu. Rozloženie \textit{DRDoS} útoku znázorňuje obrázok \ref{fig:drdos}.
 
 Amplifikačný útok je typ reflektujúceho útoku, kde reflektujúci server odosiela mnohonásobne väčší 
 objem odpovedí, než prijíma. Týmto spôsobom teda znásobuje aj vyťaženie spojenia medzi obeťou a 
@@ -575,7 +575,7 @@ strany, ktorý umožní útočníkovi stiahnutie \textit{zombie} agenta, prípad
 Útočník môže preniknúť do systému taktiež pomocou automatizovaných nástrojov, ktoré zneužívajú chyby v
 programoch počúvajúcich vzdialené pripojenia. Tento scenár zasahuje primárne systémy, ktoré sa správajú
 ako webové servery. Typickým príkladom \textit{DDoS} nástroja z tejto oblasti je takzvaný
-\textit{Stacheldraht}. \textit{Stacheldraht} využíva vrstevnatú štruktúru, v ktorej útočník používa
+\textit{Stacheldraht}. \textit{Stacheldraht} využíva vrstevnatú štruktúru, v~ktorej útočník používa
 program klienta na pripojenie sa k \textit{handlerom}, ktoré sú zneužívané na prenos príkazov
 k \textit{zombie} agentom. Agenti následne vykonávajú samotný \textit{DDoS} útok. Agenti sú cez 
 handleri
@@ -640,13 +640,12 @@ prenos paketov medzi jednotlivými sieťovými uzlami -- zariadeniami, ktoré s�
 identifikované IP adresami. V ideálnom svete by bolo každé zariadenie v sieti
 identifikované jednou statickou IP adresou. Bolo by teda možné užívateľa
 rozpoznať len na základe množiny jeho adries. Bohužiaľ adresový priestor
-protokolu IPv4 je obmedzený na 3.7 miliardy verejne dostupných adries
-\footnote{
+protokolu IPv4 je obmedzený na 3.7 miliardy verejne dostupných adries\footnote{
   Uvedené množstvo zahŕňa všetky možné dostupné IPv4 adresy -- približne 4.2
   miliardy po odpočítaní rezervovaných adries -- 588 miliónov.
 }.
 Z toho vyplýva potreba metód ich dynamického prideľovania, proxy serverov a
-prekladu, čo identifikáciu značne komplikuje.
+prekladu, čo ďalšiu identifikáciu značne komplikuje.
 
 U dynamického prideľovania adries ide o jednoduché mapovanie pre zariadenia
 na úrovni smerovača. Identifikácia je teda stále možná, len sťažená o vyšší
@@ -665,7 +664,8 @@ verejnej IP adresy celou privátnou podsieťou. Adresný priestor privátnej
 podsiete, ktorá má byť skrytá je teda vždy mapovaný na verejnú IP adresu
 smerovača. Táto adresa samotná je taktiež zvyčajne súčasťou väčšej podmnožiny
 adresného priestoru. Pojem prekladu (\textit{NAT}) IP adries sa dnes už stal
-synonymom ich maskovania. 
+synonymom ich maskovania. Príklad štruktúry siete s použitím NAT smerovača znázorňuje
+schéma \ref{fig:tech-IP-NAT}.
 
 Paket odoslaný zo zariadenia, ktoré je prekryté
 \textit{NAT} smerovačom bude teda ako zdrojovú adresu niesť namiesto IP adresy
@@ -674,7 +674,7 @@ Identifikácia na základe IP adresy preto v tomto prípade stráca význam.
 
 \begin{figure}[H]
   \centering
-    \includegraphics[width=.97\textwidth]{images/tech-IP-NAT.png}
+    \includegraphics[width=.93\textwidth]{images/tech-IP-NAT.png}
   \caption{Vizualizácia rozloženia IP adresového priestoru pri použití techniky
   prekladu \textit{NAT}, zdroj: vlastné spracovanie}
   \label{fig:tech-IP-NAT}
@@ -687,22 +687,22 @@ adresy, prípadne neumožniť prístup tým zakázaným. Oba spôsoby sú techni
 ľahko implementovateľné.
 
 Ich nevýhodou je najmä rastúci trend použitia proxy serverov a \textit{NAT}
-prekladu, čo má napríklad pri banovaní za následok znemožnenie prístupu aj
+prekladu, čo má napríklad pri filtrovaní za následok znemožnenie prístupu aj
 užívateľom, u ktorých to nie je potrebné, ale stoja za rovnakou IP adresou.
 
 Vo všeobecnosti je teda identifikácia zariadení používateľa na základe IP
 adresy možná. V prípade, že sa však zariadenie skrýva za proxy serverom,
 prípadne sú adresy prekryté \textit{NATom} bude táto technika viesť takisto k
-nechcenému prekrytiu jednotlivých užívateľov vrámci podsiete.
+nechcenému prekrytiu jednotlivých užívateľov v rámci podsiete.
 
 \section{Monitoring TCP}
 Ako popisuje kapitola \ref{ch:net-layers}, TCP
-\textit{(Transmission Control Protocol)} je jedným z protokolov transportnej
+je jedným z protokolov transportnej
 vrstvy sieťovej hierarchie, ktorého najtypickejším znakom je na rozdiel
 od UDP garancia spoľahlivého doručenia paketov v presnom poradí. Prijatie
 každého z paketov musí byť potvrdené príjemcom, inak je paket odoslaný znovu.
 Poradie jednotlivých paketov je zaručené ich sekvenčnými číslami. Tieto 
-vlastnosti robia z TCP jasnú voľbu pre aplikácie, ktoré vyžadujú nulovú
+vlastnosti robia z~TCP jasnú voľbu pre aplikácie, ktoré vyžadujú nulovú
 stratovosť dát. 
 
 Aplikácie typicky zasielajú na TCP vrstvu \textit{stream} dát
@@ -725,10 +725,9 @@ spôsobe inicializácie položky sekvenčného čísla. Jej výpočet je definov
 počiatočná hodnota však zostáva neznáma. Možnosť výberu zostáva na vývojárovi,
 pričom najčastejšie ide o náhodne zvolené číslo. To isté platí pre veľkosť TCP
 okna (\textit{TCP Window}) používaného na ovládanie preťaženia. Nakoľko
-riadenie preťaženia má kľúčový vplyv na celkový výkon TCP, veľa pokusov o
-optimalizáciu je vykonávaných už výrobcom operačného systému.
- 
-Všetky podobné implementačne závislé informácie bývajú používané na takzvané
+riadenie preťaženia má kľúčový vplyv na celkový výkon TCP, veľa pokusov
+o~optimalizáciu je vykonávaných už výrobcom operačného systému.
+Všetky podobné implementačne závislé informácie bývajú následne používané na takzvané
 zaznamenávanie \textit{TCP/IP zásobníka}. Cieľom tejto techniky je odhadnúť,
 aký \textit{zásobník} a operačný systém beží na vzdialenom počítači.
 
@@ -782,7 +781,7 @@ systému.
 Metóda identifikácie systému poskytuje na aplikačnej úrovni jednoznačnú
 identitu používateľa. Táto identita je typicky reprezentovaná jeho
 identifikátorom. Systém preto prehľadáva všetky dostupné abstraktné objekty a
-vráti objekt vyhovujúci privilégiám a atribútom entity s ktorou aktuálne
+vráti objekt vyhovujúci privilégiám a atribútom entity, s ktorou aktuálne
 komunikuje. Po úspešnom dokončení tohto procesu je užívateľ jednoznačne
 identifikovaný.
 
@@ -797,6 +796,7 @@ ktoré predkladá komunikujúca entita, sa nazývajú poverenia
 (\textit{credentials}). Tieto poverenia sa môžu v rôznych systémoch líšiť, 
 prípadne môžu niektoré systémy vyžadovať ich väčšie množstvo. Najčastejšími
 formami týchto údajov sú: meno, heslo, pin, token, prípadne certifikáty, a iné.
+Celý proces identifikácie a autentizácie znázorňuje diagram \ref{fig:tech-app}.
 
 Akonáhle prebehne úspešná autentizácia, môže používateľ vykonať akcie, na ktoré
 ma oprávnenia. Všetky akcie, ktoré vykoná, sú zviazané s jeho identitou a je ich
@@ -804,14 +804,14 @@ preto možné dodatočne trasovať.
 
 \begin{figure}[h]
   \centering
-    \includegraphics[width=.99\textwidth]{images/tech-app.png}
+    \includegraphics[width=.94\textwidth]{images/tech-app.png}
   \caption{Grafické znázornenie procesu identifikácie užívateľa na aplikačnej
   úrovni a jeho následnej autentizácie, zdroj: vlastné spracovanie}
   \label{fig:tech-app}
 \end{figure}
 
 \subsection{Výhody a nevýhody}
-Identifikátory na aplikačnej úrovni sú veľmi jednoznačné a presné z hľadiska
+Identifikátory na aplikačnej úrovni sú veľmi jednoznačné a presné z~hľadiska
 priradenia účtu užívateľovi. Je pomocou nich preto následne možné presne
 sledovať jeho akcie a manipulovať s privilégiami.
 
