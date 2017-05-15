@@ -2,6 +2,7 @@
 Client-Server
 -------------
 
+x
 @article{Oluwatosin:2014:CS,
   author = {Oluwatosin, Haroon Shakirat},
   title = {Client-Server Model},
@@ -20,12 +21,14 @@ Client-Server
 DoS - General
 -------------
 
+x
 @manual{McDowell:DoS,
   title = {Understanding Denial-of-Service Attacks},
   organization = {McDowell, Mindi},
   note = {\url{https://www.us-cert.gov/ncas/tips/ST04-015}}
 }
 
+x
 @PhdThesis{Bukac:2015:DoS,
   author = {BUKAČ, Vít},
   title = {Small scale denial of service attacks [online]},
@@ -34,9 +37,36 @@ DoS - General
   school = {Masarykova univerzita, Fakulta informatiky, Brno},
   supervisor = {Václav Matyáš}, 
   url = {http://is.muni.cz/th/172999/fi_d/},
+} 
+
+----
+----
+DDoS
+----
+----
+
+x
+@article{Zargar:2013:DDoS, 
+  author = {Zargar, Saman Taghavi and Joshi, James and Tipper, David}, 
+  journal = {IEEE Communications Surveys Tutorials}, 
+  title = {A Survey of Defense Mechanisms Against Distributed Denial of Service (DDoS) Flooding Attacks}, 
+  year = {2013}, 
+  volume = {15}, 
+  number = {4}, 
+  pages = {2046-2069}, 
+  doi = {10.1109/SURV.2013.031413.00127}, 
+  ISSN = {1553-877X}, 
+  month = apr,
+  url = {http://d-scholarship.pitt.edu/19225/1/FinalVersion.pdf}
 }
 
-+ SEMANTICC & BRUTE_FORCE
+-----------------------
+-----------------------
+SEMANTICC & BRUTE_FORCE
+-----------------------
+-----------------------
+
+x
 @article{Mirkovic:2004:DoS,
   author = {Mirkovic, Jelena and Reiher, Peter},
   title = {A Taxonomy of DDoS Attack and DDoS Defense Mechanisms},
@@ -54,7 +84,7 @@ DoS - General
   acmid = {997156},
   publisher = {ACM},
   address = {New York, NY, USA},
-} 
+}
 
 -----------
 -----------
@@ -62,20 +92,22 @@ DoS - Tools
 -----------
 -----------
 
+x
 @misc{Dittrich:DoST,
   title = {The "stacheldraht" distributed denial of service attack tool},
   author = {Dittrich, David},
   howpublished = {\url{https://staff.washington.edu/dittrich/misc/stacheldraht.analysis}},
 }
 
-@article{Greenwald:2014:DoST,
-  author = {Greenwald, Glenn},
-  title = {Hacking online polls and other ways British spies seek to contro the Internet},
-  journal = {The Interceptor},
-  month = july,
-  year = {2014},
-  url = {http://www.iosrjournals.org/iosr-jce/papers/Vol16-issue1/Version-9/J016195771.pdf},
-} 
+x
+@article{BBC:2004:DoST,
+  author = {BBC},
+  title = {Mydoom virus starts to fizzle out},
+  journal = {BBC News},
+  month = feb,
+  year = {2004},
+  url = {http://news.bbc.co.uk/2/hi/technology/3459363.stm}
+}
 
 -------------
 -------------
@@ -83,6 +115,17 @@ DoS - Service
 -------------
 -------------
 
+x
+@article{Leyden:2010:DoSaaS,
+  author = {Leyden, John},
+  title = {4chan launches DDoS against entertainment industry},
+  journal = {The Register},
+  month = sep,
+  year = {2010},
+  url = {http://www.theregister.co.uk/2010/09/20/4chan_ddos_mpaa_riaa/}
+}
+
+x
 @article{Karami:2015:DoSaaS,
   author = {Karami, Mohammad and Park, Youngsam and McCoy, Damon},
   title = {Stress Testing the Booters: Understanding and Undermining the Business of DDoS Services},
@@ -98,31 +141,17 @@ DoS - Reflection
 ----------------
 ----------------
 
+x
 @article{Paxson:2001:DoSR,
   author = {Paxson, Vern},
   title = {An Analysis of Using Reflectors for Distributed Denial-of-Service Attacks},
   journal = {SIGCOMM Comput. Commun. Rev.},
   volume = {31},
-  month = july,
+  month = jul,
   year = {2001},
   pages = {38--47},
   numpages = {10},
   url = {https://www.icir.org/vern/papers/reflectors.CCR.01.pdf},
-} 
-
--------------------
--------------------
-DoS - Amplification
--------------------
--------------------
-
-@techreport{Vaughn:2006:DoSA,
-  author = {Vaughn, Randal and Evron, Gadi},
-  title = {DNS Amplification Attacks},
-  institution = {ISOTF},
-  month = march,
-  year = {2006},
-  url = {http://crt.io/DNS-Amplification-Attacks.pdf},
 } 
 
 --------------------
@@ -131,7 +160,9 @@ Layers - Application
 --------------------
 --------------------
 
+x
 @techreport{rfc1123,
+  shorthand = {Bra23} ,
   author = {Braden, Robert},
   title = {Requirements for Internet Hosts - Application and Support},
   howpublished = {Internet Requests for Comments},
@@ -153,6 +184,7 @@ LA - HTTP
 ---------
 ---------
 
+x
 @techreport{Berners:2010:HTTP,
   author = {Berners-Lee, Tim},
   title = {HyperText Transfer Protocol},
@@ -162,14 +194,32 @@ LA - HTTP
   url = {https://www.w3.org/History/19921103-hypertext/hypertext/WWW/Protocols/HTTP.html}
 }
 
+x
+@techreport{rfc2818,
+  author = {Rescola, Eric},
+  title = {HTTP Over TLS},
+  howpublished = {Internet Requests for Comments},
+  type= {RFC},
+  number = 2818,
+  numpages = {7},
+  year = {2000},
+  month = may,
+  publisher = {RFC Editor},
+  institution = {RFC Editor},
+  url = {http://www.rfc-editor.org/rfc/rfc2818.txt}
+}
+
+
 ------------------
 ------------------
 Layers - Transport
 ------------------
 ------------------
 
+x
 + Network Layer 
 @techreport{rfc1122,
+  shorthand = {Bra22} ,
   author = {Braden, Robert},
   title = {Requirements for Internet Hosts -- Communication Layers},
   howpublished = {Internet Requests for Comments},
@@ -183,10 +233,12 @@ Layers - Transport
   url = {http://www.rfc-editor.org/rfc/rfc1122.txt}
 }
 
+x
 + Existing - TCP
-@misc{Dittrich:DoST,
+@misc{FIDIS:TCP,
+  shorthand = {FID},
   title = {Transport layer protocols},
-  author = {FIDIS - Future of Identity in the Information Society},
+  author = {Future of Identity in the Information Society - FIDIS},
   howpublished = {\url{http://www.fidis.net/resources/fidis-deliverables/hightechid/int-d37003/doc/10/}},
 }
 
@@ -196,19 +248,35 @@ Layers - Network
 ----------------
 ----------------
 
-@techreport{rfc1825,
-  author = {Atkinson, Randall},
-  title = {Security Architecture for the Internet Protocol},
+x
+@techreport{rfc791,
+  author = {University of Southern California},
+  title = {Internet Protocol Specification},
   howpublished = {Internet Requests for Comments},
   type = {RFC},
-  number = 1825,
-  numpages = {22},
-  year = {1995},
-  month = aug,
+  number = 791,
+  numpages = {45},
+  month = sep,
   publisher = {RFC Editor},
   institution = {RFC Editor},
-  url = {http://www.rfc-editor.org/rfc/rfc1825.txt}
+  url = {http://www.rfc-editor.org/rfc/rfc791.txt}
 }
+
+x
+@techreport{rfc1752,
+  author = {Brander, Sebastian and Mankin, Allison},
+  title = {The Recommendation for the IP Next Generation Protocol},
+  howpublished = {Internet Requests for Comments},
+  type = {RFC},
+  number = 1752,
+  numpages = {52},
+  year = {1995},
+  month = jan,
+  publisher = {RFC Editor},
+  institution = {RFC Editor},
+  url = {http://www.rfc-editor.org/rfc/rfc1752.txt}
+}
+
 
 --------------
 --------------
@@ -216,7 +284,9 @@ UFoo - Jaccard
 --------------
 --------------
 
-@book{Zezula:2007:SS,
+x
+@book{Zezula:2006:SS,
+   shorthand = {Zez06},
    author = {Zezula, Pavel and Amato, Giuseppe and Dohnal, Vlastislav and Batko, Michal},
    year = {2006},
    isbn = {0-38729-151-2},
@@ -224,6 +294,7 @@ UFoo - Jaccard
    title = {Similarity Search: The Metric Space Approach}
 }
 
+x
 @article{Kosub:2016:SS,
   author = {Kosub, Sven},
   title = {A note on the triangle inequality for the Jaccard distance},
@@ -233,6 +304,7 @@ UFoo - Jaccard
   url = {http://arxiv.org/abs/1612.02696}
 }
 
+x
 Pre obrazok
 @inproceedings{Zitnick:2014:SS,
   author = {Zitnick, Larry and Dollar, Piotr},
@@ -250,6 +322,7 @@ UFoo - AOP
 ----------
 ----------
 
+x
 @book{Laddad:2009:AOP,
   author = {Laddad, Ramnivas},
   title = {AspectJ in Action: Enterprise AOP with Spring Applications},
@@ -260,7 +333,9 @@ UFoo - AOP
   address = {Greenwich, CT, USA},
 } 
 
+x
 @inbook{Kiczales:1997:AOP,
+  shorthand = {Kic97} ,
   author = {Kiczales, Gregor and Lamping, John and Mendhekar, Anurag and Maeda, Chris and Lopes, Cristina and Loingtier, Jean-Marc and Irwin, John},
   title = {Aspect-oriented programming},
   year = {1997},
@@ -278,7 +353,9 @@ Existing - IP - NAT
 -------------------
 -------------------
 -------------------
-@misc{Dittrich:DoST,
+
+x
+@misc{Huston:NAT,
   title = {Anatomy: A Look Inside Network Address Translators},
   author = {Huston, Geoff},
   howpublished = {\url{http://www.cisco.com/c/en/us/about/press/internet-protocol-journal/back-issues/table-contents-29/anatomy.html}},
@@ -290,6 +367,7 @@ Existing - Application
 ----------------------
 ----------------------
 
+x
 @inbook{Todorov:2007:EX,
   author = {Todorov, Dobromir},
   title = {Mechanics of User Identification and Authentication},

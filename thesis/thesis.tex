@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[
-  digital, %% This option enables the default options for the
+  printed, %% This option enables the default options for the
            %% printed version of a document. Replace with `digital`
            %% to enable the default options for the digital version
            %% of a document.
@@ -68,6 +68,7 @@
   sortlocale=auto         %% For more unformation about the available
 ]{biblatex}               %% `style`s and `citestyles`, see:
 %% <http://mirrors.ctan.org/macros/latex/contrib/biblatex/doc/biblatex.pdf>.
+\setlength\bibitemsep{\baselineskip}
 \addbibresource{thesis.bib}   %% The bibliograpic database
                           
 \usepackage{makeidx}      %% The `makeidx` package contains
@@ -187,7 +188,7 @@ dvojstupňovej líši najmä tým, že okrem zariadenia klienta
 \noindent a databázového serveru, zahŕňa aj aplikačný server. Tento je následne používaný na obsluhu
 \textit{business} logiky aplikácie a komunikáciu s databázou, pričom zariadenie
 klienta slúži len na zobrazovanie. Iný názov pre takýto typ architektúry je tenký
-klient (\textit{thin client}). \cite{Oluwatosin:2014:CS}
+klient (\textit{thin client}) \cite{Oluwatosin:2014:CS}.
 
 \section{Štruktúra práce}
 Práca je ďalej rozdelená na dve časti, pozostávajúce z piatich kapitol, z ktorých každá sa zaoberá iným aspektom
@@ -233,15 +234,15 @@ konkrétne protokoly a metódy používané hostiteľskými uzlami v sieti. Tát
 vrstva je definovaná jednak v TCP/IP, ale aj OSI
 \textit{(Open Systems Interconnection)} modeli sieťovej komunikácie.
 
-Táto práca narába s modelom TCP/IP, v ktorom aplikačná vrstva definuje práve
+Táto práca narába s modelom TCP/IP, v ktorom aplikačná vrstva definuje
 protokoly a metódy rozhraní pre komunikáciu medzi jednotlivými procesmi
 spájaných strán v sieti. Samotná aplikačná vrstva však len štandardizuje formu
 komunikácie, pričom ustanovenie uceleného dátového spojenia a správu prenosu dát
 u aplikácií typu klient-server a \textit{peer-to-peer} ponecháva na protokoloch
 nasledujúcej -- \textit{transportnej vrstvy}. Keďže aplikačná vrstva nijakým spôsobom
-nepopisuje a nešpecifikuje konkrétne pravidlá pre formu prenášaných dát,
+nešpecifikuje konkrétne pravidlá pre formu prenášaných dát,
 aplikácie samotné musia obsahovať logiku, ktorá zabezpečí, že obe komunikujúce
-strany budú v tomto ohľade navzájom kompatibilné.
+strany budú v tomto ohľade navzájom kompatibilné \cite{rfc1123}.
 
 Aplikačná vrstva definuje veľké množstvo používaných protokolov, ako napríklad:
 \begin{itemize}
@@ -254,7 +255,7 @@ Aplikačná vrstva definuje veľké množstvo používaných protokolov, ako nap
 Pri tvorbe identifikátora sa však budeme venovať najmä informáciám z protokolov
 rodiny HTTP, konkrétne teda hlavičkám a atribútom HTTP a HTTPS \footnote{HTTPS 
 \textit{(HTTP Secure)} na rozdiel od klasického HTTP poskytuje zabezpečenú komunikáciu
-s využitím protokolu TLS, alebo SSL. Zaisťuje tak autentizáciu oboch strán a integritu prenášaných dát}.
+s využitím protokolu TLS, alebo SSL. Zaisťuje tak autentizáciu oboch strán a integritu prenášaných dát \cite{rfc2818}}.
 
 \subsection{HTTP}
 HTTP \textit{(Hypertext Transfer Protocol)} je protokol určený
@@ -274,7 +275,7 @@ forme HTTP požiadavky na server. V ideálnom prípade server požiadavku
 \textit{(request)} spracuje a vygeneruje odpoveď (napríklad HTML stránku),
 ktorú vráti klientovi ako správu vo formáte HTTP odpovede \textit{(response)}.
 Odpoveď pre klienta vždy obsahuje takzvaný \textit{status}, ktorý informuje o
-dokončení požiadavky, alebo konkrétnej chybe a prípadné telo obsahujúce správu odpovede.
+dokončení požiadavky, alebo konkrétnej chybe a prípadné telo obsahujúce správu odpovede \cite{rfc1123}.
 
 Celá relácia HTTP spojenia medzi dvoma uzlami je teda sekvenciou niekoľkých
 takýchto \textit{(request-respone)} transakcií. Samotný prenos dát však nie
@@ -308,7 +309,7 @@ Prvý riadok definície a každá z hlavičiek musia byť zakončené znakmi
 Prázdny riadok musí zároveň pozostávať výlučne zo znakov \textit{<CR><LF>}.
 Z pohľadu identifikácie budú neskôr veľmi dôležité práve HTTP hlavičky. U HTTP
 verzie 1.1 je jedinou povinnou hlavičkou \textit{Host} definujúci server, na
-ktorý bola požiadavka odoslaná.
+ktorý bola požiadavka odoslaná \cite{Berners:2010:HTTP}.
 
 \begin{figure}[h]
   \centering
@@ -331,7 +332,7 @@ sieťový model. Tento protokol je orientovaný na prenos zložitejších spojen
 oproti čomu druhý z protokolov -- UDP \textit{(User Datagram Protocol )}, je
 vhodný a používaný skôr pre jednoduchšie správy a spojenia. Protokol TCP je
 komplexnejší najmä kvôli svojmu návrhu, ktorý uchováva stav jednotlivých
-transakcií a zabezpečuje spoľahlivosť doručenia všetkých dátových správ. 
+transakcií a zabezpečuje spoľahlivosť doručenia všetkých dátových správ \cite{rfc1122}. 
 
 Ďalšími
 významnými protokolmi transportnej vrstvy sú DCCP
@@ -345,7 +346,7 @@ modelu. Jeho najdôležitejšou charakteristikou je
 pravdepodobne garancia kompletného doručenia všetkých paketov v správnom
 poradí. K samotným dátam aplikačnej vrstvy preto TCP pripája ku každému paketu
 aj takzvanú TCP hlavičku (\textit{TCP Header}), ktorá ho dopĺňa o informácie
-potrebné pre dosiahnutie tejto funkcionality.
+potrebné pre dosiahnutie tejto funkcionality \cite{FIDIS:TCP}.
 
 \begin{figure}[h]
   \centering
@@ -376,14 +377,14 @@ popisuje diagram \ref{fig:net-tcp-flow}.
 UDP je na rozdiel od TCP protokolom, ktorý poskytuje takzvaný nespoľahlivý
 prenos dát. Táto nespoľahlivosť spočíva v možnej stratovosti jednotlivých
 paketov počas prenosu dát, bez možnosti automatického preposielania chýbajúcich
-informácií. UDP zároveň negarantuje žiadne poradie ich doručenia.
+informácií. UDP zároveň negarantuje žiadne poradie ich doručenia \cite{rfc1122}.
 
 Vďaka týmto
 vlastnostiam je tento protokol veľmi rýchly a jednoduchý, pričom doručuje
 pakety nezávisle a v pomerne krátkom čase. Ďalšou z jeho typických vlastností
 je bezstavovosť, vďaka ktorej ho využívajú najmä systémy, ktoré odosielajú
 veľké množstvo malých paketov viacerým príjemcom. Ide napríklad o: DNS servery,
-IPTV médiá, online hry a podobne.
+IPTV médiá, online hry a podobne \cite{FIDIS:TCP}.
 
 Hlavička UDP protokolu je pomerne jednoduchá a pozostáva len z nevyhnutných
 informácií, ako číslo portu odosielateľa, dĺžka paketu a špecifikácia portu
@@ -398,10 +399,10 @@ aplikácií komunikujúcich strán. Porty pre TCP a UDP sú na sebe navzájom
 nezávislé, čo prináša možnosť komunikácie jedného zariadenie zároveň v TCP aj
 UDP kontexte.
 
-\begin{figure}[H]
+\begin{figure}[t]
   \centering
-    \includegraphics[width=.80\textwidth]{images/net-udp-head.png}
-  \caption{Schéma popisujúca štruktúru UDP hlavičky IPv4 paketu}
+    \includegraphics[width=.72\textwidth]{images/net-udp-head.png}
+  \caption{Schéma popisujúca štruktúru UDP hlavičky IPv4 paketu, zdroj: vlastné spracovanie}
   \label{fig:net-udp-head}
 \end{figure}
 
@@ -411,8 +412,8 @@ v sieťovom modeli TCP/IP slúži (transportnej vrstve) na prenos datagramov
 (paketov) od odosielateľa, cez jednotlivé sieťové rozhrania, až k príjemcovi.
 Realizuje teda takzvaný \textit{host-to-host} prenos dát.
 Každý z uzlov v sieti je na sieťovej vrstve identifikovaný takzvanou IP
-\textit{(Internte Protocol)} adresou. Táto vrstva odvodzuje svoj názov od
-svojej hlavnej funkcionality, ktorou je formovanie a tvorba pripojenia k
+\textit{(Internte Protocol)} adresou \cite{rfc791}. Táto vrstva odvodzuje svoj názov od
+svojej hlavnej funkcionality, ktorou je najmä formovanie a tvorba pripojenia k
 internetovej sieti prostredníctvom navzájom prepojených uzlov.
 
 Protokoly sieťovej vrstvy pracujú s paketmi založenými na IP adresách
@@ -423,19 +424,19 @@ dôležité a používané protokoly ako napríklad: ICMP
 chybových správ operačnými systémami, alebo IGMP
 \textit{(Internet Group Management Protocol)} pre podporu multicastu smerovačov.
 Neobsahuje však žiadne protokoly, ktoré definujú komunikáciu na
-úrovni lokálnej siete a fyzických spojení.
+úrovni lokálnej siete a fyzických spojení \cite{rfc1122}.
 
 \subsection{Protokol IP}
 IP protokol sieťovej vrstvy je zodpovedný za adresáciu hostiteľského uzla a
 prenos datagramu (paketu) od odosielateľa k príjemcovi cez jednu, alebo viacero
 IP sietí v Internete. Pre tento účel definuje IP vlastný formát hlavičky paketov, čím
-poskytuje logiku jednoznačnej identifikácie v rámci siete. Štruktúru hlavičky
-IP paketu znázorňuje nasledujúci diagram.
+poskytuje logiku jednoznačnej identifikácie v rámci siete \cite{rfc791}. Štruktúru hlavičky
+IPv4 paketu znázorňuje nasledujúci diagram.
 
 \begin{figure}[h]
   \centering
     \includegraphics[width=.95\textwidth]{images/net-ip-head.png}
-  \caption{Schéma popisujúca štruktúru hlavičky IPv4 protokolu}
+  \caption{Schéma popisujúca štruktúru hlavičky IPv4 protokolu, zdroj: vlastné spracovanie}
   \label{fig:net-ip-head}
 \end{figure}
 
@@ -446,7 +447,7 @@ počtu sú niektoré konkrétne adresy rezervované na špeciálne účely, ako 
 privátne siete (18 miliónov adries), alebo adresy určené pre multicast
 (270 miliónov). Rapídny pokles počtu voľných IPv4 adries preto vyústil do
 rozšírenia protokolu o IPv6. IPv6 definuje 128 bitové adresy, z čoho vyplýva,
-že poskytne 3.4x1038 adries. Tento počet by mal byť do budúcna viac ako
+že poskytne 3.4x1038 adries \cite{rfc1752}. Tento počet by mal byť do budúcna viac ako
 dostačujúci.
 
 Zrejme najzaujímavejšou informáciu z hľadiska identifikácie užívateľa bude samotná IP
@@ -463,7 +464,7 @@ teda operujú na fyzickom spojení dvoch uzlov.
 Niektorými z jej dôležitých protokolov sú: ARP
 \textit{(Address Resolution Protocol)}, RARP
 \textit{(Reverse Address Resolution Protocol)},
-NDP \textit{(Neighbor Discovery Protocol)} a iné.
+NDP \textit{(Neighbor Discovery Protocol)} a iné \cite{rfc1123}.
 
 Informácie týchto protokolov však operujú na príliš nízkej úrovni sieťovej
 infraštruktúry, preto ich nebude možné využiť pri identifikácii. V prehľade je 
@@ -477,7 +478,7 @@ práve týmto spôsobom, patrí takzvaný útok typu \textit{Denial of Service}
 (ďalej len \textit{DoS}).
 
 Vo všeobecnosti je za \textit{DoS} útok považovaná snaha útočníka zabrániť
-oprávneným užívateľom v prístupe k informáciám, prípadne službám poskytovateľa.
+oprávneným užívateľom v prístupe k informáciám, prípadne službám poskytovateľa \cite{McDowell:DoS}.
 Graficky tento typ útoku znázorňuje obrázok \ref{fig:dos}.
 Snahou útočníka je znefunkčniť pripojenie neustálym narúšaním služby serveru,
 prípadne sieťovej infraštruktúry, v dôsledku čoho môže dôjsť k čiastočnej, či
@@ -498,15 +499,15 @@ prostriedky, pomocou ktorých je možné sa im brániť.
 \subsection{Distribuované DoS útoky}
 O distribuovaných \textit{DoS} útokoch hovoríme v prípade, že viaceré zariadenia zaplavia
 celú šírku pásma, prípadne zdrojov cieľového systému, ktorým je zvyčajne jeden, alebo viacero
-serverov (obrázok \ref{fig:ddos}). Takýto útok je často dôsledkom použitia rôznych systémov a zariadení (napríklad
+serverov (príkladom je obrázok \ref{fig:ddos}). Takýto útok je často dôsledkom použitia rôznych systémov a zariadení (napríklad
 takzvaného \textit{botnetu}), ktoré sa snažia vyťažiť cieľový systém. \textit{Botnet} je rozsiahla
 virtuálna sieť umelých (\textit{zombie}) počítačov, ktorých cieľom je prijímať príkazy bez
 vedomia majiteľa. Keď cieľový systém spotrebuje všetky voľné spojenia, ďalšie už nie
-je možné nadviazať. 
+je možné nadviazať \cite{Zargar:2013:DDoS}. 
 
 \begin{figure}[h]
   \centering
-    \includegraphics[width=\textwidth]{images/ddos.png}
+    \includegraphics[width=.98\textwidth]{images/ddos.png}
   \caption{Schéma rozloženia DDoS útoku, zdroj: vlastné spracovanie}
   \label{fig:ddos}
 \end{figure}
@@ -519,7 +520,7 @@ sa každého z~týchto zariadení je zároveň horšie pozorovateľné, čo sťa
 Tieto výhody taktiež spôsobujú vývoj obranných mechanizmov. Na strane cieľového serveru už
 nebude stačiť jednoduché zvýšenie šírky pásma nad hranicu momentálnej veľkosti útoku, pretože
 útočník môže napríklad zvýšiť počet zapojených zariadení, čím by taktiež spôsobil zaťaženie a
-výpadok systému.
+výpadok systému \cite{Zargar:2013:DDoS}.
 
 \subsection{Sémantické DoS útoky}
 Sémantické útoky využívajú špecifickú funkcionalitu alebo implementačnú chybu aplikácie,
@@ -530,7 +531,7 @@ viaceré spojenia, ktoré nikdy neuzavrie, čím zahlcuje server.
 Pri \textit{CGI} útoku je zasa cieľom útočníka takýmto spôsobom zahltiť procesor viacerými
 \textit{CGI requestami}.
 Jedným z obzvlášť nebezpečných útokov je \textit{NAPTHA} útok, ktorý sa zameriava na
-\textit{TCP} protokol. Inicializuje mnoho \textit{TCP} spojení, ktoré zaplnia zdroje serveru.
+\textit{TCP} protokol. Inicializuje mnoho \textit{TCP} spojení, ktoré následne zaplnia všetky dostupné zdroje serveru \cite{Mirkovic:2004:DoS}.
 
 \subsection{Reflexia a amplifikácia}
 U reflexie -- \textit{DRDoS} (\textit{Distributed Reflection Denial of Service})
@@ -538,13 +539,13 @@ U reflexie -- \textit{DRDoS} (\textit{Distributed Reflection Denial of Service})
 ktorá v prípade odoslania
 paketu, tento paket spätne aj vráti.
 Skupiny útočníkov cielene organizujú nimi kontrolované hostiteľské servery tak, aby sa zasielali 
-falošné dáta, simulujúce napadnutý uzol, až ku reflektujúcemu serveru. Vo výsledku sú teda obete 
+falošné dáta, simulujúce napadnutý uzol, až ku reflektujúcemu serveru \cite{Bukac:2015:DoS}. Vo výsledku sú teda obete 
 napadnuté z výrazne väčšieho počtu zdrojových bodov, obsiahlo rozptýlených v sieti, čím útočníci účelne 
 odrezávajú ich spojenie zo zvyškom Internetu. Rozloženie \textit{DRDoS} útoku znázorňuje obrázok \ref{fig:drdos}.
 
 Amplifikačný útok je typ reflektujúceho útoku, kde reflektujúci server odosiela mnohonásobne väčší 
 objem odpovedí, než prijíma. Týmto spôsobom teda znásobuje aj vyťaženie spojenia medzi obeťou a 
-zdrojovým uzlom.
+zdrojovým uzlom\cite{Paxson:2001:DoSR}.
 
 \begin{figure}[h]
   \centering
@@ -553,20 +554,10 @@ zdrojovým uzlom.
   \label{fig:drdos}
 \end{figure}
 
-%\subsection{HTTP POST DoS útoky}
-%Výskyt kompletného HTTP POST útoku s legitímnou hlavičkou, v ktorej je obsiahnutá ’Content-Length’ položka,  špecifikujúca veľkosť tela sprievodnej správy, sa prvý raz objavil v roku 2009. Útočník však realizuje zaslanie skutočného tela správy extrémne pomalou rýchlosťou, ako napríklad 1 byte za 110 sekúnd. So zámerom uchovať celú správu korektnú a kompletnú, cieľový server sa bude pokúšať riadiť podľa ’Content-Length’ pola v hlavičke a čakať, kým nie je celé telo správy prenesené, čo može trvať skutočne dlho. Útočník zriadi stovky, či dokonca tisíce takýchto pripojení, pričom sú všetky vstupné body prichádzajúcich pripojení (obetí)  využité na znemožnenie vytvárania ďaľších (včetne legitímnych) pripojení, pokým sa neodošlú všetky dáta.
-
-% First discovered in 2009, the HTTP POST attack sends a complete, legitimate HTTP POST header, which includes a 'Content-Length' field to specify the size of the message body to follow. However, the attacker then proceeds to send the actual message body at an extremely slow rate (e.g. 1 byte/110 seconds). Due to the entire message being correct and complete, the target server will attempt to obey the 'Content-Length' field in the header, and wait for the entire body of the message to be transmitted, which can take a very long time. The attacker establishes hundreds or even thousands of such connections, until all resources for incoming connections on the server (the victim) are used up, hence making any further (including legitimate) connections impossible until all data has been sent. 
-
-%Je pozoruhodné, že na rozdiel od množstva iných (D)DoS útokov, ktoré sa pokúšali pokoriť server preťažením svojej siete alebo CPU, HTTP POST útok je zameraný na logické možnosti svojich obetí.V praxi to znamená, že zasiahnutým prvkom ostane dostatok network bandwidth priepustnosti vrámci siete a výkonu procesoru na nenarušenú prevádzku. V neposlednom rade, ak zvážime, že softvérový webový server Apache implicitne akceptuje požiadavky o veľkosti 2 GB, môže byť tento typ útoku obzvlášť silný. Je veľmi ťažké ich odlíšiť od neškodných legitímnych pripojení, preto sú schopné obísť aj bezpečnostné systémy. 
-%OWASP (open source web application security project) poskytla verejnosti testovací prostriedok pre overovanie bezpečnosti serverov voči takémuto druhu nástrahy.
-
-%It is notable that unlike many other (D)DoS attacks, which try to subdue the server by overloading its network or CPU, a HTTP POST attack targets the logical resources of the victim, which means the victim would still have enough network bandwidth and processing power to operate. Further combined with the fact that Apache will, by default, accept requests up to 2GB in size, this attack can be particularly powerful. HTTP POST attacks are difficult to differentiate from legitimate connections, and are therefore able to bypass some protection systems. OWASP, an open source web application security project, has released a testing tool to test the security of servers against this type of attacks.
-
 \section{DoS nástroje a DoS as a Service}
 Typickou metódou prenosu mechanizmov \textit{DoS} a \textit{DDoS} útokov je malvér. Jedným z príkladov 
 bol
-takzvaný \textit{MyDoom}. Ide o \textit{DoS} mechanizmus, ktorý sa spúšťal vo vopred naplánovanom čase.
+takzvaný \textit{MyDoom} \cite{BBC:2004:DoST}. Ide o \textit{DoS} mechanizmus, ktorý sa spúšťal vo vopred naplánovanom čase.
 Tento útok zahŕňal nastavenie hodnoty \textit{IP} adresy cieľového systému pre nasadenie malvéru,
 pričom pre spustenie útoku nebola potrebná žiadna interakcia s používateľom.
 
@@ -575,7 +566,7 @@ strany, ktorý umožní útočníkovi stiahnutie \textit{zombie} agenta, prípad
 Útočník môže preniknúť do systému taktiež pomocou automatizovaných nástrojov, ktoré zneužívajú chyby v
 programoch počúvajúcich vzdialené pripojenia. Tento scenár zasahuje primárne systémy, ktoré sa správajú
 ako webové servery. Typickým príkladom \textit{DDoS} nástroja z tejto oblasti je takzvaný
-\textit{Stacheldraht}. \textit{Stacheldraht} využíva vrstevnatú štruktúru, v~ktorej útočník používa
+\textit{Stacheldraht} \cite{Dittrich:DoST}. \textit{Stacheldraht} využíva vrstevnatú štruktúru, v~ktorej útočník používa
 program klienta na pripojenie sa k \textit{handlerom}, ktoré sú zneužívané na prenos príkazov
 k \textit{zombie} agentom. Agenti následne vykonávajú samotný \textit{DDoS} útok. Agenti sú cez 
 handleri
@@ -587,15 +578,15 @@ agentov.
 DDoS nástroje ako \textit{Stacheldraht} stále používajú klasické \textit{DoS} metódy zamerané na
 zosilnenie a podvrhovanie IP adries, ako napríklad útok vyťaženia šírky pásma. Ďalšou z možností je
 zahltenie zdrojov -- \textit{SYN Flood} útok. Novšie nástroje používajú na \textit{DoS} útoky taktiež
-\textit{DNS} servery.
+\textit{DNS} servery \cite{Dittrich:DoST}.
 
 Nástroje ako \textit{MyDoom} môžu byť použité voči ľubovoľnej IP adrese. Menej skúsení útočníci ich
 používajú k znemožneniu dostupnosti populárnych a známych webových serverov. Naopak sofistikovanejší
-útočníci používajú tieto nástroje na vydieranie, napríklad voči svojim obchodným protivníkom.
+útočníci používajú tieto nástroje na vydieranie, napríklad voči svojim obchodným protivníkom \cite{Karami:2015:DoSaaS}.
 
 V niektorých prípadoch sa však môže zariadenie stať časťou \textit{DDoS} útoku zámerne -- so súhlasom
 majiteľa. Príkladom je distribuovaný útok \textit{Operation Payback} organizovaný skupinou
-\textit{Anonymous}.
+\textit{Anonymous} \cite{Leyden:2010:DoSaaS}.
 
 %---
 
@@ -655,7 +646,7 @@ Preklad (\textit{Network Address Translation}) IP adries však identifikáciu
 prakticky znemožňuje. Vo všeobecnosti ide o techniku prekladu jednej podmnožiny
 IP adries na inú pomocou zmeny informácie o sieťovej adrese v datagrame IP
 protokolu. Pôvodne sa táto technika používala pre zjednodušenie presmerovania
-komunikácie bez nutnosti opätovnej adresácie každého uzla. 
+komunikácie bez nutnosti opätovnej adresácie každého uzla \cite{Huston:NAT}. 
 
 V pokročilých
 implementáciách však dnes \textit{NAT} predstavuje veľmi populárnu možnosť
@@ -663,7 +654,7 @@ takzvaného  IP maskovania. Maskovanie IP adries je technika zdieľania jednej
 verejnej IP adresy celou privátnou podsieťou. Adresný priestor privátnej
 podsiete, ktorá má byť skrytá je teda vždy mapovaný na verejnú IP adresu
 smerovača. Táto adresa samotná je taktiež zvyčajne súčasťou väčšej podmnožiny
-adresného priestoru. Pojem prekladu (\textit{NAT}) IP adries sa dnes už stal
+adresného priestoru \cite{Huston:NAT}. Pojem prekladu (\textit{NAT}) IP adries sa dnes už stal
 synonymom ich maskovania. Príklad štruktúry siete s použitím NAT smerovača znázorňuje
 schéma \ref{fig:tech-IP-NAT}.
 
@@ -728,7 +719,7 @@ okna (\textit{TCP Window}) používaného na ovládanie preťaženia. Nakoľko
 riadenie preťaženia má kľúčový vplyv na celkový výkon TCP, veľa pokusov
 o~optimalizáciu je vykonávaných už výrobcom operačného systému.
 Všetky podobné implementačne závislé informácie bývajú následne používané na takzvané
-zaznamenávanie \textit{TCP/IP zásobníka}. Cieľom tejto techniky je odhadnúť,
+zaznamenávanie \textit{TCP/IP zásobníka} \cite{FIDIS:TCP}. Cieľom tejto techniky je odhadnúť,
 aký \textit{zásobník} a operačný systém beží na vzdialenom počítači.
 
 Zaznamenávanie TCP/IP (ako aj mnoho jeho ďalších spôsobov) môže byť vykonané
@@ -739,7 +730,7 @@ pakety aj zasiela. Útočník úmyselne vyberá také pakety, aby získal čo na
 informácií od vzdialeného hostiteľa. Avšak, keďže ide o pozorovací útok,
 útočník zvyčajne prispôsobí svoje správanie v závislosti od protokolu. Pravidlá
 protokolu by mohol samozrejme aj porušiť, čo by mu dalo väčšiu šancu uhádnuť
-TCP/IP zásobník, avšak, týmto by sa jeho útok stal nápadnejším a zreteľnejším.
+TCP/IP zásobník, avšak, týmto by sa jeho útok stal nápadnejším a zreteľnejším \cite{FIDIS:TCP}.
  
 \subsection{Výhody a nevýhody TCP}
 Jednou z pomerne často používaných vlastností TCP je možnosť odhadu informácií
@@ -766,14 +757,14 @@ obsahovať dodatočné atribúty, ktoré ho popisujú. Atribúty môžu, ale nem
 zahŕňať osobné údaje jednotlivca. Odhliadnuc od ID objektu, bezpečný systém
 typicky priradí každému z používateľov jednoznačný identifikátor (číslo, alebo
 reťazec), ktorým sa odkazuje na abstraktný objekt reprezentujúci aktuálnu
-entitu. 
+entitu \cite{Todorov:2007:EX}. 
 
 Tvorba unikátneho abstraktného objektu vo forme užívateľského účtu
 pre každého jednotlivca alebo proces komunikujúci so systémom je na aplikačnej
 úrovni veľmi dôležitá. Tento objekt je následne používaný na identifikáciu
 užívateľa v rámci celého systému. Zároveň tento objekt slúži ako odkaz pre
 jednotlivé akcie systému umožňujúce prístup k údajom komunikujúcej entity.
-ID používateľa sa tak stáva základom pre kontrolu prístupu. Z toho dôvodu je 
+ID používateľa sa tak stáva základom pre kontrolu prístupu \cite{Todorov:2007:EX}. Z toho dôvodu je 
 nevyhnutné uchovávať unikátne ID pre každého používateľa, keďže každý z nich
 môže mať rozličné požiadavky a individuálne zodpovednosti v rámci akcií tohto
 systému.
@@ -783,7 +774,7 @@ identitu používateľa. Táto identita je typicky reprezentovaná jeho
 identifikátorom. Systém preto prehľadáva všetky dostupné abstraktné objekty a
 vráti objekt vyhovujúci privilégiám a atribútom entity, s ktorou aktuálne
 komunikuje. Po úspešnom dokončení tohto procesu je užívateľ jednoznačne
-identifikovaný.
+identifikovaný \cite{Todorov:2007:EX}.
 
 Po identifikácii typicky nasleduje krok validácie získanej identity,
 vo všeobecnosti nazývaný autentizácia používateľa. Fakt, že užívateľ tvrdí,
@@ -795,7 +786,7 @@ Autentizácia je teda procesom validácie danej poskytnutej identity. Informáci
 ktoré predkladá komunikujúca entita, sa nazývajú poverenia
 (\textit{credentials}). Tieto poverenia sa môžu v rôznych systémoch líšiť, 
 prípadne môžu niektoré systémy vyžadovať ich väčšie množstvo. Najčastejšími
-formami týchto údajov sú: meno, heslo, pin, token, prípadne certifikáty, a iné.
+formami týchto údajov sú: meno, heslo, pin, token, prípadne certifikáty, a iné \cite{Todorov:2007:EX}.
 Celý proces identifikácie a autentizácie znázorňuje diagram \ref{fig:tech-app}.
 
 Akonáhle prebehne úspešná autentizácia, môže používateľ vykonať akcie, na ktoré
@@ -1022,7 +1013,7 @@ určenie miery podobnosti množín pomocou výpočtu takzvaného
 Výpočet Jaccardovho koeficientu, taktiež známy ako podiel prieniku a 
 zjednotenia, je funkcia pôvodne popísaná Paulom Jaccardom, ktorá slúži na
 porovnanie podobnosti a rozdielov testovaných množín. Jaccardov koeficient teda
-meria mieru podobnosti medzi dvoma konečnými množinami. Matematicky je
+meria mieru podobnosti medzi dvoma konečnými množinami \cite{Zezula:2006:SS}. Matematicky je
 definovaný ako podiel veľkostí zjednotenia a prieniku týchto množín:
 
 \begin{equation}
@@ -1031,7 +1022,7 @@ definovaný ako podiel veľkostí zjednotenia a prieniku týchto množín:
 
 V prípade, že sú obe množiny prázdne \textit{J(A,B) = 1}.
 Jaccardova vzdialenosť, ktorá naopak určuje rozdielnosť dvoch množín, je
-doplnkom k Jaccardovmu koeficientu. Počíta sa teda odrátaním jeho hodnoty od
+doplnkom k Jaccardovmu koeficientu \cite{Zezula:2006:SS,Kosub:2016:SS}. Počíta sa teda odrátaním jeho hodnoty od
 jednotky, prípadne ako podiel, ktorého čitateľom je rozdiel zjednotenia s
 prienikom a menovateľom je zjednotenie týchto množín:
 
@@ -1047,7 +1038,7 @@ prienikom a menovateľom je zjednotenie týchto množín:
   \centering
     \includegraphics[width=.99\textwidth]{images/footprint-jacc-sets.png}
   \caption{Znázornenie prieniku a zjednotenia množín pre výpočet Jaccardovho
-  koeficientu, zdroj: ??}
+  koeficientu, zdroj: \cite{Zitnick:2014:SS}}
   \label{fig:footprint-jacc-sets}
 \end{figure}
 
@@ -1168,12 +1159,12 @@ Aspektovo-orientované programovanie (ďalej len AOP) je paradigma určená k
 zvýšeniu modularity kódu bez narúšania prirodzeného behu aplikácie. Ide o 
 pridanie novej funkcionality k už existujúcemu kódu, bez nutnosti modifikácie
 pôvodného zdroja. Namiesto toho je osobitne definovaný takzvaný prístupový bod,
-ktorý pridá požadovanú funkcionalitu na vopred určené miesto.
+ktorý pridá požadovanú funkcionalitu na vopred určené miesto \cite{Kiczales:1997:AOP}.
 
 V implementačnej časti je AOP, konkrétne knižnica \textit{AspectJ}, použitá pre
 injektovanie jednotlivých prístupových metód hostiteľskej aplikácie a následné
 odchytávanie informácií z ich HTTP requestov. Je tak možné vytvoriť prístupové
-body pre ľubovoľný z používaných \textit{frameworkov}, či prístupov. Momentálne, na
+body pre ľubovoľný z používaných \textit{frameworkov}, či prístupov \cite{Laddad:2009:AOP}. Momentálne, na
 testovacie účely, implementácia obsahuje prístupový bod pre metódy so
 \textit{Springovou} anotáciou \textit{@RestController}. Nie je však problém
 rozhranie rozšíriť o akýkoľvek existujúci, či vlastný prístupový bod. Ďalšou z 
