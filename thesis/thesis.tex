@@ -44,35 +44,38 @@
     advisor       = doc. RNDr. Vlastislav Dohnal\, Ph.D.,
     title         = {Rozpoznanie užívateľa na základe informácií o HTTP komunikácií},
     TeXtitle      = {Rozpoznanie užívateľa na základe informácií o HTTP komunikácií},
-    keywords      = {identifikácia, HTTP, TCP, podobnosť, hľadanie podobnosti, DOS, rozpoznanie užívateľa},
-    TeXkeywords   = {identifikácia, HTTP, TCP, podobnosť, hľadanie podobnosti, DOS, rozpoznanie užívateľa},
-    assignment  = {} %TODO - prnted - Kopie zadání a Kopie prohlášení autora školního díla
+    keywords      = {identifikácia užívateľa, HTTP, TCP, podobnosť, hľadanie podobnosti, Denial of Service, rozpoznanie užívateľa},
+    TeXkeywords   = {identifikácia užívateľa, HTTP, TCP, podobnosť, hľadanie podobnosti, Denial of Service, rozpoznanie užívateľa},
+    %assignment  = {} %TODO - prnted - Kopie zadání a Kopie prohlášení autora školního díla
 }
 
 \thesislong{abstract}{
-Táto práca sa zaoberá prieskumom možností rozpoznania užívateľa na základe dostupných
-informácií z HTTP, prípadne TCP protokolu a tvorbou unikátneho identifikátoru.
-
+Táto práca sa zaoberá prieskumom možností rozpoznania užívateľa na základe
+informácií dostupných v komunikácii pomocou protokolu HTTP a tvorbou unikátneho identifikátoru.
 Cieľom je nájsť spôsob jednoznačnej identifikácie užívateľa na základe dostupných
 informácii z aktuálne prebiehajúcej HTTP komunikácie. Tento identifikátor je možne
 následne využiť pri detekovaných anomáliách v komunikácii a ich následnej eliminácií.
-Súčasťou práce je zhodnotenie existujúcich prístupov identifikácie a praktická časť, ktorá
+Súčasťou práce je popis existujúcich prístupov identifikácie a praktická časť, ktorá
 obsahuje algoritmus pre výpočet unikátneho identifikátoru s knižnicou obsahujúcou jeho
 implementáciu. 
 }
 
 %TODO - printed - poďakovanie
-%\thesislong{thanks}{ 
-%	TODO
-%}
+\thesislong{thanks}{ 
+Na tomto mieste sa chcem poďakovať najmä doc. RNDr. Vlastislavovi
+Dohnalovi, Ph.D. a Ing. Dominikovi Wolfovi za odbornú pomoc, užitočné
+rady a metodické usmernenie počas prípravy diplomovej práce. Osobitná
+vďaka patrí mojej rodine a 
+priateľom za podporu.
+}
 
 %% The following section sets up the bibliography.
 \usepackage{csquotes}
 \usepackage[              %% When typesetting the bibliography, the
   backend=bibtex,         %% `numeric` style will be used for the
-  style=alphabetic,          %% entries and the `numeric-comp` style
-  citestyle=alphabetic, %% for the references to the entries. The
-  sorting=nty,           %% entries will be sorted in cite order.
+  style=alphabetic,       %% entries and the `numeric-comp` style
+  citestyle=alphabetic,   %% for the references to the entries. The
+  sorting=nty,            %% entries will be sorted in cite order.
   sortlocale=auto         %% For more unformation about the available
 ]{biblatex}               %% `style`s and `citestyles`, see:
 %% <http://mirrors.ctan.org/macros/latex/contrib/biblatex/doc/biblatex.pdf>.
@@ -95,6 +98,7 @@ implementáciu.
 \usepackage{listings}
 \usepackage{color}
 \usepackage{fancyhdr}
+\usepackage[]{algorithm2e}
  
 \definecolor{codeblue}{rgb}{0,0,0.6}
 \definecolor{codegray}{rgb}{0.02, 0.3, 0.14}
@@ -288,7 +292,7 @@ Odpoveď pre klienta vždy obsahuje takzvaný \textit{status}, ktorý informuje 
 dokončení požiadavky, alebo konkrétnej chybe a prípadné telo obsahujúce správu odpovede \cite{rfc1123}.
 
 Celá relácia HTTP spojenia medzi dvoma uzlami je teda sekvenciou niekoľkých
-takýchto \textit{(request-respone)} transakcií. Samotný prenos dát však nie
+takýchto \textit{(request-response)} transakcií. Samotný prenos dát však nie
 je realizovaný na úrovni HTTP protokolu, ale prostredníctvom protokolu TCP
 na úrovni transportnej vrstvy. HTTP klient iniciuje ustálenie TCP spojenia pre
 špecifický port serveru (typickými portami sú 80, 443 alebo 8080). HTTP server
@@ -804,15 +808,15 @@ Tieto identifikátory sa však v abstrakcii komunikácie nachádzajú príliš v
 preto nie je pomocou nich možné ovplyvniť napríklad DoS útoky popísané v
 kapitole \ref{ch:dos}.
 
-\section{Podobné a súvisiace práce}
+\section{Súvisiace práce}
 Súčasťou tejto kapitoly je aj predstavenie existujúcich prác, ktoré sa zaoberajú 
 problematikou súvisiacou s identifikáciu používateľa, prípadne využívajú rovnako
-informácie HTTP protokolu. Ide o práce s tematikou prispôsobenia obsahu a
+informácie HTTP protokolu. Ide najmä o~práce s~tematikou prispôsobenia obsahu a
 profilovania užívateľov na základe jeho verejne dostupných dát. Nasledujúce sekcie 
-preto stručne popisujú dve najvýstižnejšie vybrané práce, ktoré sa venujú tejto problematike.
+preto stručne popisujú vybrané práce, ktoré sa venujú tejto problematike.
 
 \subsection{Prispôsobenie obsahu}
-Provu prácou je článok s názvom \textit{Automatic personalization based on Web usage mining} \cite{Mobasher:2000:APB},
+Prvou prácou je článok s názvom \textit{Automatic personalization based on Web usage mining} \cite{Mobasher:2000:APB},
 ktorý sa zaoberá prispôsobením a personalizáciou webového obsahu. Popisuje prístup k personalizácii webových
 aplikácií založený na ich používaní, pričom zohľadňuje veľké spektrum techník a aktivít dolovania informácií.
 Pomocou nich sa zároveň snaží prispôsobenie čo najviac automatizovať.
@@ -824,8 +828,10 @@ servery a~\textit{cache}. V~logu webového serveru majú totiž všetky požiada
 rovnaký identifikátor. Proxy servery môžu taktiež predĺžiť, prípadne skresliť informácie čase a~dĺžke doby
 zotrvania užívateľa na danej adrese \cite{Mobasher:2000:APB}.
 
-Pre zlepšenie identifikácie používateľa preto táto práca narába s~atribútmi HTTP protokolu a~zostavuje
-tak zoznam navštívených webov pre účely prispôsobenia obsahu.
+Jednou zo súvislostí s touto prácou je motivácia rozoznania užívateľov za spomínaným proxy serverom.
+Pre zlepšenie ich identifikácie článok taktiež narába s~atribútmi HTTP protokolu a~zostavuje
+tak zoznam navštívených webov pre účely prispôsobenia obsahu. Jeho prínosom bol teda najmä výber konkrétnych 
+informácií HTTP protokolu ako zdroja pre lepšiu identifikáciu klientov.
 
 \subsection{Profilovanie užívateľov}
 Druhou súvisiacou prácou je článok s názvom \textit{Web user behavioral profiling for user identification} \cite{Yang:2010:Prof},
@@ -834,10 +840,11 @@ jednoduchý, ale účinný prístup k profilovania správania sa požívateľov 
 Cieľom a motiváciu tejto identifikácie je možnosť rozlíšenia používateľov hlavne pre účely cielenia
 reklamy, prípadne odporúčania produktov.
 
-Okrem štandardných informácií z komunikácie s klientom však táto práca popisuje aj 
-techniky pre tvorbu behaviorálnych vzorov správania sa používateľov.  Behaviorálne vzory sú vytvárané na základe obsahu komunikácie
-s používateľom. Na základe týchto vzorov je následne možné klientov
-rozdeliť do skupín a konkrétnu reklamu cieliť len na vybrané skupiny ich vzoriek.
+Prínosom tejto práce bolo najmä využitia štandardných informácií z~komunikácie s~klientom, ale aj spôsob akým práca zapája 
+techniky pre tvorbu behaviorálnych vzorov správania sa používateľov. Behaviorálne vzory sú vytvárané na základe obsahu komunikácie
+s~používateľom. Na základe týchto vzorov je následne možné klientov
+rozdeliť do skupín a~konkrétnu reklamu cieliť len na vybrané skupiny ich vzoriek. Tento spôsob identifikácie by teda taktiež mohol byť inšpiráciou
+pre budúce rozšírenie algoritmu identifikátor praktickej časti práce.
 
 \section{Zhrnutie}
 Na identifikáciu užívateľa, prípadne jeho zariadenia, sú v súčasnosti
@@ -1243,7 +1250,7 @@ Z Injectora dáta pokračujú vždy v samostatnom vlákne na spracovanie triedou
 \textit{endpoint.collector.http}. Ich účelom je extrahovať potrebné HTTP
 informácie, ktoré sú následne reprezentované triedou \textit{HTTPFootprint}.
 
-Ďalej už s reprezentáciami \textit{HTTPFootprint} a \textit{TCPFootprint} [\ref{fig:appendix-structure}]
+Ďalej už s reprezentáciami \textit{HTTPFootprint} a \textit{TCPFootprint} (dostupné v prílohe \ref{fig:appendix-structure})
 pracuje trieda \textit{UFooProcessor}. Táto trieda obsluhuje hlavnú logiku
 analýzy podobnosti aktuálne spracovávanej požiadavky s ostatnými identifikátormi
 v databáze. \textit{UFooProcessor} pomocou metód triedy \textit{Serializer} spracuje informácie do
@@ -1283,7 +1290,7 @@ zneužitiu.} Nasledujúce odseky popisujú jednak priebeh tohto
 organizovaný. Celkovo trval 56 minút a zúčastnili sa ho klienti zo 136 rôznych
 IP adries. V~priebehu týchto 56 minút server prijal dohromady 1 345 446 požiadaviek, pričom
 všetky smerovali na rovnakú URL a jednu konkrétnu akciu. Jeho ďalším znakom bola
-pomerne malá diverzita obsahu HTTP hlavičiek. Jednotlivé varianty hlavičiek sa lýšili
+pomerne malá diverzita obsahu HTTP hlavičiek. Jednotlivé varianty hlavičiek sa líšili
 len v~niektorých hodnotách, prípadne mierne menili svoju podmnožinu položiek. Príklady týchto hlavičiek
 niektorých z~požiadaviek zobrazuje nasledujúca schéma: 
 
@@ -1408,21 +1415,6 @@ databázy odtlačkov, až po zlepšenie sledovania a použitia TCP informácií.
 \printindex
 
 \appendix %% Start the appendices.
-\chapter{Priebeh spracovania požiadavky}
-\label{fig:appendix-impl-flow}
-\begin{figure}[H]
-  \centering
-    \includegraphics[width=1\textwidth]{images/footprint-impl-flow-1.png}
-  \caption{Sekvenčný diagram znázorňujúci priebeh spracovania požiadavky algoritmom
-  pre určenie najbližšieho podobného identifikátoru, diagram pokračuje na ďalšej strane,
-  zdroj: implementačná časť práce}
-\end{figure}
-\begin{figure}[h]
-  \centering
-    \includegraphics[width=1.1\textwidth]{images/footprint-impl-flow-2.png}
-  \caption{Pokračovanie sekvenčného diagramu v časti tvorby identifikátoru požiadavky a
-  určenia vzdialenosti najbližšieho odtlačku, zdroj: implementačná časť práce}
-\end{figure}
 
 \chapter{Triedy \textit{HTTPFootprint} a \textit{TCPootprint}}
 \label{fig:appendix-structure}
@@ -1432,20 +1424,39 @@ databázy odtlačkov, až po zlepšenie sledovania a použitia TCP informácií.
   \caption{Štruktúra tried \textit{HTTPFootprint} a \textit{TCPootprint},
   zdroj: implementačná časť práce}
 \end{figure}
+\let\cleardoublepage\clearpage %TODO printed - onepage layout
+\chapter{Priebeh spracovania požiadavky}
+\label{fig:appendix-impl-flow}
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=1\textwidth]{images/footprint-impl-flow-1.png}
+  \caption{Sekvenčný diagram znázorňujúci priebeh spracovania požiadavky algoritmom
+  pre určenie najbližšieho podobného identifikátoru, diagram pokračuje na ďalšej strane,
+  zdroj: implementačná časť práce}
+\end{figure}
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=1.1\textwidth]{images/footprint-impl-flow-2.png}
+  \caption{Pokračovanie sekvenčného diagramu v časti tvorby identifikátoru požiadavky a
+  určenia vzdialenosti najbližšieho odtlačku, zdroj: implementačná časť práce}
+\end{figure}
 
 %TODO printed
-%\chapter{Obsah CD}
-%Priložené CD obsahuje nasledujúce adresáre:
-%\begin{itemize}
-%\item \texttt{dp/thesis} -- obsahuje text bakalárskej práce vo formáte PDF a
-%zdrojové soubory vo formáte \LaTeX,
-%\item \texttt{dp/ufoo} -- obsahuje zdrojový kód implementačnej časti práce,
-%teda knižnicu implementujúcu algoritmus identifikácie užívateľa v jazyku Java,
-%\item \texttt{dp/exampleServer} -- obsahuje spustiteľný JAR súbor aplikácie, v
-%ktorej je použitá knižnica implementačnej časti práce, spolu s inštrukciami pre
-%jej testovanie.
-%\end{itemize}
-%Aktuálna verzia diplomovej práce, implementácie a jednotlivých príkladov je
-%takisto k dispozícií v repozitári \url{https://github.com/m-mato/dp.git}.
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\chapter{Obsah CD}
+Priložené CD obsahuje nasledujúce adresáre:
+\begin{itemize}
+\item \texttt{dp/thesis} -- obsahuje text diplomovej práce vo formáte PDF a
+zdrojové súbory vo formáte \LaTeX,
+\item \texttt{dp/ufoo} -- obsahuje zdrojový kód implementačnej časti práce,
+teda knižnicu implementujúcu algoritmus identifikácie užívateľa v jazyku Java,
+\item \texttt{dp/exampleServer} -- obsahuje spustiteľný JAR súbor aplikácie, v
+ktorej je použitá knižnica implementačnej časti práce, spolu s inštrukciami pre
+jej testovanie.
+\end{itemize}
+Aktuálna verzia práce, implementácie a jednotlivých príkladov je
+takisto k dispozícií v repozitári \url{https://github.com/m-mato/dp.git}.
 
 \end{document}
