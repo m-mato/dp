@@ -7,10 +7,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[
-  printed, %% This option enables the default options for the
+  digital, %% This option enables the default options for the
            %% printed version of a document. Replace with `digital`
            %% to enable the default options for the digital version
            %% of a document.
+  oneside, %% Oneside
   table,   %% Causes the coloring of tables. Replace with `notable`
            %% to restore plain tables.
   lof,     %% Prints the List of Figures. Replace with `nolof` to
@@ -99,6 +100,8 @@ priateľom za podporu.
 \usepackage{color}
 \usepackage{fancyhdr}
 \usepackage[]{algorithm2e}
+\usepackage{pdflscape}
+\usepackage{changepage}
  
 \definecolor{codeblue}{rgb}{0,0,0.6}
 \definecolor{codegray}{rgb}{0.02, 0.3, 0.14}
@@ -1424,7 +1427,7 @@ databázy odtlačkov, až po zlepšenie sledovania a použitia TCP informácií.
   \caption{Štruktúra tried \textit{HTTPFootprint} a \textit{TCPootprint},
   zdroj: implementačná časť práce}
 \end{figure}
-\let\cleardoublepage\clearpage %TODO printed - onepage layout
+%\let\cleardoublepage\clearpage %TODO printed - onepage layout
 \chapter{Priebeh spracovania požiadavky}
 \label{fig:appendix-impl-flow}
 \begin{figure}[H]
@@ -1442,21 +1445,21 @@ databázy odtlačkov, až po zlepšenie sledovania a použitia TCP informácií.
 \end{figure}
 
 %TODO printed
-\newpage
-\thispagestyle{empty}
-\mbox{}
-\chapter{Obsah CD}
-Priložené CD obsahuje nasledujúce adresáre:
-\begin{itemize}
-\item \texttt{dp/thesis} -- obsahuje text diplomovej práce vo formáte PDF a
-zdrojové súbory vo formáte \LaTeX,
-\item \texttt{dp/ufoo} -- obsahuje zdrojový kód implementačnej časti práce,
-teda knižnicu implementujúcu algoritmus identifikácie užívateľa v jazyku Java,
-\item \texttt{dp/exampleServer} -- obsahuje spustiteľný JAR súbor aplikácie, v
-ktorej je použitá knižnica implementačnej časti práce, spolu s inštrukciami pre
-jej testovanie.
-\end{itemize}
-Aktuálna verzia práce, implementácie a jednotlivých príkladov je
-takisto k dispozícií v repozitári \url{https://github.com/m-mato/dp.git}.
+%\newpage
+%\thispagestyle{empty}
+%\mbox{}
+%\chapter{Obsah CD}
+%Priložené CD obsahuje nasledujúce adresáre:
+%\begin{itemize}
+%\item \texttt{dp/thesis} -- obsahuje text diplomovej práce vo formáte PDF a
+%zdrojové súbory vo formáte \LaTeX,
+%\item \texttt{dp/ufoo} -- obsahuje zdrojový kód implementačnej časti práce,
+%teda knižnicu implementujúcu algoritmus identifikácie užívateľa v jazyku Java,
+%\item \texttt{dp/exampleServer} -- obsahuje spustiteľný JAR súbor aplikácie, v
+%ktorej je použitá knižnica implementačnej časti práce, spolu s inštrukciami pre
+%jej testovanie.
+%\end{itemize}
+%Aktuálna verzia práce, implementácie a jednotlivých príkladov je
+%takisto k dispozícií v repozitári \url{https://github.com/m-mato/dp.git}.
 
 \end{document}
