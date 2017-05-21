@@ -38,7 +38,6 @@ public class RequestHandler {
 
         Result result = uFooProcessor.analyze(httpFootprint);
         if (result.equals(Result.DETECTED)) {
-            //TODO - reaction
             return true;
         }
 

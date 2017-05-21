@@ -85,6 +85,7 @@ public class UFooProcessor {
 
             if (distance > Constants.DOS_DISTANCE_LOW && distance < Constants.DOS_DISTANCE_HIGH && frequency > alertThreshold) {
                 //possibly throw new RequestCountAlertException("Request frequency threshold exceeded by: " + uFooEntity);
+                //not in test mode
                 LOGGER.warn("---> Possible attack detected for UFoo: {}", uFooEntity);
                 return Result.DETECTED;
             }
