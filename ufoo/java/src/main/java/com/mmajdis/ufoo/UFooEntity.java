@@ -3,7 +3,7 @@ package com.mmajdis.ufoo;
 import java.util.Map;
 
 /**
- * @author Matej Majdis <matej.majdis@avg.com>
+ * @author Matej Majdis <mato.majdis@gmail.com>
  */
 public class UFooEntity {
 

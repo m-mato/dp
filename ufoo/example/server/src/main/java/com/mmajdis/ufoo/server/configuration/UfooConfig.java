@@ -4,7 +4,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author Matej Majdis <matej.majdis@avg.com>
+ * @author Matej Majdis <mato.majdis@gmail.com>
  */
 @Configuration
 @ComponentScan("com.mmajdis")

@@ -3,7 +3,7 @@ package com.mmajdis.ufoo.analyzer;
 import org.apache.http.HttpHeaders;
 
 /**
- * @author Matej Majdis <matej.majdis@avg.com>
+ * @author Matej Majdis <mato.majdis@gmail.com>
  */
 public class HeadersDefinition {
 

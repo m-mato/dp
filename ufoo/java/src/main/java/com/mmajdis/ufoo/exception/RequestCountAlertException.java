@@ -1,7 +1,7 @@
 package com.mmajdis.ufoo.exception;
 
 /**
- * @author Matej Majdis <matej.majdis@avg.com>
+ * @author Matej Majdis <mato.majdis@gmail.com>
  */
 public class RequestCountAlertException extends RuntimeException {
 

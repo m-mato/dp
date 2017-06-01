@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class HeaderParser {
 
-    private static final String key = "Host: mysearch.avg.com";
+    private static final String key = "Host: domain-sample.com";
     private static final int keylength = key.length();
     private static final Gson gson = new Gson();
 

@@ -3,7 +3,7 @@ package com.mmajdis.ufoo.util;
 import com.mmajdis.ufoo.UFooEntity;
 
 /**
- * @author Matej Majdis <matej.majdis@avg.com>
+ * @author Matej Majdis <mato.majdis@gmail.com>
  */
 public class MatchResponse {
 

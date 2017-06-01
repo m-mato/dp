@@ -1,33 +1,33 @@
 User-Agent,ELB-HealthChecker/1.0
 Content-Length,140
-X-Forwarded-For,54.245.168.42
+X-Forwarded-For,IP sample
 X-Forwarded-Port,443
 Content-Length,73
 Accept,application/json
 Content-Type,application/json
-X-Forwarded-For,212.4.138.50
+X-Forwarded-For,IP sample
 Content-Length,128
 Content-Type,application/x-www-form-urlencoded
-X-Forwarded-For,54.251.31.138
-X-Forwarded-For,54.244.52.202
-Authorization,Basic YzU0NTY2ZmRiODMxMDQyZTJkMzAwMzcxNjhjZWQyZjZhNGFzZGVlOmM1NDU2NmZkYjgzMTA0MmUyZDMwMDM3MTY4Y2VkMmY2YTRhc2RlZQ==
-X-Forwarded-For,177.71.207.170
-X-Forwarded-For,54.183.255.138
-X-Forwarded-For,54.248.220.42
-X-Forwarded-For,54.243.31.234
-X-Forwarded-For,54.255.254.234
-X-Forwarded-For,54.252.79.170
-X-Forwarded-For,54.232.40.74
+X-Forwarded-For,IP sample
+X-Forwarded-For,IP sample
+Authorization,Basic Sample
+X-Forwarded-For,IP sample
+X-Forwarded-For,IP sample
+X-Forwarded-For,IP sample
+X-Forwarded-For,IP sample
+X-Forwarded-For,IP sample
+X-Forwarded-For,IP sample
+X-Forwarded-For,IP sample
 X-Forwarded-Proto,https
-X-Forwarded-For,54.228.16.10
-X-AVG-Authorization,"token=""c54566fdb831042e2d30037168ced2f6a4asdee"" version=""1.0"""
-X-Forwarded-For,176.34.159.234
+X-Forwarded-For,IP sample
+X-***-Authorization,"token=""sample"" version=""1.0"""
+X-Forwarded-For,IP sample
 Connection,keep-alive
-User-Agent,Amazon Route 53 Health Check Service; ref:0138f52d-b450-4d27-885d-c04db81b07c5; report http://amzn.to/1vsZADi
+User-Agent,Amazon Route 53 Health Check Service; ref:***; report http://amzn.to/***
 Accept-Encoding,*
-X-Forwarded-For,54.241.32.106
-X-Forwarded-For,54.250.253.234
+X-Forwarded-For,IP sample
+X-Forwarded-For,IP sample
 Accept,*/*
-X-Forwarded-For,107.23.255.10
-X-Forwarded-For,212.4.138.185
-X-Forwarded-For,54.252.254.202
+X-Forwarded-For,IP sample
+X-Forwarded-For,IP sample
+X-Forwarded-For,IP sample

@@ -1,7 +1,7 @@
 package com.mmajdis.ufoo.endpoint.collector.tcp;
 
 /**
- * @author Matej Majdis <matej.majdis@avg.com>
+ * @author Matej Majdis <mato.majdis@gmail.com>
  */
 public class TCPFootprint {
 
